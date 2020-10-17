@@ -1,0 +1,19 @@
+.navbar__content--search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    input {
+        outline: none;
+        width: 90%;
+        height: 1.5rem
+    }
+
+    img {
+        height: 1.4rem;
+    
+        &:hover {
+            cursor: pointer;
+        }   
+    }
+}
