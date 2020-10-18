@@ -3,7 +3,7 @@ import movieReducer from './movies/movies.reducer';
 
 
 const rootReducer = combineReducers({
-    movies: movieReducer
+    moviesData: movieReducer
 })
 
 export default rootReducer

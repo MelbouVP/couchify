@@ -1,40 +1,31 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 
-import { fetchMovies, isLoading } from '../../Redux/movies/movies.actions';
+import { fetchSearchedMovies, changeFetchStatus } from '../../Redux/movies/movies.actions';
 
 import './searchbar.styles.scss';
 
-const SearchBar = ({ fetchMovies, isLoading }) => {
+const SearchBar = ({ fetchSearchedMovies, changeFetchStatus }) => {
     
     let history = useHistory();
     const [searchValue, setSearchValue] = useState('');
-    
-    const usePrevious = (value) => {
-        const ref = useRef();
-        useEffect(() => {
-            ref.current = value;
-        });
-        return ref.current;
-    }
-    
-    const prevSearchValue = usePrevious(searchValue);
-
-    console.log(prevSearchValue, searchValue)
+    const [fetchedSearchValue, setFetchedSearchValue] = useState('')
 
     const fetchSearch = async () => {
-        history.push('/search')
-        
-        if(searchValue === searchValue){
-            console.log('similar')
-            history.push('/search')
+        if(searchValue === '') return
+        // Stops user from re-fetching data if search value hasn't changed
+        // redirects back to search result overview component
+        if(searchValue === fetchedSearchValue){
+            history.location.pathname !== '/search' && history.push('/search')
+            return
         }
 
-        isLoading(true);
+        
+        history.push('/search')
+        changeFetchStatus(true);
 
         try {
-            console.log('fetching')
             const response = await fetch(`http://localhost:3001/api/find`, {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
@@ -44,14 +35,14 @@ const SearchBar = ({ fetchMovies, isLoading }) => {
             })
 
             const data = await response.json()
-            console.log(data)
         
-            fetchMovies(data);
+            fetchSearchedMovies(data);
+            setFetchedSearchValue(searchValue);
             
         } catch(error) {
             console.log(error)
         }
-        isLoading(false)
+        changeFetchStatus(false)
     }
 
     const handleKeyDown = (event) => {
@@ -75,8 +66,8 @@ const SearchBar = ({ fetchMovies, isLoading }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    isLoading: (bool) => dispatch(isLoading(bool)),
-    fetchMovies: (data) => dispatch(fetchMovies(data))
+    changeFetchStatus: (bool) => dispatch(changeFetchStatus(bool)),
+    fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data))
 })
 
 export default connect(null, mapDispatchToProps)(SearchBar);

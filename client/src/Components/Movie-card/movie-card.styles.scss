@@ -3,16 +3,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 15rem;
-    height: 30rem;
-    margin: 1rem;
-    padding: 2rem;
+    width: 20rem;
+    height: 28rem;
+    padding: 1rem;
+    margin: 1.5rem 1rem;
     background-color: skyblue;
     transition: transform .5s;
 
     img {
-        height: 40%;
-        width: 80%;
+        height: 60%;
+        width: 60%;
         margin: .5rem;
     }
 

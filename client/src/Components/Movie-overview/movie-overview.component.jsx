@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectMoviesIsFetching, selectMoviesSearchData } from '../../Redux/movies/movies.selectors';
 
 import MovieCard from '../Movie-card/movie-card.component';
 
@@ -8,16 +11,11 @@ import './movie-overview.styles.scss';
 
 const MovieOverview = ({ searchResult, isLoading }) => {
 
-    console.log('rendered')
+    console.log('Movie overview rendered')
 
     const movies = searchResult.length ? 
         searchResult.map( movieData => 
-            // return (
-                // <Link to={`/movie/${movieData.id}`}>
                     <MovieCard key={movieData.id} movieData={movieData} />
-                /* </Link> */
-        //     )
-        // })
         ) 
     :   
         null
@@ -37,9 +35,9 @@ const MovieOverview = ({ searchResult, isLoading }) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    searchResult: state.movies.searchData,
-    isLoading: state.movies.isLoading
+const mapStateToProps = createStructuredSelector({
+    searchResult: selectMoviesSearchData,
+    isLoading: selectMoviesIsFetching
 })
   
 export default connect(mapStateToProps)(MovieOverview)

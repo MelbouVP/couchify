@@ -66,7 +66,7 @@ app.post('/api/find', (req,res) => {
 // Trending movies
 app.get('/api/trending', (req, res) => {
     axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.API_KEY}`)
-        .then(response => console.log(response.data.results))
+        .then(response => res.json(response.data.results))
         .catch(err => res.send(err));
 })
 

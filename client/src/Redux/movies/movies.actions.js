@@ -1,16 +1,21 @@
 import moviesActionTypes from './movies.types';
 
-export const addSearchValue = (value) => ({
-    type: moviesActionTypes.SET_SEARCH_VALUE,
-    payload: value
-})
-
-export const fetchMovies = (item) => ({
-    type: moviesActionTypes.FETCH_MOVIES,
+export const fetchSearchedMovies = (item) => ({
+    type: moviesActionTypes.FETCH_SEARCHED_MOVIES,
     payload: item
 })
 
-export const isLoading = (bool) => ({
-    type: moviesActionTypes.IS_LOADING,
+export const fetchTrendingMovies = (item) => ({
+    type: moviesActionTypes.FETCH_TRENDING_MOVIES,
+    payload: item
+})
+
+export const fetchPopularMovies = (item) => ({
+    type: moviesActionTypes.FETCH_POPULAR_MOVIES,
+    payload: item
+})
+
+export const changeFetchStatus = (bool) => ({
+    type: moviesActionTypes.CHANGE_FETCH_STATUS,
     payload: bool
 })

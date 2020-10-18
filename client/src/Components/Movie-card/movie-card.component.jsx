@@ -4,7 +4,7 @@ import './movie-card.styles.scss';
 
 
 const MovieCard = ({ movieData }) => {
-    console.log('me render')
+    console.log('moviecard rendered')
     let history = useHistory();
 
     return (
@@ -19,4 +19,4 @@ const MovieCard = ({ movieData }) => {
     )
 }
 
-export default MovieCard;
+export default React.memo(MovieCard);

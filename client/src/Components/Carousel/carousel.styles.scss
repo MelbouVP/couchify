@@ -1,0 +1,19 @@
+.container {
+  padding-right: 40px;
+  padding-left: 40px;
+  background: #419be0;
+}
+
+.slick-slide>div {
+  transform: scale(.75);
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.slick-center>div {
+  transform: scale(1);
+}
+
+// .slider__item>img {
+//   width: 100%;
+//   height: auto;
+// }

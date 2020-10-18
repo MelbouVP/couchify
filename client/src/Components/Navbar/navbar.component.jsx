@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import SearchBar from '../Searchbar/searchbar.component';
 
@@ -11,7 +12,9 @@ const Navbar = () => {
             <nav className="navbar">
                 <div className="navbar__content">
                     <ul className="navbar__nav">
-                    <li>Upcoming</li>
+                    <li>
+                        <Link to='/' > Home </Link>
+                    </li>
                     <li>Popular</li>
                     </ul>
                 </div>

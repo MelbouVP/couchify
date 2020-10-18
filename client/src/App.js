@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
+import HomePage from './Pages/Home-page/home-page.component'
 import MovieOverview from './Components/Movie-overview/movie-overview.component'
 import Navbar from './Components/Navbar/navbar.component'
 import Movie from './Components/Movie/movie.component';
@@ -12,17 +13,14 @@ const App = () => {
   return (
     <div>
       {/* <Switch> */}
-          <Route path="/">
-            <Navbar />
-          </Route>
+          <Navbar />
+          <Route exact path="/" component={HomePage} />
           <Route path='/search' component={MovieOverview}/>
-          {/* <MovieOverview /> */}
         <div className="App">
           <Route exact path="/movie/:movieId">
             <Movie />
           </Route>
         </div>
-      {/* </Switch> */}
     </div>
   );
 }
