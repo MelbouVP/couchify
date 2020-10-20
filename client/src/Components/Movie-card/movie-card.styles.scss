@@ -3,12 +3,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20rem;
-    height: 28rem;
+    width: 18rem;
+    height: 25rem;
     padding: 1rem;
     margin: 1.5rem 1rem;
-    background-color: skyblue;
-    transition: transform .5s;
+    background-color: grey;
+    transition: transform 1.5s;
+    // -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
 
     img {
         height: 60%;
@@ -24,6 +26,9 @@
 
     &:hover {
         cursor: pointer;
-        transform: scale(1.1);
+        // transform: scale(1.3);
+        backface-visibility: hidden;
+        transform: translateZ(1);
+
     }
 }

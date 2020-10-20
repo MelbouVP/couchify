@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import './carousel.styles.scss';
 
-const Carousel = ({ moviesData }) => {
+const Carousel = ({ sectionName, moviesData }) => {
   
   const movies = moviesData.length ? 
         moviesData.map( movieData => 
@@ -54,6 +54,7 @@ const Carousel = ({ moviesData }) => {
 
   return (
     <div className="container">
+      <h2 className="container__title" >{sectionName}</h2>
       <Slider {...settings}>
         {
           movies

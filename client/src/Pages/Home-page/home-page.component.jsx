@@ -10,7 +10,7 @@ import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/m
 
 import { changeFetchStatus, fetchTrendingMovies } from '../../Redux/movies/movies.actions'
 
-// import './home-page.styles.scss';
+import './home-page.styles.scss';
 
 const HomePage = ({ trendingMovies, fetchTrendingMovies, changeFetchStatus }) => {
 
@@ -41,9 +41,8 @@ const HomePage = ({ trendingMovies, fetchTrendingMovies, changeFetchStatus }) =>
     
 
     return (
-        <div>
-            <h1>Trending movies</h1>
-            <Carousel moviesData={trendingMovies}/>
+        <div className="container">
+            <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
         </div>
     )
 }

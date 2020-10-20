@@ -19,3 +19,8 @@ export const changeFetchStatus = (bool) => ({
     type: moviesActionTypes.CHANGE_FETCH_STATUS,
     payload: bool
 })
+
+export const changeCurrentlyViewedMovie = (item) => ({
+    type: moviesActionTypes.CHANGE_CURRENTLY_VIEWED_MOVIE,
+    payload: item
+})

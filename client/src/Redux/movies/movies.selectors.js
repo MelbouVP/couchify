@@ -22,3 +22,8 @@ export const selectMoviesIsFetching = createSelector(
     [selectMovies],
     data => data.isFetching
 )
+
+export const selectMoviesCurrentlyViewedMovie = createSelector(
+    [selectMovies],
+    data => data.currentlyViewedMovie
+)

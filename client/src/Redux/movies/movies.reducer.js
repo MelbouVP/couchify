@@ -4,7 +4,8 @@ export const INITIAL_STATE = {
     searchData: [],
     trendingData: [],
     popularData: [],
-    isFetching: false
+    isFetching: false,
+    currentlyViewedMovie: ''
 }
 
 const movieReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,11 @@ const movieReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isFetching: action.payload
+            }
+        case moviesActionTypes.CHANGE_CURRENTLY_VIEWED_MOVIE:
+            return {
+                ...state,
+                currentlyViewedMovie: action.payload
             }
         default:
             return state
