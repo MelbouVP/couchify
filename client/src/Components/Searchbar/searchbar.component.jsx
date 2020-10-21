@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import { useHistory } from 'react-router-dom';
+
+import { selectMoviesSearchValue } from '../../Redux/movies/movies.selectors';
 
 import { fetchSearchedMovies, changeFetchStatus } from '../../Redux/movies/movies.actions';
 
 import './searchbar.styles.scss';
 
-const SearchBar = ({ fetchSearchedMovies, changeFetchStatus }) => {
+const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue }) => {
     
     let history = useHistory();
+
     const [searchValue, setSearchValue] = useState('');
-    const [fetchedSearchValue, setFetchedSearchValue] = useState('')
 
     const fetchSearch = async () => {
         if(searchValue === '') return
@@ -35,9 +38,8 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus }) => {
             })
 
             const data = await response.json()
-        
+
             fetchSearchedMovies(data);
-            setFetchedSearchValue(searchValue);
             
         } catch(error) {
             console.log(error)
@@ -65,9 +67,14 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus }) => {
     )
 }
 
+const mapStateToProps = createStructuredSelector({
+    fetchedSearchValue: selectMoviesSearchValue
+})
+
+
 const mapDispatchToProps = dispatch => ({
     changeFetchStatus: (bool) => dispatch(changeFetchStatus(bool)),
     fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data))
 })
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

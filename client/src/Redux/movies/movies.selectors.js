@@ -2,10 +2,24 @@ import { createSelector } from 'reselect';
 
 const selectMovies = state => state.moviesData;
 
-
-export const selectMoviesSearchData = createSelector(
+const selectMoviesSearchData = createSelector(
     [selectMovies],
     data => data.searchData
+)
+
+export const selectMoviesSearchResults = createSelector(
+    [selectMoviesSearchData],
+    data => data.results
+)
+
+export const selectMoviesSearchValue = createSelector(
+    [selectMoviesSearchData],
+    data => data.searchValue
+)
+
+export const selectMoviesCurrentSearchPage = createSelector(
+    [selectMoviesSearchData],
+    data => data.page
 )
 
 export const selectMoviesTrendingData = createSelector(

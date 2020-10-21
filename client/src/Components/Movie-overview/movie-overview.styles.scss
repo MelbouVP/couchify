@@ -1,11 +1,36 @@
 
-.movie-overview {
+.container__search-page {
+
+  .search__container {
     display: flex;
-    height: 90vh;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 1rem;
+    width: 100%;
+    min-height: 80vh;
+    background-color: brown;
+    
+    .search__filter {
+      width: 20%;
+      background-color: indianred;
+    }
+  
+    .search__movie-overview {
+        position: relative;
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+  
+  }
+
+  .footer {
+    background-color: black;
+    height: 10vh;
+  }
 }
+
+
 
 .loader {
     border: 25px solid #f3f3f3;

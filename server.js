@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 
-// Filter movies/ discover
+//? Filter movies/ discover
 app.get('/api/discover', async (req,res) => {
     try {
         // const resp = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
@@ -53,24 +53,79 @@ app.get('/api/discover', async (req,res) => {
 })
 
 
-// Search movie by name
+//? Search movie by name
 app.post('/api/find', (req,res) => {
     const searchValue = req.body.searchValue
-    console.log(searchValue)
+    let encodedSearch = encodeURIComponent(searchValue)
+    console.log('Find path: ', searchValue)
 
-    axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchValue}&api_key=${process.env.API_KEY}&language=en-US`)
-        .then(response => res.json(response.data.results))
+    axios.get(`https://api.themoviedb.org/3/search/movie?query=${encodedSearch}&api_key=${process.env.API_KEY}&page=1`)
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                searchValue: searchValue,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            res.json(modifiedResponse)
+        })
         .catch(err => res.send(err));
 })
 
-// Trending movies
+app.post('/api/find/next', (req,res) => {
+    const searchValue = req.body.searchValue
+    const pageNum = req.body.pageNum + 1
+    let encodedSearch = encodeURIComponent(searchValue)
+    console.log('Find/next path: ', searchValue, pageNum)
+    
+
+    axios.get(`https://api.themoviedb.org/3/search/movie?query=${encodedSearch}&api_key=${process.env.API_KEY}&page=${pageNum}`)
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                searchValue: searchValue,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            res.json(modifiedResponse)
+        })
+        .catch(err => res.send(err));
+})
+
+app.post('/api/find/prev', (req,res) => {
+    const searchValue = req.body.searchValue
+    const pageNum = req.body.pageNum - 1
+    let encodedSearch = encodeURIComponent(searchValue)
+    console.log('Find/next path: ', searchValue, pageNum)
+    
+
+    axios.get(`https://api.themoviedb.org/3/search/movie?query=${encodedSearch}&api_key=${process.env.API_KEY}&page=${pageNum}`)
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                searchValue: searchValue,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            res.json(modifiedResponse)
+        })
+        .catch(err => res.send(err));
+})
+
+
+//? Trending movies
 app.get('/api/trending', (req, res) => {
     axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.API_KEY}`)
         .then(response => res.json(response.data.results))
         .catch(err => res.send(err));
 })
 
-// Get specific movie
+//? Get specific movie
+// Append search instead of doing multiple searcheds
+// https://api.themoviedb.org/3/movie/157336?api_key={api_key}
+// https://api.themoviedb.org/3/movie/157336/videos?api_key={api_key}
+// https://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos
+// ttps://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos,images
 app.get('/api/movie/:id', (req,res) => {
     const { id } = req.params
     axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`)
@@ -94,6 +149,36 @@ app.get('/api/movie/:id', (req,res) => {
         .catch(err => res.send(err));
 })
 
+
+
+//? Sorting route
+app.get('/api/filter', (req, res) => {
+    let movieGenre = {
+        Action: 28,
+        Adventure: 12,
+        Animation: 16,
+        Comedy: 35,
+        Crime: 80,
+        Documentary: 99,
+        Drama: 18,
+        Family: 10751,
+        Fantasy: 14,
+        History: 36,
+        Horror: 27,
+        Music: 10402,
+        Mystery: 9648,
+        Romance: 10749,
+        Science_Fiction: 878,
+        TV_Movie: 10770,
+        Thriller: 53,
+        War: 10752,
+        Western: 37
+    }
+
+
+    
+
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`)
