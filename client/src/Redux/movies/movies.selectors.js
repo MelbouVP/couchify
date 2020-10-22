@@ -22,6 +22,11 @@ export const selectMoviesCurrentSearchPage = createSelector(
     data => data.page
 )
 
+export const selectMoviesTotalSearchPage = createSelector(
+    [selectMoviesSearchData],
+    data => data.total_pages
+)
+
 export const selectMoviesTrendingData = createSelector(
     [selectMovies],
     data => data.trendingData
