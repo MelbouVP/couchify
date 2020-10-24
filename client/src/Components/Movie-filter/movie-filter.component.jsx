@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import RangeSlider from '../Range-slider/range-slider.component';
 
 
@@ -7,7 +6,7 @@ import MOVIE_GENRES from './movie-genres';
 import './movie-filter.styles.scss';
 
 
-const MovieFilter = () => {
+const MovieFilter = ({ handleSubmit}) => {
 
     const [sortByValue, setSortByValue ] = useState('popularity.desc')
     const [releaseDateRange, setReleaseDateRange ] = useState([1980,2020])
@@ -25,34 +24,15 @@ const MovieFilter = () => {
         const value = e.target.value
 
         setMovieGenres( (prevState) => {
-            return {...prevState, [value]: !prevState.[value]}
+            return {...prevState, [value]: !prevState[value]}
         })
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const response = await axios({
-                method: 'post',
-                url: 'http://localhost:3001/api/filter',
-                data: {
-                  sortBy: sortByValue,
-                  releaseDate: releaseDateRange,
-                  genres: movieGenres
-                }
-            })
-
-            console.log(response)
-        } catch (error){
-            console.log(error)
-        }
     }
     
     return (
         <div className='container__filter'>
             <h2>This is filtering section</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => handleSubmit(e, sortByValue, releaseDateRange, movieGenres)}>
                 {/* <h3>Sort By: </h3> */}
                 <label htmlFor='sort-by'>Sort results by: </label>
                 <select name="sorting" id="sorting" onClick={handleSelectChange}>

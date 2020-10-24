@@ -1,20 +1,13 @@
 
-.container__search-page {
 
   .search__container {
     display: flex;
     width: 100%;
     min-height: 80vh;
     background-color: brown;
-    
-    .search__filter {
-      width: 24%;
-      background-color: indianred;
-    }
   
     .search__movie-overview {
         position: relative;
-        width: 75%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -28,7 +21,6 @@
     background-color: black;
     height: 10vh;
   }
-}
 
 
 

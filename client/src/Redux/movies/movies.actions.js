@@ -5,6 +5,11 @@ export const fetchSearchedMovies = (item) => ({
     payload: item
 })
 
+// export const fetchFilteredMovies = (item) => ({
+//     type: moviesActionTypes.FETCH_FILTERED_MOVIES,
+//     payload: item
+// })
+
 export const fetchTrendingMovies = (item) => ({
     type: moviesActionTypes.FETCH_TRENDING_MOVIES,
     payload: item

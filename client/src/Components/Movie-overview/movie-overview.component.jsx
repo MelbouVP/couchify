@@ -1,24 +1,31 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { selectMoviesIsFetching, selectMoviesSearchResults, selectMoviesCurrentSearchPage, selectMoviesTotalSearchPage } from '../../Redux/movies/movies.selectors';
-
-import { selectMoviesSearchValue } from '../../Redux/movies/movies.selectors';
+import { selectMoviesSearchValue, selectMoviesIsFetching, selectMoviesSearchResults, 
+    selectMoviesCurrentSearchPage, selectMoviesTotalSearchPage, selectMoviesFilteredSortByValue, 
+    selectMoviesFilteredReleaseDates, selectMoviesFilteredGenres } from '../../Redux/movies/movies.selectors';
 
 import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies/movies.actions'
 
 import MovieCard from '../Movie-card/movie-card.component';
-import MovieFilter from '../Movie-filter/movie-filter.component';
 import ChangePageButton from '../Change-page-btn/change-page-button.component';
 
 import './movie-overview.styles.scss';
 
 
-const MovieOverview = ({ searchResult, currentPage, isLoading, changeFetchStatus, fetchSearchedMovies, searchValue, totalPages  }) => {
+const MovieOverview = ({ 
+    searchResult, currentPage, isLoading, changeFetchStatus, 
+    fetchSearchedMovies, searchValue, totalPages,
+    sortByValue, releaseDates, genres }) => {
 
     console.log('Movie overview rendered')
     console.log(currentPage)
+
+    const history = useHistory()
+    console.log(history.location.pathname)
 
 
     const movies = searchResult.length ? 
@@ -29,17 +36,46 @@ const MovieOverview = ({ searchResult, currentPage, isLoading, changeFetchStatus
         null
 
 
-    const getNewMoviePage = async (route) => {
+    const getNewSearchPage = async (routeName) => {
+        let route = routeName.toLowerCase()
+        changeFetchStatus(true);
         try {
-            let nextPage = currentPage
             let currentSearch = searchValue
 
-            const response = await fetch(`http://localhost:3001/api/find/${route}`, {
+            const response = await axios({
+                method: 'post',
+                url: `http://localhost:3001/api/find/${route}`,
+                headers: {'Content-Type': 'application/json'},
+                data : {
+                    searchValue: currentSearch,
+                    pageNum: currentPage
+                }
+            })
+
+            const data = await response.data
+            console.log(data);
+            fetchSearchedMovies(data);
+            
+        } catch(error) {
+            console.log(error)
+        }
+
+        changeFetchStatus(false);
+    }
+
+    const getNewFilterPage = async (routeName) => {
+        let route = routeName.toLowerCase()
+        changeFetchStatus(true);
+
+        try {
+            const response = await fetch(`http://localhost:3001/api/filter/${route}`, {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    searchValue: currentSearch,
-                    pageNum: nextPage
+                    sortBy: sortByValue,
+                    releaseDate: releaseDates,
+                    genres: genres,
+                    pageNum: currentPage
                 })
             })
 
@@ -50,36 +86,34 @@ const MovieOverview = ({ searchResult, currentPage, isLoading, changeFetchStatus
         } catch(error) {
             console.log(error)
         }
+        changeFetchStatus(false);
     }
 
     const handleClick = async (event) => {
-        let content = event.target.textContent
-        console.log(searchValue)
-        changeFetchStatus(true);
-        if(content === 'NEXT PAGE'){
-            getNewMoviePage('next')
-        } else if (content ==='PREV PAGE'){
-            getNewMoviePage('prev')
+        let pageChange = event.target.textContent
+        let pathname = history.location.pathname
+        try {
+            if(pathname === '/search'){
+                getNewSearchPage(pageChange)
+            } else if (pathname === '/filter'){
+                getNewFilterPage(pageChange)
+            }
+
+        } catch (error) {
+            console.log(error)
         }
-        changeFetchStatus(false)
-
-
     } 
 
 
     return (
-        <div className='container__search-page'>
             <div className='search__container'>
-                <aside className='search__filter'>
-                    <MovieFilter />
-                </aside>
                 <div className="search__movie-overview">
                     {
-                        currentPage > 1 ?
+                        currentPage > 1 && isLoading === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
-                                position={{bottom: '-0.5%', left: '1%'}}>
-                                PREV PAGE
+                                position={{bottom: '-0.25%', left: '10%'}}>
+                                PREV
                             </ChangePageButton>
                         :
                             null
@@ -93,11 +127,11 @@ const MovieOverview = ({ searchResult, currentPage, isLoading, changeFetchStatus
                     }
 
                     {
-                        totalPages > currentPage ?
+                        totalPages > currentPage && isLoading === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
-                                position={{bottom: '-0.5%', right: '1%'}} >
-                                NEXT PAGE
+                                position={{bottom: '-0.25%', right: '10%'}} >
+                                NEXT
                             </ChangePageButton>
                         :
                             null
@@ -107,8 +141,6 @@ const MovieOverview = ({ searchResult, currentPage, isLoading, changeFetchStatus
                 </div>
             </div>
 
-            <div className='footer'></div>
-        </div>
     )
 }
 
@@ -118,6 +150,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = createStructuredSelector({
+    sortByValue: selectMoviesFilteredSortByValue,
+    releaseDates: selectMoviesFilteredReleaseDates,
+    genres: selectMoviesFilteredGenres,
     searchResult: selectMoviesSearchResults,
     searchValue: selectMoviesSearchValue,
     currentPage: selectMoviesCurrentSearchPage,

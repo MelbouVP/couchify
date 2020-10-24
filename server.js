@@ -153,6 +153,7 @@ app.get('/api/movie/:id', (req,res) => {
 
 //? Sorting route
 app.post('/api/filter', (req, res) => {
+    const { sortBy, releaseDate, genres } = req.body
 
     const currentYear = parseInt(new Date().toISOString().replace('T', ' ').substr(0, 4))
     let movieGenre = {
@@ -177,7 +178,6 @@ app.post('/api/filter', (req, res) => {
         Western: 37
     }
 
-    const { sortBy, releaseDate, genres } = req.body
 
     let genreID = []
 
@@ -204,23 +204,74 @@ app.post('/api/filter', (req, res) => {
 
     
     axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=${sortBy}&release_date.gte=${minReleaseDate}&release_date.lte=${maxReleaseDate}&with_genres=${genreID}`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=${sortBy}&primary_release_date.gte=${minReleaseDate}&primary_release_date.lte=${maxReleaseDate}&with_genres=${genreID}`
         )
-        .then( response => console.log(response.data.results)
-            // { data: { page, total_pages, results}})
-            // const modifiedResponse = {
-            //     searchValue: searchValue,
-            //     page: page,
-            //     total_pages: total_pages,
-            //     results : results
-            // }
-            // res.json(modifiedResponse)
-            // console.log(repsonse)
-        )
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                sort_by: sortBy,
+                primary_release_date: [minReleaseDate, maxReleaseDate],
+                with_genres: genreID,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            // console.log(modifiedResponse)
+            res.json(modifiedResponse)
+        })
         .catch(err => res.send(err));
 
     
 })
+
+
+app.post('/api/filter/next', (req,res) => {
+    const { sortBy, releaseDate, genres} = req.body
+    let { pageNum } = req.body
+    const [ minReleaseDate, maxReleaseDate ] = releaseDate
+    
+    pageNum++
+
+    axios.get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=${sortBy}&primary_release_date.gte=${minReleaseDate}&primary_release_date.lte=${maxReleaseDate}&with_genres=${[...genres]}&page=${pageNum}`
+        )
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                sort_by: sortBy,
+                primary_release_date: [minReleaseDate, maxReleaseDate],
+                with_genres: genres,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            res.json(modifiedResponse)
+        })
+        .catch(err => res.send(err));
+})
+
+app.post('/api/filter/prev', (req,res) => {
+    const { sortBy, releaseDate, genres} = req.body
+    let { pageNum } = req.body
+    const [ minReleaseDate, maxReleaseDate ] = releaseDate
+    
+    pageNum--
+
+    axios.get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=${sortBy}&primary_release_date.gte=${minReleaseDate}&primary_release_date.lte=${maxReleaseDate}&with_genres=${[...genres]}&page=${pageNum}`
+        )
+        .then( ({ data: { page, total_pages, results}}) => {
+            const modifiedResponse = {
+                sort_by: sortBy,
+                primary_release_date: [minReleaseDate, maxReleaseDate],
+                with_genres: genres,
+                page: page,
+                total_pages: total_pages,
+                results : results
+            }
+            res.json(modifiedResponse)
+        })
+        .catch(err => res.send(err));
+})
+
 
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`)

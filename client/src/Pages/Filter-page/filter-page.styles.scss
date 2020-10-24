@@ -1,0 +1,18 @@
+
+.filter-page-container {
+    
+
+    .container__overview {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 80vh;
+        background-color: brown;
+        
+        // &--filter {
+        //     width: 25%;
+        //     background-color: indianred;
+        // }
+    }
+
+}

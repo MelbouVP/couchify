@@ -3,8 +3,11 @@ import moviesActionTypes from './movies.types';
 export const INITIAL_STATE = {
     searchData: {
         searchValue: '',
+        sort_by: '',
+        primary_release_date: [],
+        with_genres: [],
         page: 0,
-        total_pages: 1,
+        total_pages: 0,
         results: []
     },
     trendingData: [],
@@ -19,6 +22,11 @@ const movieReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 searchData: action.payload
+            }
+        case moviesActionTypes.FETCH_FILTERED_MOVIES:
+            return {
+                ...state,
+                filteredData: action.payload
             }
         case moviesActionTypes.CHANGE_FETCHED_SEARCH_VALUE:
             return {

@@ -19,7 +19,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
         
         <div className="movie-card" onClick={handleClick}>
             <h3>{movieData.title}</h3>
-            <img src={movieData.poster_path ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}` : `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png`} alt="poster"/>
+            <img src={movieData.poster_path ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} alt="poster"/>
             <p>
                 {movieData.overview}
             </p>

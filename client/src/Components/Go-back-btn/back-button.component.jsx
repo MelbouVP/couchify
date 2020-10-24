@@ -1,12 +1,14 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
+import { useLastLocation } from 'react-router-last-location';
 import './back-button.styles.scss';
 
 const BackButton = () => {
     let history = useHistory();
-    console.log(history)
+    const lastLocation = useLastLocation();
+
     return (
-        <div className="back-button" onClick={() => history.push('/search')}>
+        <div className="back-button" onClick={() => history.push(lastLocation)}>
             <div className="arrow-wrap">
                 <span className="arrow-part-1"></span>
                 <span className="arrow-part-2"></span>
