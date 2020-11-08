@@ -34,4 +34,4 @@ const RangeSlider = ({ handleRangeChange }) => {
   );
 }
 
-export default RangeSlider;
+export default React.memo(RangeSlider);

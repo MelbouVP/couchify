@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { useHistory } from 'react-router-dom';
 
-import { selectMoviesSearchValue } from '../../Redux/movies/movies.selectors';
+import { selectMoviesSearchValue } from '../../Redux/movies-data/movies.selectors';
 
-import { fetchSearchedMovies, changeFetchStatus } from '../../Redux/movies/movies.actions';
+import { fetchSearchedMovies, changeFetchStatus } from '../../Redux/movies-data/movies.actions';
 
 import './searchbar.styles.scss';
 
@@ -45,6 +45,7 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue 
             console.log(error)
         }
         changeFetchStatus(false)
+        setSearchValue('');
     }
 
     const handleKeyDown = (event) => {
@@ -52,7 +53,7 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue 
     }
 
     return (
-        <div className="navbar__content--search-bar" >
+        <div className="search-bar" >
             <input 
                 type="text" 
                 value={searchValue} 

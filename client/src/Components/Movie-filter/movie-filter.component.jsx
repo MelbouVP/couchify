@@ -29,7 +29,7 @@ const MovieFilter = ({ handleSubmit}) => {
     }
     
     return (
-        <div className='container__filter'>
+        <div className='filter__container'>
             <h2>This is filtering section</h2>
 
             <form onSubmit={(e) => handleSubmit(e, sortByValue, releaseDateRange, movieGenres)}>
@@ -46,12 +46,12 @@ const MovieFilter = ({ handleSubmit}) => {
                     <option value="vote_count.asc">Vote count &uarr;</option>
                 </select>
 
-                <div className='movie-filter__slider'>
+                <div className='filter__slider'>
                     <h3>Release date </h3>
                     <RangeSlider handleRangeChange={handleRangeChange} />
                 </div>
 
-                <div className="movie-filter__genres">
+                <div className="filter__genres">
                     <h3>Genre </h3>
                     <ul className="ks-cboxtags">
                         <label htmlFor=""></label>

@@ -5,23 +5,26 @@ import { connect } from 'react-redux'
 
 
 import Carousel from '../../Components/Carousel/carousel.component'
+import Spinner from '../../Components/Spinner/spinner.component';
 
-import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/movies/movies.selectors';
+import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
-import { changeFetchStatus, fetchTrendingMovies } from '../../Redux/movies/movies.actions'
+import { changeFetchStatus, fetchTrendingMovies, fetchPopularMovies } from '../../Redux/movies-data/movies.actions'
 
 import './home-page.styles.scss';
 
-const HomePage = ({ trendingMovies, fetchTrendingMovies, changeFetchStatus }) => {
+const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFetchStatus, fetchPopularMovies }) => {
 
     useEffect(() => {
         const fetchData = async() => {
             try {
                 changeFetchStatus(true);
                 console.log('fetching')
-                const response = await axios('http://localhost:3001/api/trending')
+                const trending = await axios('http://localhost:3001/api/trending')
+                const popular = await axios('http://localhost:3001/api/popular')
     
-                fetchTrendingMovies(response.data)
+                fetchTrendingMovies(trending.data)
+                fetchPopularMovies(popular.data)
                         
             } catch (error) {
                 console.log(error)
@@ -41,14 +44,27 @@ const HomePage = ({ trendingMovies, fetchTrendingMovies, changeFetchStatus }) =>
     
 
     return (
-        <div className="container">
-            <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
+        <div className="homepage__container">
+            <div className='homepage'>
+                {/* <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
+                <Carousel sectionName={'Popular movies'} moviesData={popularMovies}/> */}
+                {
+                    trendingMovies.length ? 
+                        <div>
+                            <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
+                            <Carousel sectionName={'Trending movies'} moviesData={popularMovies}/>
+                        </div>
+                    :
+                        <Spinner />
+                }
+            </div>
         </div>
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     fetchTrendingMovies: data => dispatch(fetchTrendingMovies(data)),
+    fetchPopularMovies: data => dispatch(fetchPopularMovies(data)),
     changeFetchStatus: bool => dispatch(changeFetchStatus(bool))
 })
 

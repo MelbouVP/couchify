@@ -23,36 +23,6 @@ app.get('/', (req, res) => {
 })
 
 
-//? Filter movies/ discover
-app.get('/api/discover', async (req,res) => {
-    try {
-        // const resp = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-
-        const resp = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&primary_release_date.gte=2019-09-15&primary_release_date.lte=2020-10-15`);
-        
-        const result = await resp.data.results
-        const movies = await result.map(( {id, title, overview, poster_path, popularity, vote_count, vote_average, genre_ids } ) => {
-            const movieInfo = {
-                id,
-                title,
-                overview,
-                poster_path,
-                popularity,
-                vote_count,
-                vote_average,
-                genre_ids
-            }
-            return movieInfo
-        })
-        return res.json(movies)
-    } catch (error){
-        console.log(error)
-        res.sendStatus(500).send(error)
-    }
-
-})
-
-
 //? Search movie by name
 app.post('/api/find', (req,res) => {
     const searchValue = req.body.searchValue
@@ -111,45 +81,6 @@ app.post('/api/find/prev', (req,res) => {
         })
         .catch(err => res.send(err));
 })
-
-
-//? Trending movies
-app.get('/api/trending', (req, res) => {
-    axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.API_KEY}`)
-        .then(response => res.json(response.data.results))
-        .catch(err => res.send(err));
-})
-
-//? Get specific movie
-// Append search instead of doing multiple searcheds
-// https://api.themoviedb.org/3/movie/157336?api_key={api_key}
-// https://api.themoviedb.org/3/movie/157336/videos?api_key={api_key}
-// https://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos
-// ttps://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos,images
-app.get('/api/movie/:id', (req,res) => {
-    const { id } = req.params
-    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`)
-        .then(response => {
-            const { id, backdrop_path, poster_path, genres, original_title, popularity, overview, video, vote_average, vote_count, runtime } = response.data;
-            const movieData = {
-                id,
-                backdrop_path,
-                poster_path,
-                genres,
-                original_title,
-                popularity,
-                overview,
-                video,
-                vote_average,
-                vote_count,
-                runtime
-            }
-            return res.json(movieData)
-        })
-        .catch(err => res.send(err));
-})
-
-
 
 //? Sorting route
 app.post('/api/filter', (req, res) => {
@@ -268,6 +199,54 @@ app.post('/api/filter/prev', (req,res) => {
                 results : results
             }
             res.json(modifiedResponse)
+        })
+        .catch(err => res.send(err));
+})
+
+
+//? Trending movies
+app.get('/api/trending', (req, res) => {
+    axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.API_KEY}`)
+        .then(response => res.json(response.data.results))
+        .catch(err => res.send(err));
+})
+
+
+app.get('/api/popular', (req, res) => {
+
+
+    const randomPopularPage = Math.floor(Math.random()*100)
+    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=popularity.desc&page=${randomPopularPage}`)
+        .then(response => res.send(response.data.results))
+        .catch(err => res.send(err));
+
+})
+
+//? Get specific movie
+// Append search instead of doing multiple searcheds
+// https://api.themoviedb.org/3/movie/157336?api_key={api_key}
+// https://api.themoviedb.org/3/movie/157336/videos?api_key={api_key}
+// https://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos
+// ttps://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos,images
+app.get('/api/movie/:id', (req,res) => {
+    const { id } = req.params
+    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`)
+        .then(response => {
+            const { id, backdrop_path, poster_path, genres, original_title, popularity, overview, video, vote_average, vote_count, runtime } = response.data;
+            const movieData = {
+                id,
+                backdrop_path,
+                poster_path,
+                genres,
+                original_title,
+                popularity,
+                overview,
+                video,
+                vote_average,
+                vote_count,
+                runtime
+            }
+            return res.json(movieData)
         })
         .catch(err => res.send(err));
 })

@@ -1,13 +1,14 @@
 
 
-  .search__container {
+  .search-result__container {
     display: flex;
     width: 100%;
-    min-height: 80vh;
+    min-height: 40vh;
     background-color: brown;
   
-    .search__movie-overview {
+    .search-result__overview {
         position: relative;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -15,33 +16,4 @@
         margin-bottom: 2rem;
     }
   
-  }
-
-  .footer {
-    background-color: black;
-    height: 10vh;
-  }
-
-
-
-.loader {
-    border: 25px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 25px solid #3498db;
-    width: 180px;
-    height: 180px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-    align-self: center;
-  }
-  
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
   }

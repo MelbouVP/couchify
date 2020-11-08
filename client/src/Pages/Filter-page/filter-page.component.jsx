@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { createStructuredSelector } from 'reselect';
+// import { createStructuredSelector } from 'reselect';
 
 import MovieOverview from '../../Components/Movie-overview/movie-overview.component';
 import MovieFilter from '../../Components/Movie-filter/movie-filter.component';
 
-import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies/movies.actions';
-import { selectMoviesIsFetching } from '../../Redux/movies/movies.selectors';
+import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions';
+// import { selectMoviesIsFetching } from '../../Redux/movies/movies.selectors';
 
 import './filter-page.styles.scss';
 
@@ -41,9 +41,9 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading }) => {
     }
     
     return (
-        <div className='filter-page-container' >
+        <div className='filter-page__container' >
             <div className='container__overview'>
-                <aside className='container__overview--filter'>
+                <aside className='container__movie-filter'>
                     <MovieFilter handleSubmit={handleSubmit} />
                 </aside>
                 <MovieOverview />

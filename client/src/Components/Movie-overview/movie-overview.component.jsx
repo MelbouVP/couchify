@@ -6,12 +6,13 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectMoviesSearchValue, selectMoviesIsFetching, selectMoviesSearchResults, 
     selectMoviesCurrentSearchPage, selectMoviesTotalSearchPage, selectMoviesFilteredSortByValue, 
-    selectMoviesFilteredReleaseDates, selectMoviesFilteredGenres } from '../../Redux/movies/movies.selectors';
+    selectMoviesFilteredReleaseDates, selectMoviesFilteredGenres } from '../../Redux/movies-data/movies.selectors';
 
-import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies/movies.actions'
+import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions'
 
 import MovieCard from '../Movie-card/movie-card.component';
 import ChangePageButton from '../Change-page-btn/change-page-button.component';
+import Spinner from '../Spinner/spinner.component';
 
 import './movie-overview.styles.scss';
 
@@ -106,8 +107,8 @@ const MovieOverview = ({
 
 
     return (
-            <div className='search__container'>
-                <div className="search__movie-overview">
+            <div className='search-result__container'>
+                <div className="search-result__overview">
                     {
                         currentPage > 1 && isLoading === false ?
                             <ChangePageButton 
@@ -121,7 +122,7 @@ const MovieOverview = ({
                     }
 
                     {   isLoading ? 
-                        <div className="loader"></div>
+                        <Spinner />
                     :
                         movies
                     }

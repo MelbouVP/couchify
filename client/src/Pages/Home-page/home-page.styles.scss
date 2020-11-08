@@ -1,5 +1,28 @@
 
-.container {
-    height: 80vh;
-    background: #419be0;
+.homepage__container {
+    // background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRkYBTs63MNlGQglZUAfHLTpZm7oIFa5bf6AA&usqp=CAU');
+    // background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0a46b369905797.5b912d5b54720.jpg');
+    // background-image: url('https://i.pinimg.com/originals/b6/a5/8a/b6a58a71b0b946426cccd3ecfdc4fe46.png');
+    // background-image: url('https://vignette.wikia.nocookie.net/disney/images/4/43/Zootopia_City_Full.jpg/revision/latest?cb=20160102163923');
+
+
+    // background-image: url('https://www.pioneeringminds.com/wp-content/uploads/2017/12/Coco-VR-Pixar.jpg');
+    // background-image: url('https://vignette.wikia.nocookie.net/disney/images/9/91/Coco-disneyscreencaps.com-5427.jpg/revision/latest?cb=20181214042859');
+
+    background-image: url('https://www.iamag.co/wp-content/uploads/2018/07/The-Art-of-Artur-Sadlos-18.jpg');
+
+
+    // background-image: url('https://cdna.artstation.com/p/assets/images/images/005/166/214/large/gavin-o-donnell-archwaypaintdarker.jpg?1488986795');
+
+    
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .homepage {
+        backdrop-filter: blur(4px);
+        min-height: 90vh;
+        padding: 1rem;
+    }
 }

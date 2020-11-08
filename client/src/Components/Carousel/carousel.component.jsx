@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 
 import MovieCard from '../Movie-card/movie-card.component';
+// import Spinner from '../Spinner/spinner.component';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -18,12 +19,12 @@ const Carousel = ({ sectionName, moviesData }) => {
         null
 
   const settings = {
-    centerPadding: '140px',
-    autoplay: true,
-    draggable: true,
+    // centerPadding: '5rem',
+    // autoplay: true,
+    // draggable: true,
     dots: true,
-    centerMode: true,
-    slidesToShow: 3,
+    // centerMode: true,
+    slidesToShow: 4,
     speed:400,
     infinite: true,
     initialSlide: 0,
@@ -31,8 +32,8 @@ const Carousel = ({ sectionName, moviesData }) => {
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
+            slidesToShow: 3,
+            slidesToScroll: 2,
             infinite: true,
             dots: true
           }
@@ -40,7 +41,7 @@ const Carousel = ({ sectionName, moviesData }) => {
         {
           breakpoint: 800,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 2,
             slidesToScroll: 1,
             infinite: true,
             dots: true
@@ -51,7 +52,8 @@ const Carousel = ({ sectionName, moviesData }) => {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
-            initialSlide: 1
+            initialSlide: 1,
+            dots: false
           }
         },
         {
@@ -65,15 +67,22 @@ const Carousel = ({ sectionName, moviesData }) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="container__title" >{sectionName}</h2>
-      <Slider {...settings}>
-        {
-          movies
-        }
-      </Slider>
+    <div className="carousel">
+      <h2 className="carousel__title" >{sectionName}</h2>
+      <div className="carousel-container">
+        {/* {
+          moviesData.length ?  */}
+            <Slider {...settings} >
+              {
+                movies
+              }
+            </Slider>
+            {/* :
+              <Spinner />
+        } */}
+      </div>
     </div>
   );
 };
 
-export default Carousel;
+export default React.memo(Carousel);

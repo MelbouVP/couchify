@@ -8,8 +8,8 @@ const BackButton = () => {
     const lastLocation = useLastLocation();
 
     return (
-        <div className="back-button" onClick={() => history.push(lastLocation)}>
-            <div className="arrow-wrap">
+        <div className="back-button__container" onClick={() => history.push(lastLocation)}>
+            <div className="arrow">
                 <span className="arrow-part-1"></span>
                 <span className="arrow-part-2"></span>
                 <span className="arrow-part-3"></span>

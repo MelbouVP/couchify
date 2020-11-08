@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom';
+
+import Spinner from '../Spinner/spinner.component';
+
 import './movie-card.styles.scss';
 
-import { changeCurrentlyViewedMovie } from '../../Redux/movies/movies.actions'
+import { changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
 
 const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
     console.log('moviecard rendered')
@@ -15,15 +18,27 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
         history.push(`/movie/${movieData.id}`)
     }
 
+    const [didLoad, setLoad] = React.useState(false);
+
+    const style = didLoad ? {} : {visibility: 'hidden'};
+
+
     return (
         
-        <div className="movie-card" onClick={handleClick}>
+        <div className="movie-card__container" onClick={handleClick}>
             <h3>{movieData.title}</h3>
-            <img src={movieData.poster_path ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} alt="poster"/>
+            {
+                didLoad ? null : <Spinner />
+            }
+            <img 
+                style={style} 
+                src={movieData.poster_path ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
+                alt='movie poster'
+                onLoad={() => setLoad(true)} 
+            />
             <p>
                 {movieData.overview}
             </p>
-
         </div>
     )
 }

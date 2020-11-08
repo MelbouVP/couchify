@@ -1,15 +1,12 @@
 
-.container__change-btn {
+.change-btn__container {
     height: fit-content;
     position: absolute;
     // bottom: 5%;
     // right: 15%;
 
 
-    .content__change {
-        // position: absolute;
-        // bottom: -0.25%;
-        // right: 10%;
+    .change-btn__content {
 
         &--btn {
             outline: none;

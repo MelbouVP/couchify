@@ -1,4 +1,3 @@
-
 const MOVIE_GENRES = {
     Action: false,
     Adventure: false,
