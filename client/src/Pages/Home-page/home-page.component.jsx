@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 
-
+import Navbar from '../../Components/Navbar/navbar.component';
 import Carousel from '../../Components/Carousel/carousel.component'
 import Spinner from '../../Components/Spinner/spinner.component';
+import Banner from '../../Components/Banner/banner.component';
 
 import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
@@ -40,24 +41,37 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
 
     })
 
-
-    
+    const movieBannerInfo = popularMovies[0]
 
     return (
-        <div className="homepage__container">
-            <div className='homepage'>
-                {/* <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
-                <Carousel sectionName={'Popular movies'} moviesData={popularMovies}/> */}
-                {
-                    trendingMovies.length ? 
-                        <div>
-                            <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
-                            <Carousel sectionName={'Trending movies'} moviesData={popularMovies}/>
-                        </div>
-                    :
-                        <Spinner />
-                }
-            </div>
+        <div className='page__container'>
+            <Navbar />
+            <Banner bannerImg={movieBannerInfo}>
+                <div className='homepage__banner'>
+                    <h1 className='homepage__banner--title'>
+                        Couchify
+                    </h1>
+                    <p className='homepage__banner--sub-title'>Find your favourite movies and discover recent movie trends.
+                    </p>
+                    <div className='homepage__banner--button'>
+                        <a href="#overview">Explore</a>
+                    </div>
+                </div>
+            </Banner>
+            <div className="homepage__container" id='overview' >
+                <div className='homepage'>
+                    {
+                        trendingMovies.length ? 
+                            <div>
+                                <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
+                                <Carousel sectionName={'Popular movies'} moviesData={popularMovies}/>
+                            </div>
+                        :
+                            <Spinner />
+                    }
+                </div>
+
+        </div>
         </div>
     )
 }

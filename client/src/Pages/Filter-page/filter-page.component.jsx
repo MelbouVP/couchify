@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import MovieOverview from '../../Components/Movie-overview/movie-overview.component';
 import MovieFilter from '../../Components/Movie-filter/movie-filter.component';
+import Navbar from '../../Components/Navbar/navbar.component';
 
 import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions';
 // import { selectMoviesIsFetching } from '../../Redux/movies/movies.selectors';
@@ -42,11 +43,14 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading }) => {
     
     return (
         <div className='filter-page__container' >
+            <Navbar />
             <div className='container__overview'>
                 <aside className='container__movie-filter'>
                     <MovieFilter handleSubmit={handleSubmit} />
                 </aside>
-                <MovieOverview />
+                <div className='filter-page'>
+                    <MovieOverview />
+                </div>
             </div>
         </div>
     )

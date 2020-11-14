@@ -53,17 +53,20 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue 
     }
 
     return (
-        <div className="search-bar" >
-            <input 
-                type="text" 
-                value={searchValue} 
-                onChange={ event => setSearchValue(event.target.value)} onKeyDown={handleKeyDown}
-            />
-            <img 
-                src="https://cms-assets.tutsplus.com/uploads/users/523/posts/27345/preview_image/search-icon-large.png" 
-                alt="search icon" 
-                onClick={fetchSearch} 
-            />
+        <div className="search-bar__container" >
+            <div className='search-bar'>
+                <input 
+                    type="text" 
+                    value={searchValue}
+                    placeholder='Search' 
+                    onChange={ event => setSearchValue(event.target.value)} onKeyDown={handleKeyDown}
+                />
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F51B5" fill="none" stroke-linecap="round" stroke-linejoin="round" onClick={fetchSearch} >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="10" cy="10" r="7" />
+                    <line x1="21" y1="21" x2="15" y2="15" />
+                </svg>
+            </div>
         </div>
     )
 }

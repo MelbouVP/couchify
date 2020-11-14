@@ -30,29 +30,32 @@ const MovieFilter = ({ handleSubmit}) => {
     
     return (
         <div className='filter__container'>
-            <h2>This is filtering section</h2>
-
             <form onSubmit={(e) => handleSubmit(e, sortByValue, releaseDateRange, movieGenres)}>
-                {/* <h3>Sort By: </h3> */}
-                <label htmlFor='sort-by'>Sort results by: </label>
-                <select name="sorting" id="sorting" onClick={handleSelectChange}>
-                    <option value="popularity.desc">Popularity &#8681;</option>
-                    <option value="popularity.asc">Popularity &#8679;</option>
-                    <option value="release_date.desc">Release date &darr;</option>
-                    <option value="release_date.asc">Release date &uarr;</option>
-                    <option value="vote_average.desc">Vote average &darr;</option>
-                    <option value="vote_average.asc">Vote average &uarr;</option>
-                    <option value="vote_count.desc">Vote count &darr;</option>
-                    <option value="vote_count.asc">Vote count &uarr;</option>
-                </select>
+            
 
-                <div className='filter__slider'>
-                    <h3>Release date </h3>
-                    <RangeSlider handleRangeChange={handleRangeChange} />
+                <div className="filter-properties">
+                    <div className="filter__sort-by">
+                        <label htmlFor='sort-by'>Sort results by </label>
+                        <select name="sorting" id="sorting" onClick={handleSelectChange}>
+                            <option value="popularity.desc">Popularity &#8681;</option>
+                            <option value="popularity.asc">Popularity &#8679;</option>
+                            <option value="release_date.desc">Release date &darr;</option>
+                            <option value="release_date.asc">Release date &uarr;</option>
+                            <option value="vote_average.desc">Vote average &darr;</option>
+                            <option value="vote_average.asc">Vote average &uarr;</option>
+                            <option value="vote_count.desc">Vote count &darr;</option>
+                            <option value="vote_count.asc">Vote count &uarr;</option>
+                        </select>
+                    </div>
+
+                    <div className='filter__slider'>
+                        <p>Release date </p>
+                        <RangeSlider handleRangeChange={handleRangeChange} />
+                    </div>
                 </div>
 
                 <div className="filter__genres">
-                    <h3>Genre </h3>
+                    <p>Genre </p>
                     <ul className="ks-cboxtags">
                         <label htmlFor=""></label>
                         <li>
@@ -207,7 +210,9 @@ const MovieFilter = ({ handleSubmit}) => {
                     </ul>
                 </div>
 
-                <button type='submit' >SEARCH</button>
+                <div className='filter__submit-btn'>
+                    <button type='submit'> Search </button>
+                </div>
             </form>
         </div>
     )

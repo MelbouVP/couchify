@@ -2,18 +2,14 @@
 
   .search-result__container {
     display: flex;
-    width: 100%;
-    min-height: 40vh;
-    background-color: brown;
+    // width: 100%;
   
     .search-result__overview {
         position: relative;
-        width: 100%;
+        // width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 1rem;
-        margin-bottom: 2rem;
     }
   
   }

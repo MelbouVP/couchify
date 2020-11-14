@@ -1,0 +1,12 @@
+.search-page__container {
+    background-image: url('https://lh3.googleusercontent.com/proxy/373mqi8Fy9mS9E56kDIAbISRRbxQnt1ywkgY7pJtLDFXlzrcBztJFr5hbFzrF05FJ4Y_h7ITMA8cYue3_a-_E4a6LcQ8e-CyCzM56KRM0uL_Zu6LBR52J7eGTyyVbtV_cUf-lvoOxSq-SkK3JK8jHIQ');
+
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .search-page {
+        backdrop-filter: blur(4px);
+    }
+}

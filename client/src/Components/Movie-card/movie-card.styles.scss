@@ -1,35 +1,184 @@
+$card-text-color: white;
 
 .movie-card__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 15rem;
-    height: 20rem;
-    padding: 1rem;
-    margin: 1rem 1rem;
-    background-color: grey;
-    transition: transform 1s;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
+    position: relative;
+    width: 16rem;
+    padding: .5rem .5rem;
 
-    //! Both fix weird trace lines from scale animation
-    // box-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
-    // outline: 1px solid transparent;
-    //!
+    .movie-card__front {
+        transition: .2s;
 
-    img {
-        height: 60%;
-        width: 60%;
-        margin: .5rem;
+        img {
+            width: 100%;
+            border-radius: .75rem;
+            // border: 1px solid rgb(58, 58, 58);
+        }
     }
 
-    p {
-        margin: .5rem;
-        overflow-y: scroll;
+    .movie-card__back {
+        display: none;
+        position: absolute;
     }
 
+    .movie-card__rating {
+        position: absolute;
+        top: 1;
+        font-size: 1.125rem;
+        right: 1.5rem;
+        padding: .4rem .4rem 1.5rem;
+        clip-path: polygon(100% 100%, 50% 70%, 0 100%, 0 0, 100% 0);
+        transition: .2s;
+        z-index: 1;
 
+
+        background-color: rgba(0, 0, 0, .8);
+        color: white;
+        font-weight: bold;
+
+        &::before {
+            content: "\2605";
+            padding: 0 .15rem 0 0;
+            color: yellow;
+        }
+    }
+
+    .movie-card__background {
+        background: rgba(39, 39, 39, .9);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: .75rem;
+
+
+        transition: .2s ease-in-out;
+        transform: scale(.2);
+    }
+    
     &:hover {
-        cursor: pointer;
-        transform: scale(1.1);
+        .movie-card__front {
+            transform: translateY(-26%);
+            img {
+                transform: scale(.5, .45);
+                border: 2px solid yellow;
+            }
+        }
+
+        .movie-card__back {
+            display: block;
+            height: 46%;
+            width: 90%;
+            top: 48%;
+            left: 5%;
+
+            .movie-info {
+                color: $card-text-color;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                &__title {
+                    width: 100%;
+                    text-align: center;
+                    align-self: center;
+                    padding-bottom: 1rem;
+                    text-shadow: 2px 1px 3px rgb(0, 0, 0);
+
+                    background:
+                        linear-gradient(
+                        to left, 
+                        rgba(255, 255, 255, 0) 0%,
+                        rgb(255, 255, 255) 35%,
+                        rgba(255, 255, 255, 0) 100%
+                        )
+                        left 
+                        bottom   
+                        no-repeat; 
+                    background-size:100% .3rem;
+                }
+
+                &__statistics {
+                    display: flex;
+                    justify-content: center;
+
+                    .statistics__stat {
+                        display: flex;
+                        flex-direction: column;
+                        width: 50%;
+                        text-align: center;
+                        text-shadow: 2px 1px 3px rgb(0, 0, 0);
+
+                        &--number {
+                            display: flex;
+                            width: 80%; 
+                            justify-content: center;
+                            align-items: center;
+                            margin: 0 auto;
+                        }
+
+                        &--name {
+                            justify-self: center;
+                        }
+
+
+                        &:nth-child(1) {
+                            border-right: 2px solid rgba(255, 255, 255, 0.1);
+                        }
+
+                    }
+
+                }
+
+
+                &__details {
+                    display: flex;
+                    justify-content: space-around;
+
+                    &--btn {
+                        font-size: .9rem;
+                        color: white;
+                        background-color: rgb(44, 21, 255);
+                        width: 6.3rem;
+                        height: 2.3rem;
+                        text-align: center;
+                        border-radius: 1.75rem;
+                        transition: transform .5s;
+                        outline: none;
+                        border: none;
+                        box-shadow: 0px 4px 7px 0px rgb(0, 0, 0);
+
+                        &:hover {
+                            cursor: pointer;
+                            transform: scale(1.15);
+                            background-color: rgb(25, 4, 216);
+                            border: 1px solid yellow;
+                            
+                            text-shadow: 2px 1px 3px rgb(0, 0, 0);
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        .movie-card__background {
+            transform: scale(1, 1);
+            margin-top: 3rem;
+            border: 1px solid black;
+        }
+
+        .movie-card__rating {
+            top: 2.65rem;
+            right: .5rem;
+            transform: scale(.8);
+        }
+    }
+
+
+    h3,p {
+        margin: 0;
     }
 }

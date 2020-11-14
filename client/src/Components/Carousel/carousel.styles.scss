@@ -4,6 +4,19 @@
 
   &__title {
     color: white;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    background:
+    linear-gradient(
+      to left, 
+      rgba(255, 255, 255, 0) 0%,
+      rgb(255, 255, 255) 35%,
+      rgba(255, 255, 255, 0) 100%
+    )
+    left 
+    bottom   
+    no-repeat; 
+    background-size:100% .3rem;
   }
 
   &-container {

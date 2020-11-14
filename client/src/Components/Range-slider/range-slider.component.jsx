@@ -1,4 +1,6 @@
 import React from 'react';
+import './range-slider.styles.scss';
+
 import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import Slider from '@bit/mui-org.material-ui.slider';
 
@@ -29,7 +31,7 @@ const RangeSlider = ({ handleRangeChange }) => {
         min={1920}
         max={2020}
       />
-        <h2>{value[0]}-{value[1]}</h2>
+        <h2>{value[0]} - {value[1]}</h2>
     </div>
   );
 }

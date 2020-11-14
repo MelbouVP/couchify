@@ -1,0 +1,45 @@
+.banner__container {
+    height: 90vh;
+    background-color: rgb(39, 39, 39);
+
+    .banner {
+        min-height: 90vh;
+        background-image: url('https://image.tmdb.org/t/p/original/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg');
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        clip-path: ellipse(150% 100% at 50% 0);
+        -webkit-clip-path: ellipse(90% 100% at 50% 0);
+        
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0; right: 0;
+            top: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+            
+        .custom-shape-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        
+        .custom-shape-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        
+        .custom-shape-divider .shape-fill {
+            fill: #FFFFFF;
+        }
+    }
+}
