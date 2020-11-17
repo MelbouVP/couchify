@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router'
+import { useLastLocation } from 'react-router-last-location';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
 import { selectMoviesCurrentlyViewedMovie } from '../../Redux/movies-data/movies.selectors';
@@ -12,10 +13,18 @@ const MovieSection = ({ currentMovie }) => {
     console.log('movie section rendered')
 
     let history = useHistory();
+    const lastLocation = useLastLocation();
+
+    const sendToPreviousPage = () => {
+        history.push(lastLocation)
+    }
+
 
     return (
         <div>
-            <BackButton />
+            <div className='movie-section__back-btn'>
+                <BackButton handleClick={sendToPreviousPage} />
+            </div>
             <h1>Movie Section</h1>
             <div className='movie-section__container'>
                 {

@@ -1,5 +1,5 @@
 
-.back-button__container {
+.forward-button__container {
     cursor: pointer;
     width:50px;
     height:50px;
@@ -50,14 +50,14 @@
         }
         &-part-2{
             width:65%;
-            transform: rotate(-35deg) translate(-10%, 10%);
-            transform-origin: 0 0;
+            transform: rotate(35deg) translate(15%, -220%);
+            // transform-origin: 0 0;
             border-radius: 10px;
         }
         &-part-3{
             width:65%;
-            transform: rotate(35deg);
-            transform-origin: 0 0;
+            transform: rotate(-35deg) translate(15%, 220%);
+            // transform-origin: 0 0;
             border-radius: 10px;
         }
     }

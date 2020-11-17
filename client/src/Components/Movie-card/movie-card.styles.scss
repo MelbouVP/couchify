@@ -4,14 +4,25 @@ $card-text-color: white;
     position: relative;
     width: 16rem;
     padding: .5rem .5rem;
+    
 
     .movie-card__front {
         transition: .2s;
+        
 
         img {
             width: 100%;
             border-radius: .75rem;
-            // border: 1px solid rgb(58, 58, 58);
+            // border: 1px solid rgb(245, 175, 0);
+        }
+
+        &--loading {
+            display: flex;
+            flex-direction: column;
+            padding: 3.5rem 0;
+            background-color: rgba(128, 128, 128, 0.596);
+            border-radius: .75rem;
+            height: 20rem;
         }
     }
 
@@ -51,6 +62,7 @@ $card-text-color: white;
         left: 0;
         z-index: -1;
         border-radius: .75rem;
+        
 
 
         transition: .2s ease-in-out;
@@ -135,13 +147,13 @@ $card-text-color: white;
 
                 &__details {
                     display: flex;
-                    justify-content: space-around;
+                    justify-content: space-evenly;
 
                     &--btn {
-                        font-size: .9rem;
+                        font-size: .8rem;
                         color: white;
                         background-color: rgb(44, 21, 255);
-                        width: 6.3rem;
+                        width: 5.8rem;
                         height: 2.3rem;
                         text-align: center;
                         border-radius: 1.75rem;
@@ -168,6 +180,7 @@ $card-text-color: white;
             transform: scale(1, 1);
             margin-top: 3rem;
             border: 1px solid black;
+            height: 85%;
         }
 
         .movie-card__rating {

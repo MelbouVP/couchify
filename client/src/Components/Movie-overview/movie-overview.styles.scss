@@ -2,7 +2,8 @@
 
   .search-result__container {
     display: flex;
-    // width: 100%;
+    justify-content: center;
+    width: 100%;
   
     .search-result__overview {
         position: relative;
@@ -10,6 +11,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
     }
   
   }

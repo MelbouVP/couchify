@@ -7,13 +7,18 @@ import './navbar.styles.scss';
 
 const Navbar = () => {
     console.log('navbar')
+
+    const handleClick = () => {
+        window.scrollTo(0,0)
+    }
+
     return (
         <header className="header">
             <nav className="navbar">
                 <div className="navbar__content">
                     <ul className="navbar__nav">
                         <li>
-                            <Link to='/' >
+                            <Link to='/' onClick={handleClick} >
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F51B5" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <polyline points="5 12 3 12 12 3 21 12 19 12" />
@@ -23,7 +28,7 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to='/filter' >
+                            <Link to='/filter' onClick={handleClick} >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments-horizontal" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F51B5" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <circle cx="14" cy="6" r="2" />

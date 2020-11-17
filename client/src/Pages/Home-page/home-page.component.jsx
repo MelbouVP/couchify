@@ -45,7 +45,6 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
 
     return (
         <div className='page__container'>
-            <Navbar />
             <Banner bannerImg={movieBannerInfo}>
                 <div className='homepage__banner'>
                     <h1 className='homepage__banner--title'>

@@ -1,6 +1,5 @@
-
 const utilityActionTypes = {
-    TOGGLE_FILTER_SECTION: 'TOGGLE_FILTER_SECTION'
+    TOGGLE_MOVIE_FILTER: 'TOGGLE_MOVIE_FILTER'
 }
 
 export default utilityActionTypes;

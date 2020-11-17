@@ -1,18 +1,14 @@
 
 .change-btn__container {
-    height: fit-content;
-    position: absolute;
-    // bottom: 5%;
-    // right: 15%;
-
-
+    
     .change-btn__content {
+        position: absolute;
 
         &--btn {
             outline: none;
             box-sizing: border-box;
             appearance: none;
-            background-color: gray;
+            background-color: #3F88C5;
             border-radius: 1.5rem;
             display: flex;
             align-self: center;
@@ -25,20 +21,25 @@
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
+            text-shadow: 2px 1px 3px rgb(0, 0, 0);
 
-            border-color: black;
-            color: black;
+            border: 1px solid black;
+
+            color: white;
             background: {
-                image: linear-gradient(45deg,rgb(63, 63, 63) 50%, transparent 50%);
+                image: linear-gradient(45deg, rgb(25, 4, 216) 50%, transparent 50%);
                 position: 100%;
                 size: 400%;   
             }
-            transition: background 300ms ease-in-out;
+            transition: all 300ms ease-in-out;
+
+            box-shadow: 0px 3px 3px 0px rgb(0, 0, 0);
   
             &:hover {
                 cursor: pointer;
                 background-position: 0;
                 color: white;
+                transform: scale(1.1);
             }
         }
     }

@@ -1,12 +1,14 @@
 .search-page__container {
-    background-image: url('https://lh3.googleusercontent.com/proxy/373mqi8Fy9mS9E56kDIAbISRRbxQnt1ywkgY7pJtLDFXlzrcBztJFr5hbFzrF05FJ4Y_h7ITMA8cYue3_a-_E4a6LcQ8e-CyCzM56KRM0uL_Zu6LBR52J7eGTyyVbtV_cUf-lvoOxSq-SkK3JK8jHIQ');
-
+    background-image: url('https://cdn.hipwallpaper.com/i/33/96/rJKV1g.jpg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 80vh;
 
     .search-page {
+        padding: 4rem 1rem;
         backdrop-filter: blur(4px);
+        min-height: 80vh;
     }
 }

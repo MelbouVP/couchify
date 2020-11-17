@@ -1,10 +1,10 @@
 import React from 'react';
-import './back-button.styles.scss';
+import './forward-button.styles.scss'
 
-const BackButton = ({ handleClick }) => {
+const ForwardButton = ({ handleClick }) => {
     
     return (
-        <div className="back-button__container" onClick={handleClick}>
+        <div className="forward-button__container" onClick={handleClick}>
             <div className="arrow">
                 <span className="arrow-part-1"></span>
                 <span className="arrow-part-2"></span>
@@ -14,4 +14,4 @@ const BackButton = ({ handleClick }) => {
     )
 }
 
-export default React.memo(BackButton)
+export default React.memo(ForwardButton)

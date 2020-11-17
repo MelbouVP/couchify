@@ -7,8 +7,8 @@ const ChangePageButton = ({ position, handleClick, children }) => {
 
 
     return (
-        <div className='change-btn__container' style={position} onClick={ e => handleClick(e)}>
-            <div className='change-btn__content'>
+        <div className='change-btn__container' onClick={ e => handleClick(e)}>
+            <div className='change-btn__content' style={position}>
                 <button className='change-btn__content--btn'>{children}</button>
             </div>
         </div>

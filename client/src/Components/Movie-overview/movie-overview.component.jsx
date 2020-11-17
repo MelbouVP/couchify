@@ -93,6 +93,9 @@ const MovieOverview = ({
     const handleClick = async (event) => {
         let pageChange = event.target.textContent
         let pathname = history.location.pathname
+        window.scrollTo(0, 0);
+
+
         try {
             if(pathname === '/search'){
                 getNewSearchPage(pageChange)
@@ -113,7 +116,7 @@ const MovieOverview = ({
                         currentPage > 1 && isLoading === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
-                                position={{bottom: '-0.25%', left: '10%'}}>
+                                position={{top: '100%', right: '55%'}}>
                                 PREV
                             </ChangePageButton>
                         :
@@ -131,7 +134,7 @@ const MovieOverview = ({
                         totalPages > currentPage && isLoading === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
-                                position={{bottom: '-0.25%', right: '10%'}} >
+                                position={{top: '100%', left: '55%'}} >
                                 NEXT
                             </ChangePageButton>
                         :
