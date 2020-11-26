@@ -20,7 +20,7 @@ const Carousel = ({ sectionName, moviesData }) => {
 
   const settings = {
     // centerPadding: '5rem',
-    // autoplay: true,
+    autoplay: true,
     // draggable: true,
     dots: true,
     // centerMode: true,
@@ -60,7 +60,8 @@ const Carousel = ({ sectionName, moviesData }) => {
           breakpoint: 480,
           settings: {
             slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToScroll: 1,
+            dots: false
           }
         }
       ]

@@ -9,12 +9,11 @@ import './movie-card.styles.scss';
 import { changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
 
 const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
-    console.log('moviecard rendered')
+    console.log('moviecard')
 
     let history = useHistory();
 
     const handleClick = () => {
-        console.log(movieData)
         changeCurrentlyViewedMovie(movieData)
         history.push(`/movie/${movieData.id}`)
     }
@@ -30,7 +29,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                     <div className="movie-card__front">
                         <img 
                             // style={style}  
-                            src={movieData.poster_path ? `https://image.tmdb.org/t/p/original/${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
+                            src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
                             alt={`${movieData.title} movie poster`}
                         />
                     </div>
@@ -42,7 +41,8 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                             <div className="movie-info__statistics">
                                 <div className="statistics__stat">
                                     <div className="statistics__stat--number">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2196F3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-award" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2196F3" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <title>Number of votes</title>
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                             <circle cx="12" cy="9" r="6" />
                                             <polyline points="9 14.2 9 21 12 19 15 21 15 14.2" transform="rotate(-30 12 9)" />
@@ -58,7 +58,8 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                                 </div>
                                 <div className="statistics__stat">
                                     <div className="statistics__stat--number">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-comet" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFC107" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-comet" width="24" height="24" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#FFC107" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <title>Popularity</title>
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                             <path d="M15.5 18.5l-3 1.5l.5-3.5-2-2 3-.5 1.5-3 1.5 3 3 .5-2 2 .5 3.5z" />
                                             <line x1="4" y1="4" x2="11" y2="11" />
@@ -81,7 +82,6 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                                     onClick={handleClick}>
                                     See details
                                 </button>
-                                <button className="movie-info__details--btn">Watch trailer</button>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                     <Spinner />
                     <img 
                         style={{visibility: 'hidden'}}  
-                        src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`} 
+                        src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
                         onLoad={() => setLoad(true)}
                         alt=''
                     />

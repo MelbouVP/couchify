@@ -8,20 +8,22 @@ import MovieFilter from '../../Components/Movie-filter/movie-filter.component';
 import BackButton from '../../Components/Go-back-btn/back-button.component';
 import ForwardButton from '../../Components/Go-forward-btn/forward-button.component';
 
+// Data from movies reducer
 import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions';
-// import { selectMoviesIsFetching } from '../../Redux/movies/movies.selectors';
+import { selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
+// Data from utility-events reducer
 import { toggleMovieFilter } from '../../Redux/utility-events/utility.actions';
 import { selectMovieFilterHidden } from '../../Redux/utility-events/utility.selectors';
 
 import './filter-page.styles.scss';
 
-const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading, toggleMovieFilter, filterHidden }) => {
+const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter, filterHidden, popularMoviesData }) => {
+
 
     const handleSubmit = async (e, sortByValue, releaseDateValue, movieGenresValue) => {
         e.preventDefault()
         window.scrollTo(0, 0);
-
         toggleMovieFilter(!filterHidden);
         changeFetchStatus(true);
 
@@ -52,7 +54,8 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading, toggleM
     const handleMovieFilter = () => {
         toggleMovieFilter(!filterHidden)
     }
-    
+
+
     return (
         <div className='filter-page__container' >
             <div className='container__overview'>
@@ -70,10 +73,7 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading, toggleM
                         </aside>
                 }
                 <div className='filter-page'>
-                    {/* <div className="filter__hide-btn">
-                        <BackButton />
-                    </div> */}
-                    <MovieOverview />
+                    <MovieOverview otherData={popularMoviesData}/>
                 </div>
             </div>
         </div>
@@ -81,14 +81,15 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, isLoading, toggleM
 }
 
 const mapStateToProps = createStructuredSelector({
-    filterHidden: selectMovieFilterHidden
+    filterHidden: selectMovieFilterHidden,
+    popularMoviesData: selectMoviesPopularData
 })
 
 
 const mapDispatchToProps = dispatch => ({
     changeFetchStatus: (bool) => dispatch(changeFetchStatus(bool)),
     fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data)),
-    toggleMovieFilter: (bool) => dispatch(toggleMovieFilter(bool))
+    toggleMovieFilter: (bool) => dispatch(toggleMovieFilter(bool)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPage);

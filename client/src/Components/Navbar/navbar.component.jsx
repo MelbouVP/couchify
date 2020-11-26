@@ -19,7 +19,8 @@ const Navbar = () => {
                     <ul className="navbar__nav">
                         <li>
                             <Link to='/' onClick={handleClick} >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F51B5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-home" width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#A2AEBB" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                <title>Home</title>
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <polyline points="5 12 3 12 12 3 21 12 19 12" />
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -29,7 +30,8 @@ const Navbar = () => {
                         </li>
                         <li>
                             <Link to='/filter' onClick={handleClick} >
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments-horizontal" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3F51B5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-adjustments-horizontal" width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#A2AEBB" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                    <title>Filter</title>
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                     <circle cx="14" cy="6" r="2" />
                                     <line x1="4" y1="6" x2="12" y2="6" />

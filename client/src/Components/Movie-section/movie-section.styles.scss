@@ -1,10 +1,127 @@
-
-.movie-section__back-btn {
-  position: relative;
-}
-
 .movie-section__container {
-  margin: 3rem;
-  background-color: honeydew;
-  height: 70vh;
+  background-color:rgba(128, 128, 128, 0.6);
+  min-height: 90vh;
+
+  .movie-section__page {
+    min-height: 90vh;
+    backdrop-filter: blur(8px);
+    color: white;
+    position: relative;
+    z-index: 20;
+    padding: 4rem 3.5rem;
+    
+    .movie-section__content {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      padding: 1rem 2.5rem;
+      
+      .content__image {
+        width: 25%;
+        transition: all .2s ease-in-out;
+        
+        img {
+          width: 100%;
+          border-radius: .75rem;
+          border: 1px solid yellow;
+        }
+
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.05);
+        }
+      }
+
+      .content__details {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        height: 100%;
+        text-shadow: 2px 1px 3px rgb(0, 0, 0);
+
+
+        .details__title {
+          justify-self: start;
+          padding-bottom: .5rem;
+          width: 100%;
+          background:
+          linear-gradient(
+            to left, 
+            rgba(255, 255, 255, 0) 0%,
+            rgb(255, 255, 255) 35%,
+            rgba(255, 255, 255, 0) 100%
+          )
+          left 
+          bottom   
+          no-repeat; 
+          background-size:100% .3rem;
+        }
+
+
+        .details__short-info {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          font-size: 1.25rem;
+          padding: .5rem .5rem;
+          width: 100%;
+
+          & > * {
+            width: 33%;
+          }
+
+          &:nth-child(2) {
+            justify-self: right;
+          }
+
+          &--release-date {
+            flex-grow: 3;
+          }
+
+          &--runtime {
+            flex-grow: 1;
+            
+          }
+
+
+          &--rating {
+            flex-grow: 3;
+
+            &::before {
+              content: "\2605";
+              padding: 0 .15rem 0 0;
+              color: yellow;
+            }
+          }
+
+          &--votes {
+            justify-self: flex-end;
+            font-size: .8rem;
+          }
+        }
+
+        .details__summary {
+          padding: 1rem .5rem;
+          line-height: 1.5rem;
+          font-size: 1.1rem;
+        }
+
+      }
+    }
+
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .movie-section__back-btn {
+    position: relative;
+    top: .5rem;
+    padding-left: 1.5rem;
+    z-index: 30;
+  }
 }
+

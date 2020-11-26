@@ -20,21 +20,32 @@ import './movie-overview.styles.scss';
 const MovieOverview = ({ 
     searchResult, currentPage, isLoading, changeFetchStatus, 
     fetchSearchedMovies, searchValue, totalPages,
-    sortByValue, releaseDates, genres }) => {
+    sortByValue, releaseDates, genres, otherData }) => {
 
     console.log('Movie overview rendered')
     console.log(currentPage)
 
+    console.log(searchResult)
     const history = useHistory()
     console.log(history.location.pathname)
 
+    
+    const defaultMovies = otherData ?
+            otherData.map( movieData =>
+                <MovieCard key={movieData.id} movieData={movieData} />
+        )
+        :
+        null
 
+
+    // Display user search result or filtering result depending on section/path
+    // if there isn't data, provide backup data - defaultMovies(parent props)
     const movies = searchResult.length ? 
         searchResult.map( movieData => 
                     <MovieCard key={movieData.id} movieData={movieData} />
         ) 
     :   
-        null
+        defaultMovies
 
 
     const getNewSearchPage = async (routeName) => {

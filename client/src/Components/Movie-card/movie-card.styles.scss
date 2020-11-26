@@ -20,7 +20,7 @@ $card-text-color: white;
             display: flex;
             flex-direction: column;
             padding: 3.5rem 0;
-            background-color: rgba(128, 128, 128, 0.596);
+            background-color: rgba(128, 128, 128, 0.6);
             border-radius: .75rem;
             height: 20rem;
         }
@@ -109,7 +109,7 @@ $card-text-color: white;
                         left 
                         bottom   
                         no-repeat; 
-                    background-size:100% .3rem;
+                    background-size:100% .1rem;
                 }
 
                 &__statistics {
@@ -137,7 +137,7 @@ $card-text-color: white;
 
 
                         &:nth-child(1) {
-                            border-right: 2px solid rgba(255, 255, 255, 0.1);
+                            border-right: 1px solid rgba(255, 255, 255, 0.1);
                         }
 
                     }

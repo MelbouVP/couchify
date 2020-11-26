@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 
-import Navbar from '../../Components/Navbar/navbar.component';
 import Carousel from '../../Components/Carousel/carousel.component'
 import Spinner from '../../Components/Spinner/spinner.component';
 import Banner from '../../Components/Banner/banner.component';
@@ -41,11 +40,10 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
 
     })
 
-    const movieBannerInfo = popularMovies[0]
 
     return (
         <div className='page__container'>
-            <Banner bannerImg={movieBannerInfo}>
+            <Banner shapeDivider={true} >
                 <div className='homepage__banner'>
                     <h1 className='homepage__banner--title'>
                         Couchify
@@ -86,4 +84,4 @@ const mapStateToProps = createStructuredSelector({
     popularMovies: selectMoviesPopularData
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(HomePage))

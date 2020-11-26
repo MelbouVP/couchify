@@ -230,21 +230,22 @@ app.get('/api/popular', (req, res) => {
 // ttps://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos,images
 app.get('/api/movie/:id', (req,res) => {
     const { id } = req.params
-    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos`)
         .then(response => {
-            const { id, backdrop_path, poster_path, genres, original_title, popularity, overview, video, vote_average, vote_count, runtime } = response.data;
+            // console.log(response.data)
+            
+            const { id, imdb_id, belong_to_collection, budget, genres, homepage, original_language, runtime,videos } = response.data;
+
             const movieData = {
                 id,
-                backdrop_path,
-                poster_path,
+                imdb_id,
+                belong_to_collection,
+                budget,
                 genres,
-                original_title,
-                popularity,
-                overview,
-                video,
-                vote_average,
-                vote_count,
-                runtime
+                homepage,
+                original_language,
+                runtime,
+                videos
             }
             return res.json(movieData)
         })

@@ -19,7 +19,6 @@ const App = () => {
       <Navbar />
           <Route exact path="/" component={HomePage} />
           <Route path='/search' component={SearchPage}/>
-          {/* <Route path='/search' component={SearchPage}/> */}
           <Route path='/filter' component={FilterPage}/>
           <Route exact path="/movie/:movieId" component={MovieSection} />
       <Footer />
