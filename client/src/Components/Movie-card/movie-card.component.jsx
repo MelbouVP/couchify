@@ -9,7 +9,7 @@ import './movie-card.styles.scss';
 import { changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
 
 const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
-    console.log('moviecard')
+    // console.log('moviecard')
 
     let history = useHistory();
 
@@ -79,6 +79,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                             <div className="movie-info__details">
                                 <button 
                                     className="movie-info__details--btn"
+                                    value='Details'
                                     onClick={handleClick}>
                                     See details
                                 </button>

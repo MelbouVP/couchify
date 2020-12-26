@@ -1,11 +1,11 @@
 .carousel {
-  padding: 30px 60px 30px 60px;
-  min-height: 50vh;
+  padding: 0px 60px 0px 60px;
+  // min-height: 50vh;
 
   &__title {
     color: white;
     font-size: 2rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0 1rem 0;
     background:
     linear-gradient(
       to left, 
@@ -20,6 +20,14 @@
   }
 
   &-container {
+
+
+    &__similar {
+      min-height: 20vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 
@@ -49,7 +57,7 @@
 
 .slick-prev::before,
 .slick-next::before {
-  line-height: 0;
+  line-height: 0.5;
   font-size: 3rem;
 }
 

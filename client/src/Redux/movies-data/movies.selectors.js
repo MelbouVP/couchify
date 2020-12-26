@@ -7,10 +7,10 @@ const selectMoviesSearchData = createSelector(
     data => data.searchData
 )
 
-// const selectMoviesFilteredData = createSelector(
-//     [selectMovies],
-//     data => data.filteredData
-// )
+const selectMoviesCurrentlyViewedMovie = createSelector(
+    [selectMovies],
+    data => data.currentlyViewedMovie
+)
 
 export const selectMoviesSearchResults = createSelector(
     [selectMoviesSearchData],
@@ -32,11 +32,6 @@ export const selectMoviesTotalSearchPage = createSelector(
     data => data.total_pages
 )
 
-// export const selectMoviesFilteredResults = createSelector(
-//     [selectMoviesFilteredData],
-//     data => data.results
-// )
-
 export const selectMoviesFilteredSortByValue = createSelector(
     [selectMoviesSearchData],
     data => data.sort_by
@@ -51,16 +46,6 @@ export const selectMoviesFilteredGenres = createSelector(
     [selectMoviesSearchData],
     data => data.with_genres
 )
-
-// export const selectMoviesCurrentFilteredPage = createSelector(
-//     [selectMoviesFilteredData],
-//     data => data.page
-// )
-
-// export const selectMoviesTotalFilteredPage = createSelector(
-//     [selectMoviesFilteredData],
-//     data => data.total_pages
-// )
 
 
 export const selectMoviesTrendingData = createSelector(
@@ -78,7 +63,17 @@ export const selectMoviesIsFetching = createSelector(
     data => data.isFetching
 )
 
-export const selectMoviesCurrentlyViewedMovie = createSelector(
-    [selectMovies],
-    data => data.currentlyViewedMovie
+export const selectMoviesCurrrentMovie = createSelector(
+    [selectMoviesCurrentlyViewedMovie],
+    movie => movie.data
+)
+
+export const selectMoviesCurrrentMovieExtraData = createSelector(
+    [selectMoviesCurrentlyViewedMovie],
+    movie => movie.additionalData
+)
+
+export const selectMoviesCurrrentMovieSimilarData = createSelector(
+    [selectMoviesCurrentlyViewedMovie],
+    movie => movie.similarMoviesData
 )

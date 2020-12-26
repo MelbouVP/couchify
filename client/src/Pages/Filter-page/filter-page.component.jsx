@@ -44,7 +44,7 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter,
             fetchSearchedMovies(data)
             
         } catch (error){
-            console.log(error)
+            throw Error(error)
         }
 
         changeFetchStatus(false);

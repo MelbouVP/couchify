@@ -1,0 +1,134 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    background: #E3F2FD;
+    min-width: 275px;
+    height: 80vh;
+    overflow: hidden;
+    color: #138FF2;
+
+    .content {
+      flex-grow: 2;
+      width: 40vw;
+      max-width: 500px;
+      margin: 0 auto;
+
+      h1 {
+        margin: 0;
+        font-size: 4em;
+        font-weight: 100;
+      }
+      
+      p {
+        width: 95%;
+        font-size: 1.5em;
+        line-height: 1.4;
+        padding: 1rem 0;
+      }
+
+      .buttons {
+        white-space: nowrap;
+        display: inline-block;
+      
+        a {
+          display: inline-block;
+          padding: .8em 1em;
+          margin-right: 1em;
+          margin-bottom: 1em;
+          border: 3px solid #1674D1;
+          background-color: #1674D1;
+          color: white;
+          font-weight: bold;
+          text-transform: uppercase;
+          text-decoration: none;
+          letter-spacing: .2em;
+          position: relative;
+          overflow: hidden;
+          transition: .3s;
+
+          &:hover {
+            color: white;        
+            background-color: #1C3144;
+            border: 3px solid #1C3144;
+          }
+
+        }
+      }
+
+      
+    }
+
+    
+    // BLACKHOLE
+    
+    $size: 120px;
+    $border: $size/15;
+    
+    .space {
+      width: $size;
+      height: calc(50vh + #{$size/2});
+      border-top-left-radius: $size/2;
+      border-top-right-radius: $size/2;
+      overflow: hidden;
+      margin: calc(50vh - #{$size/2}) auto 0 auto;
+      position: relative;
+      pointer-events: none;
+      -webkit-transform: translateZ(0);
+
+      .blackhole {
+        border: $border solid #1C3144;
+        height: $size;
+        width: $size;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        &:after {
+          content: '';
+          height: calc(100% + #{$border*2});
+          width: calc(100% + #{$border*2});
+          border: $border solid #1C3144;
+          border-right-color: transparent;
+          border-bottom-color: transparent;
+          border-radius: 50%;
+          position: absolute;
+          top: -$border;
+          left: -$border;
+          z-index: 5;
+          transform: rotate(45deg);
+        }
+      }
+      
+      .planet {
+        height: $size*2;
+        width: $size - $border*4;
+        margin-left: $border*2;
+        background: url("../../Assets/planet.svg") center/contain no-repeat;
+        animation: blackhole 4s infinite linear;
+        position: absolute;
+        bottom: -$size*2;
+      }
+    }
+    
+}
+  
+  
+
+  
+  
+@keyframes blackhole {
+to {
+    transform: translateY(-100vh);
+}
+}
+
+@media (max-width: 600px) {
+
+    .wrapper {
+        padding: .5rem;
+    }
+    .space {
+        display: none;
+    }
+}
+

@@ -8,6 +8,7 @@ import './navbar.styles.scss';
 const Navbar = () => {
     console.log('navbar')
 
+
     const handleClick = () => {
         window.scrollTo(0,0)
     }

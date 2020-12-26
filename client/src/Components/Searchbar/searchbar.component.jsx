@@ -42,7 +42,7 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue 
             fetchSearchedMovies(data);
             
         } catch(error) {
-            console.log(error)
+            throw Error(error)
         }
         changeFetchStatus(false)
         setSearchValue('');

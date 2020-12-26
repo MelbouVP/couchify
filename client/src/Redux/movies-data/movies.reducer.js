@@ -13,7 +13,12 @@ export const INITIAL_STATE = {
     trendingData: [],
     popularData: [],
     isFetching: false,
-    currentlyViewedMovie: ''
+    currentlyViewedMovie: {
+        id: null,
+        data: null,
+        additionalData: null,
+        similarMoviesData: null
+    }
 }
 
 const movieReducer = (state = INITIAL_STATE, action) => {
@@ -54,7 +59,25 @@ const movieReducer = (state = INITIAL_STATE, action) => {
         case moviesActionTypes.CHANGE_CURRENTLY_VIEWED_MOVIE:
             return {
                 ...state,
-                currentlyViewedMovie: action.payload
+                currentlyViewedMovie: {
+                    data: action.payload,
+                }
+            }
+        case moviesActionTypes.ADD_EXTRA_DATA_TO_CURRENTLY_VIEWED_MOVIE:
+            return {
+                ...state,
+                currentlyViewedMovie: {
+                    ...state.currentlyViewedMovie,
+                    additionalData: action.payload
+                }
+            }
+        case moviesActionTypes.SET_SIMILAR_MOVIES_DATA:
+            return {
+                ...state,
+                currentlyViewedMovie: {
+                    ...state.currentlyViewedMovie,
+                    similarMoviesData: action.payload
+                }
             }
         default:
             return state

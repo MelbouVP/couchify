@@ -69,7 +69,7 @@ const MovieOverview = ({
             fetchSearchedMovies(data);
             
         } catch(error) {
-            console.log(error)
+            throw Error(error)
         }
 
         changeFetchStatus(false);

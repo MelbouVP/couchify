@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Carousel from '../../Components/Carousel/carousel.component'
 import Spinner from '../../Components/Spinner/spinner.component';
 import Banner from '../../Components/Banner/banner.component';
+import MovieCard from '../../Components/Movie-card/movie-card.component';
 
 import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
@@ -27,7 +28,7 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
                 fetchPopularMovies(popular.data)
                         
             } catch (error) {
-                console.log(error)
+                throw Error(error)
             } finally {
                 changeFetchStatus(false);
             }
@@ -39,6 +40,21 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
 
 
     })
+
+
+    const popularMoviesItem = popularMovies ? 
+        popularMovies.map( movieData => 
+                <MovieCard key={movieData.id} movieData={movieData} />
+            ) 
+        :   
+            null
+
+    const trendingMoviesItem = trendingMovies ? 
+        trendingMovies.map( movieData => 
+                <MovieCard key={movieData.id} movieData={movieData} />
+            ) 
+        :   
+            null
 
 
     return (
@@ -60,8 +76,16 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
                     {
                         trendingMovies.length ? 
                             <div>
-                                <Carousel sectionName={'Trending movies'} moviesData={trendingMovies}/>
-                                <Carousel sectionName={'Popular movies'} moviesData={popularMovies}/>
+                                <Carousel sectionName={'Popular movies'} >
+                                    {
+                                        popularMoviesItem
+                                    }
+                                </Carousel>
+                                <Carousel sectionName={'Trending movies'} >
+                                    {
+                                        trendingMoviesItem
+                                    }
+                                </Carousel>
                             </div>
                         :
                             <Spinner />

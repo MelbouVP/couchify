@@ -13,16 +13,15 @@ $card-text-color: white;
         img {
             width: 100%;
             border-radius: .75rem;
-            // border: 1px solid rgb(245, 175, 0);
         }
 
         &--loading {
+            height: 20rem;
             display: flex;
             flex-direction: column;
+            background: rgba(39, 39, 39, .9);;
             padding: 3.5rem 0;
-            background-color: rgba(128, 128, 128, 0.6);
             border-radius: .75rem;
-            height: 20rem;
         }
     }
 
@@ -125,10 +124,15 @@ $card-text-color: white;
 
                         &--number {
                             display: flex;
-                            width: 80%; 
-                            justify-content: center;
+                            width: 50%; 
                             align-items: center;
+                            justify-content: space-around;
                             margin: 0 auto;
+
+                            svg {
+                                margin-left: 0rem;
+                                margin-right: .2rem;
+                            }
                         }
 
                         &--name {

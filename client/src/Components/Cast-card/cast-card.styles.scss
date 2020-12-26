@@ -1,0 +1,23 @@
+
+
+.cast__container {
+
+    .cast {
+
+        padding: .5rem;
+        &__actor-img {
+            background-repeat: no-repeat;
+            background-position: 50% 20%;
+            background-size: cover;
+            height: 5.5rem;
+            width: 5.5rem;
+            border-radius: 100%;
+            border: 1px solid grey;
+            transition: .5s ease-out;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}

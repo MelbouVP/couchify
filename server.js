@@ -82,7 +82,7 @@ app.post('/api/find/prev', (req,res) => {
         .catch(err => res.send(err));
 })
 
-//? Sorting route
+//? Filtering route
 app.post('/api/filter', (req, res) => {
     const { sortBy, releaseDate, genres } = req.body
 
@@ -211,7 +211,7 @@ app.get('/api/trending', (req, res) => {
         .catch(err => res.send(err));
 })
 
-
+//? Popular movies
 app.get('/api/popular', (req, res) => {
 
 
@@ -223,35 +223,92 @@ app.get('/api/popular', (req, res) => {
 })
 
 //? Get specific movie
-// Append search instead of doing multiple searcheds
-// https://api.themoviedb.org/3/movie/157336?api_key={api_key}
-// https://api.themoviedb.org/3/movie/157336/videos?api_key={api_key}
-// https://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos
-// ttps://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos,images
 app.get('/api/movie/:id', (req,res) => {
     const { id } = req.params
     axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos`)
         .then(response => {
-            // console.log(response.data)
-            
-            const { id, imdb_id, belong_to_collection, budget, genres, homepage, original_language, runtime,videos } = response.data;
+
+            const { id, backdrop_path, genres, overview, poster_path, popularity, title, vote_average, vote_count, runtime, imdb_id, belong_to_collection, budget, homepage, videos, release_date } = response.data;
 
             const movieData = {
-                id,
+                id, 
+                backdrop_path, 
+                genre_ids: genres, 
+                overview, 
+                poster_path, 
+                popularity, 
+                title, 
+                vote_average,
+                vote_count,
                 imdb_id,
                 belong_to_collection,
                 budget,
-                genres,
                 homepage,
-                original_language,
                 runtime,
-                videos
+                videos,
+                release_date
             }
             return res.json(movieData)
         })
         .catch(err => res.send(err));
 })
 
+
+//? Get reccomendations
+app.get('/api/recommendation/:id', (req, res) => {
+
+    const { id } = req.params
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.API_KEY}`)
+        .then(response => res.send(response.data.results))
+        .catch(err => res.send(err));
+})
+
+//? Get similar
+app.get('/api/similar/:id', (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${process.env.API_KEY}`)
+        .then(response => res.send(response.data.results))
+        .catch(err => res.send(err));
+})
+
+//? Get movie cast
+app.get('/api/credits/:id', (req, res) => {
+    const { id } = req.params
+    axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.API_KEY}`)
+        .then(response => {
+
+
+            const castData = response.data.cast.map( ({ id, name, profile_path }) => {
+
+                return { id, actorName: name, profile_path}
+
+            })
+
+            // return res.send(castData)
+            return castData
+
+        })
+        .then( async data => {
+
+            let castData = await Promise.all(data.map( async (actor) => {
+
+                let fullData = await axios.get(`https://api.themoviedb.org/3/person/${actor.id}?api_key=${process.env.API_KEY}`)
+                    .then(response => {
+                        actor.imdb_id  = response.data.imdb_id
+                        return actor
+                    })
+                    .catch(error => console.log(error.msg))
+
+                // console.log(fullData)
+                return fullData
+            }))
+
+            // console.log(castData)
+            res.send(castData)
+        })
+        .catch(err => res.send(err));
+})
 
 app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`)
