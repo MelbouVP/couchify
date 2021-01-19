@@ -55,3 +55,24 @@
     }
 
 }
+
+@media only screen and (max-width: 850px) {
+    
+    .filter-page__container {
+        .container__overview {
+
+            .container__movie-filter {
+                padding: 3.5rem 1rem;
+                max-width: 100%;
+
+                .filter__close-btn {
+                    left: unset;
+                    right: 13%;
+                }
+
+            }
+            
+        }
+
+    }
+}

@@ -55,6 +55,10 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter,
         toggleMovieFilter(!filterHidden)
     }
 
+    const styleDisplayNone = {
+        display: 'none'
+    }
+
 
     return (
         <div className='filter-page__container' >
@@ -72,7 +76,7 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter,
                             <MovieFilter handleSubmit={handleSubmit} />
                         </aside>
                 }
-                <div className='filter-page'>
+                <div className='filter-page' style={ (window.innerWidth < 900 && !filterHidden) ? styleDisplayNone : null}>
                     <MovieOverview otherData={popularMoviesData}/>
                 </div>
             </div>

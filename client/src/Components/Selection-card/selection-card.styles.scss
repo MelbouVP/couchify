@@ -1,0 +1,64 @@
+
+.selection-card__container {
+    border-bottom: 1px solid white;
+
+    &:nth-of-type(odd) {
+        background:rgb(49, 90, 202);
+    }
+
+    &:nth-of-type(even) {
+        background: rgb(14, 52, 156);
+    }
+
+    .title {
+        font-weight: italic;
+    }
+
+    .selection-card__list-item {
+        padding: .75rem 1.5rem;
+        
+
+        .play-btn {
+            border-radius: 50%;
+            transition: transform .5s ease;
+            border: 1px solid white;
+            box-shadow: 0px 3px 5px 0px rgb(0, 0, 0);
+
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.2);
+                fill: #ff4500;
+                stroke: #ff4500;
+                border: 2px solid #ff4500;
+            }
+        }
+
+        &--movie-poster {
+            width: 3.5rem;
+            height: 5rem;
+            border-radius: .25rem;
+            transition: .25s ease;
+            border: 1px solid yellow;
+            box-shadow: 0px 3px 7px 0px rgb(0, 0, 0);
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.2);
+                
+            }
+        }
+
+        &--imdb-logo {
+            width: 2rem;
+            height: 2rem;
+            transition: .5s ease;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.2);
+            }
+        }
+    }
+
+}

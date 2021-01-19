@@ -15,7 +15,7 @@
         &--title {
             font-size: 5rem;
             line-height: 8rem;
-            color:rgb(44, 21, 255);
+            color:#2196f3;
             text-shadow: 2px 1px 3px rgb(0, 0, 0);
         }
 
@@ -72,6 +72,9 @@
             backdrop-filter: blur(4px);
             min-height: 90vh;
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
     }
 }
@@ -107,5 +110,51 @@
     100% {
         opacity: 1;
         transform: translate(0);
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .page__container {
+
+        .homepage__banner {
+            padding-top: 6.5rem;
+            
+            &--title {
+                font-size: 4rem;
+                line-height: 5rem;
+            }
+    
+            &--sub-title {
+                width: 100%;
+                line-height: 2rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .page__container {
+
+        .homepage__banner {
+            
+            &--title {
+                font-size: 3rem;
+                line-height: 5rem;
+            }
+    
+            &--sub-title {
+                font-size: 1rem;
+                line-height: 1.5rem;
+            }
+
+            &--button {
+                a {
+                    font-size: 1rem;
+                    width: 7rem;
+                    height: 2rem;
+                    line-height: 2rem;
+                }
+            }
+        }
     }
 }

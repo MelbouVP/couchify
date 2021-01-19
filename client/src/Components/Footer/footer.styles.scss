@@ -1,5 +1,131 @@
 
 .footer__container {
-    height: 10vh;
+    height: 12vh;
     background: #1C3144;
+    border-top: 1px solid black;
+
+    .footer__content {
+        height: 100%;
+        width: 100%;
+        padding: .5rem 2.5rem .5rem 2.5rem;
+        
+        &--details {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            div {
+                height: 3rem;
+                display: flex;
+                align-items: center;
+            }
+
+            div:nth-of-type(1) {
+                flex: 1;
+                display: flex;
+
+                img {
+                    height: 2.5rem;
+                    transition: .5s ease;
+
+                    &:hover {
+                        transform: scale(1.25);
+                    }
+                }
+            }
+
+            div:nth-of-type(2) {
+                flex: 2;
+                flex-direction: column;
+                justify-content: center;
+                
+                .footer__content--title {
+                    font-size: 2.75rem;
+                    color:#2196f3;
+                    text-shadow: 2px 1px 3px rgb(0, 0, 0);
+                }
+
+                p {
+                    color: rgb(192, 192, 192);
+                }
+            }
+
+            div:nth-of-type(3) {
+                flex: 1;
+                justify-content: flex-end;
+                img {
+                    height: 3rem;
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .footer__container {
+        
+        .footer__content {
+            padding: .5rem 1rem .5rem 1rem;
+            
+            &--details {
+    
+    
+                div:nth-of-type(1) {
+    
+                    img {
+                        height: 1.5rem;
+                    }
+                }
+    
+                div:nth-of-type(2) {
+                    
+                    .footer__content--title {
+                        font-size: 1.5rem;
+                    }
+    
+                    p {
+                        font-size: .75rem;
+                    }
+                }
+    
+                div:nth-of-type(3) {
+
+                    img {
+                        height: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .footer__container {
+    
+        .footer__content {
+            
+            &--details {
+    
+                div:nth-of-type(2) {
+                    
+                    .footer__content--title {
+                        font-size: 1.25rem;
+                    }
+    
+                    p {
+                        font-size: .5rem;
+                    }
+                }
+    
+                div:nth-of-type(3) {
+
+                    img {
+                        height: 2rem;
+                    }
+                }
+            }
+        }
+    }
 }

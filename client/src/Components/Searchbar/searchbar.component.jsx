@@ -56,11 +56,13 @@ const SearchBar = ({ fetchSearchedMovies, changeFetchStatus, fetchedSearchValue 
         <div className="search-bar__container" >
             <div className='search-bar'>
                 <input 
-                    type="text" 
+                    type="search" 
                     value={searchValue}
                     placeholder='Search' 
                     onChange={ event => setSearchValue(event.target.value)} onKeyDown={handleKeyDown}
+                    aria-label="Keywords for a movie search"
                 />
+                
                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#3F51B5" fill="none" strokeLinecap="round" strokeLinejoin="round" onClick={fetchSearch} >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <circle cx="10" cy="10" r="7" />

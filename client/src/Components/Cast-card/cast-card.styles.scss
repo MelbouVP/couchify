@@ -1,6 +1,10 @@
 
 
 .cast__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .cast {
 
@@ -19,5 +23,11 @@
                 transform: scale(1.2);
             }
         }
+    }
+
+
+    .cast__container--spinner {
+        height: 4rem;
+        width: 4rem;
     }
 }

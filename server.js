@@ -4,11 +4,31 @@ const bodyParser= require('body-parser');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const pg = require('pg')
+const bcrypt = require('bcryptjs');
+const knex = require('knex')
+
+const Joi = require('joi')
+const registerSchema = require('./validation/registerValidation.js')
+const loginSchema = require('./validation/loginValidation.js')
 
 
 // Server Setup
 const app = express();
 const PORT = process.env.port || 3001;
+
+
+// Connect to database
+
+const db = knex({
+    client: 'pg',
+    connection: {
+        host : '127.0.0.1',
+        user : 'postgres',
+        password : process.env.PG_PASS,
+        database : 'couchify'
+    },
+});
 
 
 // Middlewares
@@ -308,6 +328,124 @@ app.get('/api/credits/:id', (req, res) => {
             res.send(castData)
         })
         .catch(err => res.send(err));
+})
+
+
+app.post('/api/register', (req,res) => {
+    const { username, email, password, confirmPassword } = req.body
+
+    const validation = registerSchema.schema.validate({
+        username,
+        email,
+        password,
+        confirm: confirmPassword
+    })
+
+    const { error } = validation
+
+    if(error) {
+        res.status(422).json({
+            message: error.details[0].message
+        })
+    } else {
+
+        let salt = bcrypt.genSaltSync(10)
+        let hash = bcrypt.hashSync(password, salt)
+
+        db.transaction(trx => {
+            trx.insert({
+                email: email,
+                hash: hash
+            })
+            .into('login')
+            .returning('email')
+            .then( email => {
+                return trx('users')
+                .returning('*')
+                .insert({
+                    name: username,
+                    email: email[0],
+                    joined: new Date().toLocaleDateString()
+                    // new Date().toISOString().replace('T',' ').substring(0, 19)
+                })
+                .then(userData => {
+                    console.log(userData[0])
+                    res.status(200).json(userData[0])
+                })
+            })
+            .then(trx.commit)
+            .catch(trx.rollback)
+        })
+        .catch( error => {
+            console.log(error)
+            res.status(400).json('Something went wrong, try again')
+        })
+    }
+})
+
+app.post('/api/login', (req, res) => {
+    const { email, password } = req.body
+
+    const validation = loginSchema.schema.validate({
+        email,
+        password,
+    })
+
+    const { error } = validation
+
+    if(error) {
+        res.status(422).json({
+            message: error.details[0].message
+        })
+    } else {
+
+        db.select('email', 'hash')
+        .from('login')
+        .where('email', '=', email)
+        .then(data => {
+
+            const isValid = bcrypt.compareSync(password, data[0].hash)
+
+            if(isValid){
+                console.log(true)
+
+                return db.select('*')
+                .from('users')
+                .where('email', '=', email)
+                .then( userData => res.status(200).json(userData[0]))
+                .catch(error => res.status(400).json('Unable to get user'))
+            } else {
+                res.status(400).json('Invalid data')
+            }
+        })
+        .catch( error => res.status(400).json('Invalid data'))
+    }
+
+})
+
+
+app.post('/api/favourites', (req, res) => {
+
+    let userID = req.body.id
+    let data = JSON.stringify(req.body.data)
+
+    return db('users')
+        .where('id', userID)
+        .update('favourite_movies', data)
+        .then( response => res.status(200).json('Favourites updated'))
+        .catch(error => res.status(400).json('Unable to update favourites'))
+})
+
+app.post('/api/must-watch', (req, res) => {
+
+    let userID = req.body.id
+    let data = JSON.stringify(req.body.data)
+
+    return db('users')
+        .where('id', userID)
+        .update('must_watch_movies', data)
+        .then( response => res.status(200).json('Must-watch movies updated'))
+        .catch(error => res.status(400).json('Unable to update must-watch movies'))
 })
 
 app.listen(PORT, () => {

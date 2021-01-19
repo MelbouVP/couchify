@@ -14,7 +14,6 @@ export const INITIAL_STATE = {
     popularData: [],
     isFetching: false,
     currentlyViewedMovie: {
-        id: null,
         data: null,
         additionalData: null,
         similarMoviesData: null
@@ -60,6 +59,8 @@ const movieReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentlyViewedMovie: {
+                    additionalData: null,
+                    similarMoviesData: null,
                     data: action.payload,
                 }
             }

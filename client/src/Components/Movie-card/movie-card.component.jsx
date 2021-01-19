@@ -27,8 +27,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                 <div>
                     <div className="movie-card__rating">{movieData.vote_average}</div>
                     <div className="movie-card__front">
-                        <img 
-                            // style={style}  
+                        <img
                             src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
                             alt={`${movieData.title} movie poster`}
                         />

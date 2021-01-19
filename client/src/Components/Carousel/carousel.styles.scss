@@ -5,7 +5,7 @@
   &__title {
     color: white;
     font-size: 2rem;
-    padding: 1rem 0 1rem 0;
+    padding: 2rem 0 1rem 0;
     background:
     linear-gradient(
       to left, 
@@ -70,4 +70,14 @@
 .slick-dots li.slick-active button:before {
   opacity: .9;
   color: white;
+}
+
+@media only screen and (max-width: 450px) {
+  .carousel {
+    padding:0px 0px 0px 0px;
+
+    &__title {
+      font-size: 1.6rem;
+    }
+  }
 }

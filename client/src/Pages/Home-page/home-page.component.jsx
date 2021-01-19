@@ -74,7 +74,7 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
             <div className="homepage__container" id='overview' >
                 <div className='homepage'>
                     {
-                        trendingMovies.length ? 
+                        (trendingMovies.length && popularMovies.length) ? 
                             <div>
                                 <Carousel sectionName={'Popular movies'} >
                                     {

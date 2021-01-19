@@ -1,16 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect'
+import { toast } from 'react-toastify'
+
+import { logOutUser } from '../../Redux/user-data/user.actions'
+import { selectUserIsAuthenticated } from '../../Redux/user-data/user.selectors';
 
 import SearchBar from '../Searchbar/searchbar.component';
 
 import './navbar.styles.scss';
 
-const Navbar = () => {
+const Navbar = ({ isAuthenticated, logOutUser }) => {
     console.log('navbar')
 
 
     const handleClick = () => {
         window.scrollTo(0,0)
+    }
+
+    const handleLogOut = () => {
+        window.scrollTo(0,0)
+        logOutUser()
+
+        toast.info('✔️ You have been logged out.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     return (
@@ -52,15 +73,46 @@ const Navbar = () => {
                     <SearchBar />
                 </div>
                 <div className="navbar__content">
-                    <ul className="navbar__nav">
-                        <li>Register</li>
-                        <li>Login</li>
-                    </ul>
+                    { isAuthenticated ? 
+                            <ul className="navbar__nav">
+                                <li>
+                                    <Link to='/profile' onClick={handleClick} className="navbar__nav--link">
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/' onClick={handleLogOut} className="navbar__nav--link">
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        :
+                            <ul className="navbar__nav">
+                                <li>
+                                    <Link to='/register' onClick={handleClick} className="navbar__nav--link">
+                                        Register
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/login' onClick={handleClick} className="navbar__nav--link" >
+                                        Login
+                                    </Link>
+                                </li>
+                            </ul>
+                    }
                 </div>
             </nav>
         </header>
     )
 }
 
+const mapDispatchToProps = dispatch => ({
+    logOutUser: () => dispatch(logOutUser())
+})
 
-export default Navbar;
+const mapStateToProps = createStructuredSelector({
+    isAuthenticated: selectUserIsAuthenticated
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Navbar));
