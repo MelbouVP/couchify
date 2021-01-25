@@ -62,7 +62,7 @@ const MovieFilter = ({ handleSubmit}) => {
                                 type="checkbox" 
                                 id="checkboxOne" 
                                 value="Action" 
-                                onClick={handleMovieGenres} 
+                                onChange={handleMovieGenres} 
                                 checked={movieGenres.Action}
                                 />
                             <label htmlFor="checkboxOne">Action</label>
