@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className="footer__content--details">
                     <div>
                         <a href="https://github.com/MelbouVP" target='_blank' rel='noopener noreferrer' >
-                            <img src="https://image.flaticon.com/icons/png/512/25/25231.png" alt="Github logo"/>
+                            <img src="https://image.flaticon.com/icons/png/512/25/25231.png" alt="Github logo" height='40px' width='40px' />
                         </a>
                     </div>
                     <div>
@@ -19,7 +19,7 @@ const Footer = () => {
                         <p>© MelbouVP</p>
                     </div>
                     <div>
-                        <img src="https://raw.githubusercontent.com/zisiszikos/the-movie-db-example/master/tmdb.png" alt='The movie database logo' />
+                        <img src="https://raw.githubusercontent.com/zisiszikos/the-movie-db-example/master/tmdb.png" alt='The movie database logo' height='48px' width='110px' />
                     </div>
                 </div>
             </div>

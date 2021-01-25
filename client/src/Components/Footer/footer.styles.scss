@@ -26,7 +26,6 @@
                 display: flex;
 
                 img {
-                    height: 2.5rem;
                     transition: .5s ease;
 
                     &:hover {
@@ -54,9 +53,6 @@
             div:nth-of-type(3) {
                 flex: 1;
                 justify-content: flex-end;
-                img {
-                    height: 3rem;
-                }
             }
         }
     }

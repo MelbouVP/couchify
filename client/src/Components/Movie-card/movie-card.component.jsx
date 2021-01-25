@@ -9,8 +9,6 @@ import './movie-card.styles.scss';
 import { changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
 
 const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
-    // console.log('moviecard')
-
     let history = useHistory();
 
     const handleClick = () => {
@@ -29,7 +27,7 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                     <div className="movie-card__front">
                         <img
                             src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
-                            alt={`${movieData.title} movie poster`}
+                            alt={`${movieData.title} movie poster`} height='350px' width='260px'
                         />
                     </div>
                     <div className="movie-card__back">
@@ -90,12 +88,12 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                 </div>
                 :
                 <div className="movie-card__front--loading">
-                    <Spinner />
+                    <Spinner size={{height: '150px', width: '150px'}}/>
                     <img 
                         style={{visibility: 'hidden'}}  
                         src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
                         onLoad={() => setLoad(true)}
-                        alt=''
+                        alt='' height='350px' width='180px'
                     />
                 </div>
             }

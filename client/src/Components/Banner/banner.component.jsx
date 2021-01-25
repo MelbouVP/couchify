@@ -6,7 +6,7 @@ import './banner.styles.scss';
 const Banner = ({ bannerStyle, shapeDivider, children }) => {
 
     const defaultDynamicStyle = {
-        backgroundImage: `url(https://image.tmdb.org/t/p/original/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)`
+        backgroundImage: `url(https://image.tmdb.org/t/p/w1280/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)`
     }
 
 

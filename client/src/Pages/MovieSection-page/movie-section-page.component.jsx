@@ -30,7 +30,7 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
     const [movieCastData, setMovieCastData] = useState([])
     const [trailerData, setTrailerData] = useState(null)
     const [hasSectionLoaded, setHasSectionLoaded] = useState(false) 
-    const [backdrop, setBackdropPath] = useState('url(https://image.tmdb.org/t/p/original/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)')
+    const [backdrop, setBackdropPath] = useState('url(https://image.tmdb.org/t/p/w1280/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)')
     const [genreNames, setGenreNames] = useState([])
 
     let history = useHistory();

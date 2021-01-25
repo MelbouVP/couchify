@@ -4,9 +4,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    //     background: #373B44;  /* fallback for old browsers */
-    // background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-    // background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: #000428;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -149,151 +146,29 @@
 
 @media only screen and (max-width: 950px) {
     .form-page__container {
-        
-        
         .form__container {
             width: 40%;
             height: 30rem;
-    
-            .form__title {
-                
-    
-                h1 {
-                    
-                }
-            }
-            
-            .form__content {
-                
-    
-                .form__content--input {
-                    
-    
-                    label {
-                        
-                    }
-    
-                    .shrink-label {
-                        
-                    }
-    
-                    input {
-                        
-                    }
-                }
-    
-    
-                .form__content--submit-btn {
-                    
-    
-                    button {
-                        
-                    }
-                }
-    
-                p {
-                  
-                }
-            }
         }
     }
 }
 
 @media only screen and (max-width: 820px) {
     .form-page__container {
-        
-        
         .form__container {
             width: 50%;
-            height: 30rem;
-    
-            .form__title {
-                
-    
-                h1 {
-                    
-                }
-            }
-            
-            .form__content {
-                
-    
-                .form__content--input {
-                    
-    
-                    label {
-                        
-                    }
-    
-                    .shrink-label {
-                        
-                    }
-    
-                    input {
-                        
-                    }
-                }
-    
-    
-                .form__content--submit-btn {
-                    
-    
-                    button {
-                        
-                    }
-                }
-    
-                p {
-                  
-                }
-            }
+            height: 30rem;        
         }
     }
 }
 
 @media only screen and (max-width: 670px) {
     .form-page__container {
-        
-        
         .form__container {
             width: 50%;
             height: 30rem;
-    
-            .form__title {
-                
-    
-                h1 {
-                    
-                }
-            }
             
             .form__content {
-                
-    
-                .form__content--input {
-                    
-    
-                    label {
-                        
-                    }
-    
-                    .shrink-label {
-                        
-                    }
-    
-                    input {
-                        
-                    }
-                }
-    
-    
-                .form__content--submit-btn {
-                    
-    
-                    button {
-                        
-                    }
-                }
     
                 p {
                   font-size: 1rem;
@@ -306,14 +181,12 @@
 @media only screen and (max-width: 550px) {
     .form-page__container {
         
-        
         .form__container {
             width: 60%;
             height: 26rem;
     
             .form__title {
                 
-    
                 h1 {
                     font-size: 1.5rem;
                 }
@@ -321,7 +194,6 @@
             
             .form__content {
                 
-    
                 .form__content--input {
                     margin-top: 1rem;
                     height: 2rem;   
@@ -370,50 +242,8 @@
 @media only screen and (max-width: 450px) {
     .form-page__container {
         
-        
         .form__container {
             width: 80%;
-    
-            .form__title {
-                
-    
-                h1 {
-                    
-                }
-            }
-            
-            .form__content {
-                
-    
-                .form__content--input {
-                    
-    
-                    label {
-                        
-                    }
-    
-                    .shrink-label {
-                        
-                    }
-    
-                    input {
-                        
-                    }
-                }
-    
-    
-                .form__content--submit-btn {
-                    
-    
-                    button {
-                        
-                    }
-                }
-    
-                p {
-                  
-                }
-            }
         }
     }
 }
