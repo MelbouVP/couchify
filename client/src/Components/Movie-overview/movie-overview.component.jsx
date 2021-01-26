@@ -22,12 +22,7 @@ const MovieOverview = ({
     fetchSearchedMovies, searchValue, totalPages,
     sortByValue, releaseDates, genres, otherData }) => {
 
-    console.log('Movie overview rendered')
-    console.log(currentPage)
-
-    console.log(searchResult)
     const history = useHistory()
-    console.log(history.location.pathname)
 
     
     const defaultMovies = otherData ?

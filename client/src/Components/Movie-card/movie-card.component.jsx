@@ -27,7 +27,9 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                     <div className="movie-card__front">
                         <img
                             src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
-                            alt={`${movieData.title} movie poster`} height='350px' width='260px'
+                            alt={`${movieData.title} movie poster`} 
+                            height='350px' 
+                            width='260px'
                         />
                     </div>
                     <div className="movie-card__back">
@@ -93,7 +95,9 @@ const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
                         style={{visibility: 'hidden'}}  
                         src={movieData.poster_path ? `https://image.tmdb.org/t/p/w342${movieData.poster_path}` : `https://mozitime.com/no-poster.png`} 
                         onLoad={() => setLoad(true)}
-                        alt='' height='350px' width='180px'
+                        alt='' 
+                        height='350px' 
+                        width='180px'
                     />
                 </div>
             }

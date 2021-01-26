@@ -35,7 +35,8 @@ const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter,
                 data: {
                   sortBy: sortByValue,
                   releaseDate: releaseDateValue,
-                  genres: movieGenresValue
+                  genres: movieGenresValue,
+                  pageNum: 1
                 }
             })
             const data = response.data

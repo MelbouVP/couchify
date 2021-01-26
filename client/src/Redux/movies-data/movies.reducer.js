@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
         sort_by: '',
         primary_release_date: [],
         with_genres: [],
-        page: 0,
+        page: 1,
         total_pages: 0,
         results: []
     },
