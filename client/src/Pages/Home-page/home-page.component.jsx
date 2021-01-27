@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -10,28 +9,16 @@ import MovieCard from '../../Components/Movie-card/movie-card.component';
 
 import { selectMoviesTrendingData, selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
-import { changeFetchStatus, fetchTrendingMovies, fetchPopularMovies } from '../../Redux/movies-data/movies.actions'
+import { requestHomePageData } from '../../Redux/movies-data/movies.actions'
 
 import './home-page.styles.scss';
 
-const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFetchStatus, fetchPopularMovies }) => {
+const HomePage = ({ trendingMovies, popularMovies, onRequestHomePageData }) => {
 
     useEffect(() => {
-        const fetchData = async() => {
-            try {
-                changeFetchStatus(true);
-                console.log('fetching')
-                const trending = await axios('http://localhost:3001/api/trending')
-                const popular = await axios('http://localhost:3001/api/popular')
-    
-                fetchTrendingMovies(trending.data)
-                fetchPopularMovies(popular.data)
-                        
-            } catch (error) {
-                throw Error(error)
-            } finally {
-                changeFetchStatus(false);
-            }
+        const fetchData = () => {
+
+            onRequestHomePageData()
         }
 
         if(!trendingMovies.length){
@@ -98,14 +85,12 @@ const HomePage = ({ trendingMovies, popularMovies, fetchTrendingMovies, changeFe
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchTrendingMovies: data => dispatch(fetchTrendingMovies(data)),
-    fetchPopularMovies: data => dispatch(fetchPopularMovies(data)),
-    changeFetchStatus: bool => dispatch(changeFetchStatus(bool))
+    onRequestHomePageData: () => dispatch(requestHomePageData())
 })
 
 const mapStateToProps = createStructuredSelector({
     trendingMovies: selectMoviesTrendingData,
-    popularMovies: selectMoviesPopularData
+    popularMovies: selectMoviesPopularData,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(HomePage))

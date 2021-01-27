@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { selectMoviesSearchValue, selectMoviesIsFetching, selectMoviesSearchResults, 
-    selectMoviesCurrentSearchPage, selectMoviesTotalSearchPage, selectMoviesFilteredSortByValue, 
-    selectMoviesFilteredReleaseDates, selectMoviesFilteredGenres } from '../../Redux/movies-data/movies.selectors';
+import { selectMoviesIsFetching, selectMoviesSearchData } from '../../Redux/movies-data/movies.selectors';
 
-import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions'
+import { changeIsFetching, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions'
 
 import MovieCard from '../Movie-card/movie-card.component';
 import ChangePageButton from '../Change-page-btn/change-page-button.component';
@@ -17,13 +15,11 @@ import Spinner from '../Spinner/spinner.component';
 import './movie-overview.styles.scss';
 
 
-const MovieOverview = ({ 
-    searchResult, currentPage, isLoading, changeFetchStatus, 
-    fetchSearchedMovies, searchValue, totalPages,
-    sortByValue, releaseDates, genres, otherData }) => {
+const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearchedMovies, otherData }) => {
 
-    const history = useHistory()
+    const { results, page, searchValue, total_pages, sort_by, primary_release_date, with_genres } = searchData
 
+    const history = useHistory()    
     
     const defaultMovies = otherData ?
             otherData.map( movieData =>
@@ -35,8 +31,8 @@ const MovieOverview = ({
 
     // Display user search result or filtering result depending on section/path
     // if there isn't data, provide backup data - defaultMovies(parent props)
-    const movies = searchResult.length ? 
-        searchResult.map( movieData => 
+    const movies = results.length ? 
+        results.map( movieData => 
                     <MovieCard key={movieData.id} movieData={movieData} />
         ) 
     :   
@@ -45,7 +41,7 @@ const MovieOverview = ({
 
     const getNewSearchPage = async (routeName) => {
         let route = routeName.toLowerCase()
-        changeFetchStatus(true);
+        changeIsFetching(true);
         try {
             let currentSearch = searchValue
 
@@ -55,7 +51,7 @@ const MovieOverview = ({
                 headers: {'Content-Type': 'application/json'},
                 data : {
                     searchValue: currentSearch,
-                    pageNum: currentPage
+                    pageNum: page
                 }
             })
 
@@ -67,22 +63,22 @@ const MovieOverview = ({
             throw Error(error)
         }
 
-        changeFetchStatus(false);
+        changeIsFetching(false);
     }
 
     const getNewFilterPage = async (routeName) => {
         let route = routeName.toLowerCase()
-        changeFetchStatus(true);
+        changeIsFetching(true);
 
         try {
             const response = await fetch(`http://localhost:3001/api/filter/${route}`, {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    sortBy: sortByValue,
-                    releaseDate: releaseDates,
-                    genres: genres,
-                    pageNum: currentPage
+                    sortBy: sort_by,
+                    releaseDate: primary_release_date,
+                    genres: with_genres,
+                    pageNum: page
                 })
             })
 
@@ -93,7 +89,7 @@ const MovieOverview = ({
         } catch(error) {
             console.log(error)
         }
-        changeFetchStatus(false);
+        changeIsFetching(false);
     }
 
     const handleClick = async (event) => {
@@ -119,7 +115,7 @@ const MovieOverview = ({
             <div className='search-result__container'>
                 <div className="search-result__overview">
                     {
-                        currentPage > 1 && isLoading === false ?
+                        page > 1 && isFetching === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
                                 position={{top: '100%', right: '55%'}}>
@@ -130,14 +126,14 @@ const MovieOverview = ({
                             
                     }
 
-                    {   isLoading ? 
-                        <Spinner />
-                    :
-                        movies
+                    {   isFetching ? 
+                            <Spinner />
+                        :
+                            movies
                     }
 
                     {
-                        totalPages > currentPage && isLoading === false ?
+                        total_pages > page && isFetching === false ?
                             <ChangePageButton 
                                 handleClick={handleClick} 
                                 position={{top: '100%', left: '55%'}} >
@@ -155,19 +151,13 @@ const MovieOverview = ({
 }
 
 const mapDispatchToProps = dispatch => ({
-    changeFetchStatus: (bool) => dispatch(changeFetchStatus(bool)),
+    changeIsFetching: (bool) => dispatch(changeIsFetching(bool)),
     fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data))
 })
 
 const mapStateToProps = createStructuredSelector({
-    sortByValue: selectMoviesFilteredSortByValue,
-    releaseDates: selectMoviesFilteredReleaseDates,
-    genres: selectMoviesFilteredGenres,
-    searchResult: selectMoviesSearchResults,
-    searchValue: selectMoviesSearchValue,
-    currentPage: selectMoviesCurrentSearchPage,
-    totalPages: selectMoviesTotalSearchPage,
-    isLoading: selectMoviesIsFetching
+    isFetching: selectMoviesIsFetching,
+    searchData: selectMoviesSearchData
 })
   
 export default connect(mapStateToProps, mapDispatchToProps)(MovieOverview)

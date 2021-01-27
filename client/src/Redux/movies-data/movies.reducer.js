@@ -12,10 +12,10 @@ export const INITIAL_STATE = {
     },
     trendingData: [],
     popularData: [],
+    hasLoaded: false,
     isFetching: false,
     currentlyViewedMovie: {
-        data: null,
-        additionalData: null,
+        data: {},
         similarMoviesData: null
     }
 }
@@ -27,19 +27,6 @@ const movieReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 searchData: action.payload
             }
-        case moviesActionTypes.FETCH_FILTERED_MOVIES:
-            return {
-                ...state,
-                filteredData: action.payload
-            }
-        case moviesActionTypes.CHANGE_FETCHED_SEARCH_VALUE:
-            return {
-                ...state,
-                searchData: {
-                    ...state.searchData,
-                    searchValue: action.payload
-                }
-            }
         case moviesActionTypes.FETCH_TRENDING_MOVIES:
             return {
                 ...state,
@@ -50,27 +37,14 @@ const movieReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 popularData: action.payload
             }
-        case moviesActionTypes.CHANGE_FETCH_STATUS:
-            return {
-                ...state,
-                isFetching: action.payload
-            }
         case moviesActionTypes.CHANGE_CURRENTLY_VIEWED_MOVIE:
             return {
                 ...state,
                 currentlyViewedMovie: {
-                    additionalData: null,
                     similarMoviesData: null,
                     data: action.payload,
-                }
-            }
-        case moviesActionTypes.ADD_EXTRA_DATA_TO_CURRENTLY_VIEWED_MOVIE:
-            return {
-                ...state,
-                currentlyViewedMovie: {
-                    ...state.currentlyViewedMovie,
-                    additionalData: action.payload
-                }
+                },
+                hasLoaded: false
             }
         case moviesActionTypes.SET_SIMILAR_MOVIES_DATA:
             return {
@@ -79,6 +53,37 @@ const movieReducer = (state = INITIAL_STATE, action) => {
                     ...state.currentlyViewedMovie,
                     similarMoviesData: action.payload
                 }
+            }
+        case moviesActionTypes.SET_MOVIE_CAST_DATA:
+            return {
+                ...state,
+                currentlyViewedMovie: {
+                    ...state.currentlyViewedMovie,
+                    data: {
+                        ...state.currentlyViewedMovie.data,
+                        cast: [...action.payload]
+                    }
+                }
+            }
+        case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_SUCCESS:
+        case moviesActionTypes.REQUEST_HOME_PAGE_DATA_SUCCESS:
+        case moviesActionTypes.REQUEST_SEARCH_DATA_SUCCESS:
+        case moviesActionTypes.REQUEST_FILTER_DATA_SUCCESS:
+            return {
+                ...state,
+                hasLoaded: true
+            }
+        case moviesActionTypes.REQUEST_HOME_PAGE_DATA_PENDING:
+        case moviesActionTypes.REQUEST_HOME_PAGE_DATA_FAILED:  
+        case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_PENDING:
+        case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_FAILED:
+        case moviesActionTypes.REQUEST_SEARCH_DATA_PENDING:
+        case moviesActionTypes.REQUEST_SEARCH_DATA_FAILED:
+        case moviesActionTypes.REQUEST_FILTER_DATA_PENDING:
+        case moviesActionTypes.REQUEST_FILTER_DATA_FAILED:
+            return {
+                ...state,
+                hasLoaded: false
             }
         default:
             return state

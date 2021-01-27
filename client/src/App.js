@@ -41,7 +41,9 @@ const App = () => {
                 <Route path='/filter' component={FilterPage}/>
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={RegisterPage} />
-                <Route exact path="/movie/:movieId" component={MovieSectionPage}/>
+                <Route path="/movie/:movieId" render={(props) => (
+                  <MovieSectionPage key={props.match.params.movieId} />)} 
+                />
                 <ProtectedRoute path='/profile' >
                   <ProfilePage />
                 </ProtectedRoute>

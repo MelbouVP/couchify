@@ -10,7 +10,7 @@ import { selectUserIsAuthenticated, selectUserMustWatch, selectUserID } from '..
 import { setMustWatchMovie, removeMustWatchMovie } from '../../Redux/user-data/user.actions'
 
 
-const MustWatchIcon = ({ currentMovie, extraData, isAuthenticated, mustWatch, userID, setMustWatchMovie, removeMustWatchMovie }) => {
+const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, setMustWatchMovie, removeMustWatchMovie }) => {
 
     const [isMustWatch, setIsMustWatch] = useState(false)
     const isInitialMount = useRef(true);
@@ -59,9 +59,9 @@ const MustWatchIcon = ({ currentMovie, extraData, isAuthenticated, mustWatch, us
                 posterPath: currentMovie.poster_path,
                 voteAverage: currentMovie.vote_average,
                 voteCount: currentMovie.vote_count,
-                imdbID: extraData.imdb_id,
-                videoKey: extraData.videos.results.length ? extraData.videos.results[0].key : null,
-                genre: extraData.genre_ids.map( genreID => genreID.name)
+                imdbID: currentMovie.imdb_id,
+                videoKey: currentMovie.videos.results.length ? currentMovie.videos.results[0].key : null,
+                genre: currentMovie.genre_ids.map( genreID => genreID.name)
             }
 
             setMustWatchMovie(mustWatchMovieData)

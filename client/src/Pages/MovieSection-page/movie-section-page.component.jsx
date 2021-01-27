@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { useHistory } from 'react-router'
 import { useLastLocation } from 'react-router-last-location';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
 
-import { addExtraDataToCurrentlyViewedMovie, setSimilarMoviesData, changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
-import { selectMoviesCurrrentMovie, selectMoviesCurrrentMovieExtraData, selectMoviesCurrrentMovieSimilarData } from '../../Redux/movies-data/movies.selectors';
-
+import { requestMovieSectionData, changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
+import { selectMoviesCurrrentMovie, selectMoviesCurrrentMovieSimilarData, selectMoviesHasLoaded } from '../../Redux/movies-data/movies.selectors';
 
 import BackButton from '../../Components/Go-back-btn/back-button.component';
 import Banner from '../../Components/Banner/banner.component';
@@ -22,30 +20,22 @@ import FavouriteIcon from '../../Components/Favourite-icon/favourite-icon.compon
 
 import './movie-section-page.styles.scss';
 
-
-const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData, setSimilarMoviesData, changeCurrentlyViewedMovie  }) => {
+const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionData, hasSectionLoaded  }) => {
 
     const [didPosterLoad, setPosterLoad] = React.useState(false);
     const [showOverlay, setShowOverlay] = useState(false)
-    const [movieCastData, setMovieCastData] = useState([])
     const [trailerData, setTrailerData] = useState(null)
-    const [hasSectionLoaded, setHasSectionLoaded] = useState(false) 
     const [backdrop, setBackdropPath] = useState('url(https://image.tmdb.org/t/p/w1280/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)')
-    const [genreNames, setGenreNames] = useState([])
 
     let history = useHistory();
     const lastLocation = useLastLocation();
-    
 
     const sendToPreviousPage = () => {
         lastLocation === null ? history.push('/') : history.push(lastLocation.pathname)
-        setHasSectionLoaded(false)
-        changeCurrentlyViewedMovie(null)
     }
 
     const showSimilarMovie = (e) => {
         if(e.target.value === 'Details'){
-            setHasSectionLoaded(false);
             setPosterLoad(false);
         } else {
             return
@@ -54,68 +44,40 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
 
     useEffect(() => {
         let movieId = parseInt(window.location.pathname.replace('/movie/', ''))
+        onRequestMovieSectionData(movieId)
 
-        const checkCurrentMovie = () => {
+    },[onRequestMovieSectionData])
 
-            if(currentMovie === null){
-                fetchMovieData()
-            } else if( extraData === null) {
-                fetchExtraMovieData()
-            } else if (currentMovie.id !== movieId) {
-                fetchMovieData()
-            }
-        }
 
-        const fetchMovieData = async () => {
-            try {
-                let currentMovie = await axios(`http://localhost:3001/api/movie/${movieId}`)
-                changeCurrentlyViewedMovie(currentMovie.data)
-            } catch (error) {
-                throw Error
-            }
-        }
-
-        const fetchExtraMovieData = async() => {
-            try {
-                const responseAdditionalData = await axios(`http://localhost:3001/api/movie/${currentMovie.id}`)
-
-                const responseSimilarMoviesData = await axios(`http://localhost:3001/api/similar/${currentMovie.id}`)
-                const responseMovieCastData = await axios(`http://localhost:3001/api/credits/${currentMovie.id}`)
-
-                setExtraData(responseAdditionalData.data)
-                setSimilarMoviesData(responseSimilarMoviesData.data);
-                setMovieCastData(responseMovieCastData.data)
-
-                let genres = responseAdditionalData.data.genre_ids.map(data => data.name)
-                setGenreNames(genres)
-
-                if( responseAdditionalData.data.videos.results.length ){
-                 setTrailerData(responseAdditionalData.data.videos.results[0].key)
-                }
-
-                if(currentMovie.backdrop_path){
-                    setBackdropPath(`url(https://image.tmdb.org/t/p/w1280${currentMovie.backdrop_path}`)
-                }
-
-            } catch (error) {
-                throw Error(error)
-            } finally {
-                setHasSectionLoaded(true);
-            }
-        }
+    useEffect( () => {
         
-        checkCurrentMovie()
+        if(hasSectionLoaded){
 
-    },[currentMovie, extraData, setExtraData, setSimilarMoviesData, changeCurrentlyViewedMovie])
+            if(currentMovie.videos.results.length) {
+                setTrailerData(currentMovie.videos.results[0].key)
+            }
+
+            if(currentMovie.backdrop_path) {
+                setBackdropPath(`url(https://image.tmdb.org/t/p/w1280${currentMovie.backdrop_path}`)
+            }
+
+        }
+    },[hasSectionLoaded, currentMovie])
 
 
     const bannerStyle = {
         backgroundImage: backdrop
     }
 
-    const genres = genreNames.map( (genre, index) => <div className='details__genres--name' key={index} >{genre}</div>)
+    const genres =  hasSectionLoaded ? 
+            currentMovie.genre_ids.map( ({name, id}) => <div className='details__genres--name' key={id} >{name}</div>)
+        :
+            null
 
-    const cast = movieCastData.map( (cast) => <CastCard actorData={cast} key={cast.id} />)
+    const cast = hasSectionLoaded ? 
+            currentMovie.cast.map( (cast) => <CastCard actorData={cast} key={cast.id} />) 
+        : 
+            null
 
     const similarMoviesItem = similarMoviesData ? 
             similarMoviesData.map( movieData => 
@@ -215,12 +177,10 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
                                         </h1>
                                         <div className='details__interaction-icons'>
                                             <FavouriteIcon 
-                                                currentMovie={currentMovie} 
-                                                extraData={extraData} 
+                                                currentMovie={currentMovie}
                                             />
                                             <MustWatchIcon 
-                                                currentMovie={currentMovie} 
-                                                extraData={extraData} 
+                                                currentMovie={currentMovie}
                                             />
                                         </div>
                                     </div>
@@ -232,7 +192,7 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
                                         </div>
                                         <div className='details__short-info--runtime'>
                                             {
-                                                `${Math.floor((extraData.runtime/60))}h ${extraData.runtime%60}m`
+                                                `${Math.floor((currentMovie.runtime/60))}h ${currentMovie.runtime%60}m`
                                             }
                                         </div>
                                         <div className='details__short-info--rating'>
@@ -261,7 +221,7 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
                                     <div className="details__cast">
                                         <h4>Cast</h4>
                                         <Carousel 
-                                            slideCount={movieCastData.length >= 5 ? 5 : 2} 
+                                            slideCount={currentMovie.cast.length >= 5 ? 5 : 2} 
                                             showDots={false}
                                         >
                                             {
@@ -296,14 +256,13 @@ const MovieSection = ({ currentMovie, extraData, setExtraData, similarMoviesData
 
 const mapStateToProps = createStructuredSelector({
     currentMovie: selectMoviesCurrrentMovie,
-    extraData: selectMoviesCurrrentMovieExtraData,
     similarMoviesData: selectMoviesCurrrentMovieSimilarData,
+    hasSectionLoaded: selectMoviesHasLoaded
 })
 
-const mapDispatchToProps = dispatch => ({
-    changeCurrentlyViewedMovie: item => dispatch(changeCurrentlyViewedMovie(item)),
-    setExtraData: (data) => dispatch(addExtraDataToCurrentlyViewedMovie(data)),
-    setSimilarMoviesData: (data) => dispatch(setSimilarMoviesData(data))
+const mapDispatchToProps = (dispatch) => ({
+    changeCurrentlyViewedMovie: (item) => dispatch(changeCurrentlyViewedMovie(item)),
+    onRequestMovieSectionData: (movieId) => dispatch(requestMovieSectionData(movieId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MovieSection));

@@ -10,7 +10,7 @@ import { selectUserIsAuthenticated, selectUserFavourites, selectUserID } from '.
 import { setFavouriteMovie, removeFavouriteMovie } from '../../Redux/user-data/user.actions'
 
 
-const FavouriteIcon = ({ currentMovie, extraData, isAuthenticated, favourites, userID, setFavouriteMovie, removeFavouriteMovie }) => {
+const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, setFavouriteMovie, removeFavouriteMovie }) => {
 
     const [isFavourite, setIsFavourite] = useState(false)
     const isInitialMount = useRef(true);
@@ -61,9 +61,9 @@ const FavouriteIcon = ({ currentMovie, extraData, isAuthenticated, favourites, u
                 posterPath: currentMovie.poster_path,
                 voteAverage: currentMovie.vote_average,
                 voteCount: currentMovie.vote_count,
-                imdbID: extraData.imdb_id,
-                videoKey: extraData.videos.results.length ? extraData.videos.results[0].key : null,
-                genre: extraData.genre_ids.map( genreID => genreID.name)
+                imdbID: currentMovie.imdb_id,
+                videoKey: currentMovie.videos.results.length ? currentMovie.videos.results[0].key : null,
+                genre: currentMovie.genre_ids.map( genreID => genreID.name)
             }
     
             setFavouriteMovie(favouriteMovieData)

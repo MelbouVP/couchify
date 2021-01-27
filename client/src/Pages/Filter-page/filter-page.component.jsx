@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { createStructuredSelector } from 'reselect';
 
 import MovieOverview from '../../Components/Movie-overview/movie-overview.component';
@@ -9,7 +8,7 @@ import BackButton from '../../Components/Go-back-btn/back-button.component';
 import ForwardButton from '../../Components/Go-forward-btn/forward-button.component';
 
 // Data from movies reducer
-import { changeFetchStatus, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions';
+import { requestFilteredData } from '../../Redux/movies-data/movies.actions';
 import { selectMoviesPopularData } from '../../Redux/movies-data/movies.selectors';
 
 // Data from utility-events reducer
@@ -18,39 +17,18 @@ import { selectMovieFilterHidden } from '../../Redux/utility-events/utility.sele
 
 import './filter-page.styles.scss';
 
-const FilterPage = ({ changeFetchStatus, fetchSearchedMovies, toggleMovieFilter, filterHidden, popularMoviesData }) => {
+const FilterPage = ({ toggleMovieFilter, filterHidden, popularMoviesData, onRequestFilteredData }) => {
 
 
     const handleSubmit = async (e, sortByValue, releaseDateValue, movieGenresValue) => {
         e.preventDefault()
         window.scrollTo(0, 0);
+
         toggleMovieFilter(!filterHidden);
-        changeFetchStatus(true);
 
-        try {
+        onRequestFilteredData({sortByValue, releaseDateValue, movieGenresValue, pagenum: 1})
 
-            const response = await axios({
-                method: 'post',
-                url: 'http://localhost:3001/api/filter',
-                data: {
-                  sortBy: sortByValue,
-                  releaseDate: releaseDateValue,
-                  genres: movieGenresValue,
-                  pageNum: 1
-                }
-            })
-            const data = response.data
-            console.log(data)
-            
-            fetchSearchedMovies(data)
-            
-        } catch (error){
-            throw Error(error)
-        }
-
-        changeFetchStatus(false);
     }
-
 
     const handleMovieFilter = () => {
         toggleMovieFilter(!filterHidden)
@@ -92,9 +70,8 @@ const mapStateToProps = createStructuredSelector({
 
 
 const mapDispatchToProps = dispatch => ({
-    changeFetchStatus: (bool) => dispatch(changeFetchStatus(bool)),
-    fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data)),
     toggleMovieFilter: (bool) => dispatch(toggleMovieFilter(bool)),
+    onRequestFilteredData: (filterOptions) => dispatch(requestFilteredData(filterOptions))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPage);
