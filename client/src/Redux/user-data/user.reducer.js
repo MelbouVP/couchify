@@ -56,6 +56,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     must_watch_movies: removeMovie(state.profile.must_watch_movies, action.payload)
                 }
             }
+        case userActionTypes.REQUEST_USER_DATA_PENDING:
+        case userActionTypes.REQUEST_USER_DATA_SUCCESS:
+        case userActionTypes.REQUEST_USER_DATA_FAILED:
+        case userActionTypes.REGISTER_NEW_USER_PENDING:
+        case userActionTypes.REGISTER_NEW_USER_SUCCESS:
+        case userActionTypes.REGISTER_NEW_USER_FAILED:
         default:
             return state
     }

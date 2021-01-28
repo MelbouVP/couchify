@@ -3,20 +3,15 @@ import { connect } from 'react-redux'
 
 import { useHistory } from 'react-router-dom'
 
-import { loadProfileData } from '../../Redux/user-data/user.actions'
+import { requestUserData } from '../../Redux/user-data/user.actions'
 
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import Particles from 'react-particles-js';
 
 import '../Register-page/form-page.styles.scss'
 
-
-
-const LoginPage = ({ loadProfileData }) => {
+const LoginPage = ({ onRequestUserData }) => {
 
     const [userCredentials, setUserCredentials] = useState({ email: '', password: ''})
-
 	const { email, password } = userCredentials
 	
 	const history = useHistory()
@@ -24,7 +19,6 @@ const LoginPage = ({ loadProfileData }) => {
 	const handleChange = (e) => {
 
 		const { name, value } = e.target
-
 		setUserCredentials({...userCredentials, [name]: value})
 	}
 
@@ -39,40 +33,12 @@ const LoginPage = ({ loadProfileData }) => {
          
 		const data = {}
 		formData.forEach((value, property) => data[property] = value)
-		
-		axios.post('http://localhost:3001/api/login', data)
-			.then(response => {
-				toast.success('🚀 Login successful!', {
-					position: "bottom-center",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
 
-				setUserCredentials({ email: '', password: ''})
-				
-				loadProfileData(response.data)
 
-				history.push('/profile')
-				
-			})
-			.catch(error => {
 
-				toast.error('❌ Hmm, Something went wrong', {
-					position: "bottom-center",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-                });
-                
-                setUserCredentials({ email: '', password: ''})
-			})
+		onRequestUserData(data, history)
+			
+		setUserCredentials({ email: '', password: ''})
 	}
 	
 
@@ -107,11 +73,7 @@ const LoginPage = ({ loadProfileData }) => {
 	            "onhover": {
 	                "enable": true,
 	                "mode": "bubble"
-	            },
-	            // "onclick": {
-	            //     "enable": true,
-	            //     "mode": "repulse"
-	            // }
+	            }
 	        },
 	        "modes": {
 	            "bubble": {
@@ -166,7 +128,7 @@ const LoginPage = ({ loadProfileData }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	loadProfileData: data => dispatch(loadProfileData(data))
+	onRequestUserData: (data, history) => dispatch(requestUserData(data, history))
 })
 
 export default connect(null, mapDispatchToProps)(React.memo(LoginPage));

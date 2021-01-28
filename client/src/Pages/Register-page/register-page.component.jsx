@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 
 import { useHistory } from 'react-router-dom'
 
-import { loadProfileData } from '../../Redux/user-data/user.actions'
+import { registerNewUser} from '../../Redux/user-data/user.actions'
 
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import Particles from 'react-particles-js';
 
 import './form-page.styles.scss';
 
 
 
-const RegisterPage = ({ loadProfileData }) => {
+const RegisterPage = ({ onRegisterNewUser }) => {
 
 	const [userCredentials, setUserCredentials] = useState({ username: '', email: '', password: '', confirmPassword: '' })
 
@@ -24,7 +23,6 @@ const RegisterPage = ({ loadProfileData }) => {
 	const handleChange = (e) => {
 
 		const { name, value } = e.target
-
 		setUserCredentials({...userCredentials, [name]: value})
 	}
 
@@ -63,37 +61,9 @@ const RegisterPage = ({ loadProfileData }) => {
 		const data = {}
 		formData.forEach((value, property) => data[property] = value)
 		
-		axios.post('http://localhost:3001/api/register', data)
-			.then(response => {
-				toast.success('🚀 Registration successful!', {
-					position: "bottom-center",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
+		onRegisterNewUser(data, history)
 
-				setUserCredentials({ username: '', email: '', password: '', confirmPassword: '' })
-				
-				loadProfileData(response.data)
-
-				history.push('/profile')
-				
-			})
-			.catch(error => {
-
-				toast.error('❌ Hmm, Something went wrong', {
-					position: "bottom-center",
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
-			})
+		setUserCredentials({ username: '', email: '', password: '', confirmPassword: '' })
 	}
 	
 
@@ -198,7 +168,7 @@ const RegisterPage = ({ loadProfileData }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	loadProfileData: data => dispatch(loadProfileData(data))
+	onRegisterNewUser: (data, history) => dispatch(registerNewUser(data, history))
 })
 
 

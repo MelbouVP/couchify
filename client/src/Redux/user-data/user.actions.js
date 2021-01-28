@@ -1,4 +1,6 @@
 import userActionTypes from './user.types'
+import axios from 'axios';
+import { showNotification } from './user.utils';
 
 
 export const loadProfileData = (data) => ({
@@ -29,3 +31,39 @@ export const removeMustWatchMovie = (movieID) => ({
     type: userActionTypes.REMOVE_MUST_WATCH_MOVIE,
     payload: movieID
 })
+
+export const requestUserData = (data, history) => async (dispatch) => {
+    dispatch({ type: userActionTypes.REQUEST_USER_DATA_PENDING })
+
+    try {
+        const response = await axios.post('http://localhost:3001/api/login', data)
+        showNotification('success', '🚀 Login successful!')
+        dispatch(loadProfileData(response.data))
+
+        history.push('/profile')
+
+        dispatch({type: userActionTypes.REQUEST_USER_DATA_SUCCESS})
+
+    } catch {
+        dispatch({type: userActionTypes.REQUEST_USER_DATA_FAILED})
+        showNotification('error', '❌ Hmm, Something went wrong')
+    }
+}
+
+export const registerNewUser = (data, history) =>  async (dispatch) => {
+    dispatch({ type: userActionTypes.REGISTER_NEW_USER_PENDING })
+
+    try {
+        await axios.post('http://localhost:3001/api/register', data)
+        showNotification('info', '🚀 Registration successful!')
+        dispatch({ type: userActionTypes.REGISTER_NEW_USER_SUCCESS })
+
+        const { password, email } = data
+        
+        dispatch(requestUserData({ password, email }, history))
+
+    } catch {
+        dispatch({ type: userActionTypes.REGISTER_NEW_USER_FAILED })
+        showNotification('error', '❌ Hmm, Something went wrong')
+    }
+}
