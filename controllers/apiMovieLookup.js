@@ -1,6 +1,8 @@
 require('dotenv').config();
 const axios = require('axios');
 
+
+// Retrieves data for individual movie
 const handleLookup = (req,res) => {
     const { id } = req.params
     axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos`)

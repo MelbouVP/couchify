@@ -2,16 +2,23 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom';
 
-
 import './selection-card.styles.scss';
 
 
 const SelectionCard = ({ data, handleVideo}) => {
 
+    // SelectionCard component is responsible for displaying brief information about movie in parent component (ProfilePage)
+
+    // props = {
+    //     data, // brief movie information
+    //     handleVideo // trigger function in parent component
+    // }
+
     const { id, posterPath, genre, imdbID, releaseDate, title, videoKey, voteAverage } = data
 
     const history = useHistory()
 
+    // Redirects user to page about the specific movie (MovieSectionPage component)
     const handleClick = () => {
         history.push(`/movie/${id}`)
     }
@@ -79,4 +86,4 @@ const SelectionCard = ({ data, handleVideo}) => {
     )
 }
 
-export default SelectionCard
+export default React.memo(SelectionCard)

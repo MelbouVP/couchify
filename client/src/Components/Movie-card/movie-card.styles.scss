@@ -9,7 +9,6 @@ $card-text-color: white;
     .movie-card__front {
         transition: .2s;
         
-
         img {
             width: 100%;
             border-radius: .75rem;
@@ -40,7 +39,6 @@ $card-text-color: white;
         transition: .2s;
         z-index: 1;
 
-
         background-color: rgba(0, 0, 0, .8);
         color: white;
         font-weight: bold;
@@ -61,8 +59,6 @@ $card-text-color: white;
         left: 0;
         z-index: -1;
         border-radius: .75rem;
-        
-
 
         transition: .2s ease-in-out;
         transform: scale(.2);

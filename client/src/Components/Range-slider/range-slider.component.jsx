@@ -13,9 +13,20 @@ const useStyles = makeStyles({
 });
 
 const RangeSlider = ({ handleRangeChange }) => {
-  const classes = useStyles();
-  const [value, setRangeValue] = React.useState([1980, 2020]);
 
+  // RangeSlider component is responsible for displaying interactive date range slider.
+
+  // props = {
+  //   handleRangeChange // passes date range changes to parent component (MovieFilter)
+  // }
+
+  const currentYear = parseInt(new Date().toISOString().replace('T', ' ').substr(0, 4))
+  
+  const classes = useStyles();
+  const [value, setRangeValue] = React.useState([1980, currentYear]);
+
+
+  // handles internal state changes for display purposes and passes changes to parent component
   const handleChange = (event, newRangeValue) => {
     setRangeValue(newRangeValue);
     handleRangeChange(newRangeValue)
@@ -28,10 +39,10 @@ const RangeSlider = ({ handleRangeChange }) => {
         onChange={handleChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
-        min={1920}
-        max={2020}
+        min={1900}
+        max={currentYear}
       />
-        <h2>{value[0]} - {value[1]}</h2>
+        <h2 className='range-slider__dates'>{value[0]} - {value[1]}</h2>
     </div>
   );
 }

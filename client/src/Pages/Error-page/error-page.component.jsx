@@ -10,18 +10,25 @@ class ErrorBoundary extends React.Component {
       super(props);
       this.state = { hasError: false };
     }
+
+
+    // Errorboundary component is responsible for encountered errors and displaying 404 page
   
+    // If error is caught
     static getDerivedStateFromError(error) {
       // Update state so the next render will show the fallback UI.
       return { hasError: true };
     }
 
+  
+    // Reset error state
     handleClick = () => {
       this.setState({
         hasError: false
       })
     }
   
+    // if no error has been caught then renders child components
     render() {
       if (this.state.hasError) {
         return (

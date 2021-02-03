@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { connect } from 'react-redux';
@@ -7,35 +6,26 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectUserIsAuthenticated, selectUserFavourites, selectUserID } from '../../Redux/user-data/user.selectors';
 
-import { setFavouriteMovie, removeFavouriteMovie } from '../../Redux/user-data/user.actions'
+import { updateFavouriteMovieList } from '../../Redux/user-data/user.actions'
 
 
-const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, setFavouriteMovie, removeFavouriteMovie }) => {
+const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, onUpdateFavouriteMovieList }) => {
 
+    // FavouriteIcon is responsible for handling changes in favourite movies of user and communicating changes to back-end server.
+
+    // props = {
+    //     currentMovie, // data about currently viewed movie acquired from parent component (MovieSectionPage)
+    //     isAuthenticated, // checks if user is authenticated (redux)
+    //     favourites, // array of favourite movies objects (redux)
+    //     userId, // id of logged in user (redux)
+    //     onUpdateFavouriteMovieList // handles changes of favourites movie array (react-action)
+    // }
+
+    // Controls styling of svg element
     const [isFavourite, setIsFavourite] = useState(false)
-    const isInitialMount = useRef(true);
-
-    useEffect( () => {
-
-        if(isInitialMount.current) {
-            isInitialMount.current = false
-        } else {
-            axios.post('http://localhost:3001/api/favourites', { id: userID, data: favourites })
-                .then( response => undefined)
-                .catch(error => toast.error('Hmm. something went wrong.', {
-                    position: "bottom-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                }))
-        }
-
-    }, [userID, favourites])
 
 
+    // Checks if movie is favourite on mount
     useEffect (() => {
         favourites.forEach( movie => {
                 
@@ -48,6 +38,7 @@ const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, setF
     })
 
 
+    // Handles internal state changes, dispatching of redux actions and and informing user about changes
     const handleFavourite = (e) => {
 
         if(!isFavourite){
@@ -65,8 +56,8 @@ const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, setF
                 videoKey: currentMovie.videos.results.length ? currentMovie.videos.results[0].key : null,
                 genre: currentMovie.genre_ids.map( genreID => genreID.name)
             }
-    
-            setFavouriteMovie(favouriteMovieData)
+
+            onUpdateFavouriteMovieList(favourites, favouriteMovieData, userID, 'add')
 
             toast.info('❤️ Added to favourites!', {
                 position: "bottom-center",
@@ -81,8 +72,7 @@ const FavouriteIcon = ({ currentMovie, isAuthenticated, favourites, userID, setF
         } else {
             setIsFavourite(false)
 
-            removeFavouriteMovie(currentMovie.id)
-
+            onUpdateFavouriteMovieList(favourites, currentMovie.id, userID, 'remove')
 
             toast.dark('💔 Removed from favourites!', {
                 position: "bottom-center",
@@ -143,8 +133,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setFavouriteMovie: (data) => dispatch(setFavouriteMovie(data)),
-    removeFavouriteMovie: (data) => dispatch(removeFavouriteMovie(data))
+    onUpdateFavouriteMovieList: (currentFavouritesList, movieToUpdate, userID, action) => dispatch(updateFavouriteMovieList(currentFavouritesList, movieToUpdate, userID, action))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(FavouriteIcon))

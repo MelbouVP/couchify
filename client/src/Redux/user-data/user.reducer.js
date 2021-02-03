@@ -1,5 +1,4 @@
 import userActionTypes from './user.types';
-import { removeMovie } from './user.utils';
 
 export const INITIAL_STATE = {
     isAuthenticated: false,
@@ -29,7 +28,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    favourite_movies: [...state.profile.favourite_movies, action.payload]
+                    favourite_movies: action.payload
                 }
             }
         case userActionTypes.REMOVE_FAVOURITE_MOVIE:
@@ -37,7 +36,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    favourite_movies: removeMovie(state.profile.favourite_movies, action.payload)
+                    favourite_movies: action.payload
                 }
             }
         case userActionTypes.SET_MUST_WATCH_MOVIE:
@@ -45,7 +44,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    must_watch_movies: [...state.profile.must_watch_movies, action.payload]
+                    must_watch_movies: action.payload
                 }
             }
         case userActionTypes.REMOVE_MUST_WATCH_MOVIE:
@@ -53,15 +52,21 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    must_watch_movies: removeMovie(state.profile.must_watch_movies, action.payload)
+                    must_watch_movies: action.payload
                 }
             }
+        case userActionTypes.REGISTER_NEW_USER_PENDING:
         case userActionTypes.REQUEST_USER_DATA_PENDING:
         case userActionTypes.REQUEST_USER_DATA_SUCCESS:
-        case userActionTypes.REQUEST_USER_DATA_FAILED:
-        case userActionTypes.REGISTER_NEW_USER_PENDING:
         case userActionTypes.REGISTER_NEW_USER_SUCCESS:
+            return {
+                ...state
+            }
+        case userActionTypes.REQUEST_USER_DATA_FAILED:
         case userActionTypes.REGISTER_NEW_USER_FAILED:
+            return {
+                ...INITIAL_STATE
+            }
         default:
             return state
     }

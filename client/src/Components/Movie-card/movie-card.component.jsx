@@ -9,13 +9,24 @@ import './movie-card.styles.scss';
 import { changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
 
 const MovieCard = ({ movieData, changeCurrentlyViewedMovie }) => {
+    
+    // MovieCard component is responsible for dispaly brief information about movie.
+    // props = {
+    //     movieData, // data about specific movie
+    //     changeCurrentlyViewedMovie // changes data about currently viewed movie (redux-action)
+    // }
+    
     let history = useHistory();
 
+
+    // history.push changes current url path
+    // thus triggering display of MovieSectionComponent (see app.js)
     const handleClick = () => {
         changeCurrentlyViewedMovie(movieData)
         history.push(`/movie/${movieData.id}`)
     }
 
+    // See Cast-card component for didLoad explanation.
     const [didLoad, setLoad] = React.useState(false);
 
     return (

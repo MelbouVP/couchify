@@ -2,6 +2,8 @@ import React from 'react';
 import './forward-button.styles.scss'
 
 const ForwardButton = ({ handleClick }) => {
+
+    // See Go-back-btn component 2nd point for documentation.
     
     return (
         <div className="forward-button__container" onClick={handleClick}>

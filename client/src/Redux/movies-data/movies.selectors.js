@@ -41,7 +41,7 @@ export const selectMoviesSearchValue = createSelector(
     data => data.searchValue
 )
 
-export const selectMoviesCurrrentMovie = createSelector(
+export const selectMoviesCurrrentMovieData = createSelector(
     [selectMoviesCurrentlyViewedMovie],
     movie => movie.data
 )

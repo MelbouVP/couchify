@@ -2,11 +2,19 @@ import React from 'react';
 
 import Spinner from '../Spinner/spinner.component';
 
-
 import './cast-card.styles.scss'
 
 const CastCard = ({ actorData }) => {
+    // CastCard component is responsible for displaying an image of an actor and limited actor information.
 
+    // props = {
+    //     actorData // data about actor for a specifi movie, acquired from an api
+    // }
+
+    // Controls wether an actor image or a spinner is displayed.
+    // on initial render, displays spinner with hidden actor image,
+    // using onLoad function detects when actor image is loaded
+    // after image is loaded state is changed.
     const [didActorImgLoad, setActorImgLoad] = React.useState(false);
 
     const backgroundImg = {

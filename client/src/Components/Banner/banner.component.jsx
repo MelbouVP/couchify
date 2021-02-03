@@ -2,8 +2,15 @@ import React from 'react';
 
 import './banner.styles.scss';
 
-
 const Banner = ({ bannerStyle, shapeDivider, children }) => {
+
+    // Banner component is responsible for displaying provided background-image (default if not provided) and other components as children.
+    
+    // props = {
+    //     bannerStyle, // url for background-image of the component
+    //     shapeDivider (used only at home-page), // svg element from https://www.shapedivider.app/
+    //     children // components that are display within banner
+    // }
 
     const defaultDynamicStyle = {
         backgroundImage: `url(https://image.tmdb.org/t/p/w1280/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)`

@@ -1,4 +1,3 @@
-
 .filter-page__container {
     background-image: url('https://images.hdqwalls.com/download/minimalist-landscape-to-1920x1080.jpg');
     background-attachment: fixed;
@@ -19,7 +18,6 @@
             top: 12.5%;
             z-index: 20;
         }
-
 
         .container__movie-filter {
             position: relative;
@@ -42,19 +40,14 @@
             backdrop-filter: blur(5px);
             padding: 4rem 1rem;
             width: 100%;
-            // display: flex;
-            // align-items: center;
-            // justify-content: center;
-            
+
             svg {
                 
                 display: block;
                 margin: 0 auto;
             }
-        }
-        
+        }   
     }
-
 }
 
 @media only screen and (max-width: 850px) {
@@ -70,10 +63,7 @@
                     left: unset;
                     right: 13%;
                 }
-
-            }
-            
+            }   
         }
-
     }
 }

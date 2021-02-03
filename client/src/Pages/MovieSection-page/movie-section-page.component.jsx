@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
 
 import { requestMovieSectionData, changeCurrentlyViewedMovie } from '../../Redux/movies-data/movies.actions'
-import { selectMoviesCurrrentMovie, selectMoviesCurrrentMovieSimilarData, selectMoviesHasLoaded } from '../../Redux/movies-data/movies.selectors';
+import { selectMoviesCurrrentMovieData, selectMoviesCurrrentMovieSimilarData, selectMoviesHasLoaded } from '../../Redux/movies-data/movies.selectors';
 
 import BackButton from '../../Components/Go-back-btn/back-button.component';
 import Banner from '../../Components/Banner/banner.component';
@@ -15,16 +15,31 @@ import ScrollToTop from '../../Components/ScrollToTop/scroll-to-top.component';
 import Carousel from '../../Components/Carousel/carousel.component';
 import CastCard from '../../Components/Cast-card/cast-card.component';
 import MovieCard from '../../Components/Movie-card/movie-card.component';
-import MustWatchIcon from '../../Components/MustWatch-icon/must-watch-icon.component';
-import FavouriteIcon from '../../Components/Favourite-icon/favourite-icon.component';
+import MustWatchIcon from '../../Components/Icon-components/must-watch-icon.component';
+import FavouriteIcon from '../../Components/Icon-components/favourite-icon.component';
 
 import './movie-section-page.styles.scss';
 
-const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionData, hasSectionLoaded  }) => {
+const MovieSectionPage = ({ currentMovie, similarMoviesData, onRequestMovieSectionData, hasSectionLoaded  }) => {
 
+    // MovieSectionpage component is responsible for displaying data about individual movies and fetching additional data such as movie cast info
+
+    // props = {
+    //     currentMovie, // data about currently display movie (redux)
+    //     similarMoviesData, // data about movies similar to currently displayed (redux)
+    //     onRequestMovieSectionData, // fetching additional movie data (redux-action)
+    //     hasSectionLoaded // control display of page (redux)
+    // }
+
+
+    // handles display of poster img, see cast card for similar documentation
     const [didPosterLoad, setPosterLoad] = React.useState(false);
+
+    // overlay acts as a modal and handles display of movie trailer
     const [showOverlay, setShowOverlay] = useState(false)
     const [trailerData, setTrailerData] = useState(null)
+
+    // backdrop is used as background img (display either default or related to movie)
     const [backdrop, setBackdropPath] = useState('url(https://image.tmdb.org/t/p/w1280/3pvIMjJps4uJr5NOmolY0MXvTYD.jpg)')
 
     let history = useHistory();
@@ -34,6 +49,7 @@ const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionDa
         lastLocation === null ? history.push('/') : history.push(lastLocation.pathname)
     }
 
+    // resets state (react SPA doesnt rerender component completely and therefore component poster state isnt reset)
     const showSimilarMovie = (e) => {
         if(e.target.value === 'Details'){
             setPosterLoad(false);
@@ -42,6 +58,7 @@ const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionDa
         }
     }
 
+    // Fetch data about movie to be displayed
     useEffect(() => {
         let movieId = parseInt(window.location.pathname.replace('/movie/', ''))
         onRequestMovieSectionData(movieId)
@@ -49,6 +66,7 @@ const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionDa
     },[onRequestMovieSectionData])
 
 
+    // Handles case when javascript can't read non existant object property data (it is neccessary to wait for all of object data to load first)
     useEffect( () => {
         
         if(hasSectionLoaded){
@@ -255,7 +273,7 @@ const MovieSection = ({ currentMovie, similarMoviesData, onRequestMovieSectionDa
 }
 
 const mapStateToProps = createStructuredSelector({
-    currentMovie: selectMoviesCurrrentMovie,
+    currentMovie: selectMoviesCurrrentMovieData,
     similarMoviesData: selectMoviesCurrrentMovieSimilarData,
     hasSectionLoaded: selectMoviesHasLoaded
 })
@@ -265,4 +283,4 @@ const mapDispatchToProps = (dispatch) => ({
     onRequestMovieSectionData: (movieId) => dispatch(requestMovieSectionData(movieId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MovieSection));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MovieSectionPage));

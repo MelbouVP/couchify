@@ -5,6 +5,9 @@ import './search-page.styles.scss'
 
 const SearchPage = () => {
 
+    // SearchPage component is responsible for displaying search results
+    // see SearchBar component for search result fetching
+
     return(
         <div className='search-page__container'>
             <div className="search-page">

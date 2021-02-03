@@ -1,8 +1,8 @@
 import moviesActionTypes from './movies.types';
 import axios from 'axios';
 
-export const fetchSearchedMovies = (item) => ({
-    type: moviesActionTypes.FETCH_SEARCHED_MOVIES,
+export const changeFetchedMoviesData = (item) => ({
+    type: moviesActionTypes.CHANGE_FETCHED_MOVIES_DATA,
     payload: item
 })
 
@@ -36,6 +36,8 @@ export const setSimilarMoviesData = (data) => ({
     payload: data
 })
 
+
+// redux-thunk actions
 export const requestHomePageData = () => async (dispatch) => {
     dispatch({type: moviesActionTypes.REQUEST_HOME_PAGE_DATA_PENDING })
 
@@ -46,15 +48,14 @@ export const requestHomePageData = () => async (dispatch) => {
         dispatch(fetchTrendingMovies(trending.data))
         dispatch(fetchPopularMovies(popular.data))
         
+        dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_SUCCESS })
+
     } catch (error) {
         dispatch({type: moviesActionTypes.REQUEST_HOME_PAGE_DATA_FAILED })
-    } finally {
-        dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_SUCCESS })
     }
 }
 
 export const requestMovieSectionData = (movieId) => async (dispatch) => {
-    console.log(movieId)
     dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_PENDING })
 
     try {
@@ -66,14 +67,14 @@ export const requestMovieSectionData = (movieId) => async (dispatch) => {
         dispatch(setSimilarMoviesData(responseSimilarMoviesData.data))
         dispatch(setMovieCastData(responseMovieCastData.data))
         
+        dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_SUCCESS })
+        
     } catch (error) {
         dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_FAILED })
-    } finally {
-        dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_SUCCESS })
     }
 }
 
-export const requestSearchData = (searchValue) => async (dispatch) => {
+export const requestSearchData = (searchValue, pageNum = 1) => async (dispatch) => {
 
     dispatch({type: moviesActionTypes.REQUEST_SEARCH_DATA_PENDING })
 
@@ -82,24 +83,25 @@ export const requestSearchData = (searchValue) => async (dispatch) => {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    searchValue: searchValue
+                    searchValue: searchValue,
+                    pageNum: pageNum
                 })
             })
 
         const data = await response.json()
 
-        dispatch(fetchSearchedMovies(data))
+        dispatch(changeFetchedMoviesData(data))
         
+        dispatch({type: moviesActionTypes.REQUEST_SEARCH_DATA_SUCCESS })
+
     } catch (error) {
         dispatch({type: moviesActionTypes.REQUEST_SEARCH_DATA_FAILED })
-    } finally {
-        dispatch({type: moviesActionTypes.REQUEST_SEARCH_DATA_SUCCESS })
     }
 }
 
-export const requestFilteredData = (filterOptions) => async (dispatch) => {
+export const requestFilteredData = (filterOptions, initialFetch = false) => async (dispatch) => {
 
-    const { sortByValue, releaseDateValue, movieGenresValue, pageNum } = filterOptions
+    const { sortBy, releaseDate, genres, pageNum } = filterOptions
 
     dispatch({type: moviesActionTypes.REQUEST_FILTER_DATA_PENDING })
 
@@ -108,23 +110,22 @@ export const requestFilteredData = (filterOptions) => async (dispatch) => {
             method: 'post',
             url: 'http://localhost:3001/api/filter',
             data: {
-              sortBy: sortByValue,
-              releaseDate: releaseDateValue,
-              genres: movieGenresValue,
-              pageNum: pageNum
+              sortBy,
+              releaseDate,
+              genres,
+              pageNum,
+              initialFetch: initialFetch
             }
         })
 
         const data = response.data
-        
-        fetchSearchedMovies(data)
 
-        dispatch(fetchSearchedMovies(data))
+        dispatch(changeFetchedMoviesData(data))
+
+        dispatch({type: moviesActionTypes.REQUEST_FILTER_DATA_SUCCESS })
         
     } catch (error) {
         dispatch({type: moviesActionTypes.REQUEST_FILTER_DATA_FAILED })
-    } finally {
-        dispatch({type: moviesActionTypes.REQUEST_FILTER_DATA_SUCCESS })
     }
 }
 

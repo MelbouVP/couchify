@@ -6,6 +6,8 @@ import Spinner from '../Spinner/spinner.component';
 
 const PageSpinner = () => {
 
+    // PageSpinner component is responsible for displaying a spinner on whole page while data loads for pages - lazy loading fallback.
+
     return (
         <div className="page-spinner__container">
             <Spinner />

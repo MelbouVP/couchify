@@ -10,15 +10,23 @@ import { requestSearchData } from '../../Redux/movies-data/movies.actions';
 import './searchbar.styles.scss';
 
 const SearchBar = ({ onRequestSearchData, fetchedSearchValue }) => {
+
+    // Searchbar component is responsible for handling search input from user and redirecting search results page - SearchPage component
+    // props = {
+    //     onRequestSearchData, // fetches results based on searchValue (redux-action)
+    //     fetchedSearchValue // previous search value (redux)
+    // }
     
     let history = useHistory();
 
     const [searchValue, setSearchValue] = useState('');
 
-    const fetchSearch = async () => {
+    // handles fetching of search results
+    const fetchSearch = () => {
+        // stops user from fetching empty requests
         if(searchValue === '') return
         // Stops user from re-fetching data if search value hasn't changed
-        // redirects back to search result overview component
+        // redirects back to search result overview component (MovieOverview)
         if(searchValue === fetchedSearchValue){
             history.location.pathname !== '/search' && history.push('/search')
             return

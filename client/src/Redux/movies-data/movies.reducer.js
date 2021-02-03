@@ -22,7 +22,7 @@ export const INITIAL_STATE = {
 
 const movieReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
-        case moviesActionTypes.FETCH_SEARCHED_MOVIES:
+        case moviesActionTypes.CHANGE_FETCHED_MOVIES_DATA:
             return {
                 ...state,
                 searchData: action.payload
@@ -71,19 +71,24 @@ const movieReducer = (state = INITIAL_STATE, action) => {
         case moviesActionTypes.REQUEST_FILTER_DATA_SUCCESS:
             return {
                 ...state,
+                isFetching: false,
                 hasLoaded: true
             }
         case moviesActionTypes.REQUEST_HOME_PAGE_DATA_PENDING:
-        case moviesActionTypes.REQUEST_HOME_PAGE_DATA_FAILED:  
         case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_PENDING:
-        case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_FAILED:
         case moviesActionTypes.REQUEST_SEARCH_DATA_PENDING:
-        case moviesActionTypes.REQUEST_SEARCH_DATA_FAILED:
         case moviesActionTypes.REQUEST_FILTER_DATA_PENDING:
-        case moviesActionTypes.REQUEST_FILTER_DATA_FAILED:
             return {
                 ...state,
+                isFetching: true,
                 hasLoaded: false
+            }
+        case moviesActionTypes.REQUEST_HOME_PAGE_DATA_FAILED:  
+        case moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_FAILED:
+        case moviesActionTypes.REQUEST_SEARCH_DATA_FAILED:
+        case moviesActionTypes.REQUEST_FILTER_DATA_FAILED:
+            return {
+                ...INITIAL_STATE
             }
         default:
             return state

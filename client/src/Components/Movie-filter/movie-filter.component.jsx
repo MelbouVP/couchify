@@ -8,9 +8,16 @@ import './movie-filter.styles.scss';
 
 const MovieFilter = ({ handleSubmit}) => {
 
+    // MovieFilter component handles filtering option collection and submitting them to parent component(MovieFilterPage)
+
+    // props = {
+    //     handleSubmit // trigger submition of selected filtering options to parent component
+    // }
+
     const [sortByValue, setSortByValue ] = useState('popularity.desc')
     const [releaseDateRange, setReleaseDateRange ] = useState([1980,2020])
     const [movieGenres, setMovieGenres ] = useState(MOVIE_GENRES)
+
 
     const handleSelectChange = (e) => {
         setSortByValue(e.target.value)

@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { connect } from 'react-redux';
@@ -7,33 +6,14 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectUserIsAuthenticated, selectUserMustWatch, selectUserID } from '../../Redux/user-data/user.selectors';
 
-import { setMustWatchMovie, removeMustWatchMovie } from '../../Redux/user-data/user.actions'
+import { updateMustWatchMovieList } from '../../Redux/user-data/user.actions'
 
 
-const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, setMustWatchMovie, removeMustWatchMovie }) => {
+const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, onUpdateMustWatchMovieList }) => {
+
+    // See Favourite-icon component for documentation
 
     const [isMustWatch, setIsMustWatch] = useState(false)
-    const isInitialMount = useRef(true);
-
-    useEffect( () => {
-
-        if(isInitialMount.current) {
-            isInitialMount.current = false
-        } else {
-            axios.post('http://localhost:3001/api/must-watch', { id: userID, data: mustWatch })
-                .then( response => undefined)
-                .catch(error => toast.error('Hmm. something went wrong.', {
-                    position: "bottom-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                }))
-        }
-
-    }, [userID, mustWatch])
 
 
     useEffect (() => {
@@ -49,6 +29,8 @@ const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, setMu
 
 
     const handleMustWatch = (e) => {
+
+            
         if(!isMustWatch){
             setIsMustWatch(true)
 
@@ -64,9 +46,9 @@ const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, setMu
                 genre: currentMovie.genre_ids.map( genreID => genreID.name)
             }
 
-            setMustWatchMovie(mustWatchMovieData)
+            onUpdateMustWatchMovieList(mustWatch, mustWatchMovieData, userID, 'add')
 
-            toast.info('❤️ Added to must-watch!', {
+            toast.info('📺 Added to must-watch!', {
                 position: "bottom-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -79,9 +61,9 @@ const MustWatchIcon = ({ currentMovie, isAuthenticated, mustWatch, userID, setMu
         } else {
             setIsMustWatch(false)
 
-            removeMustWatchMovie(currentMovie.id)
+            onUpdateMustWatchMovieList(mustWatch, currentMovie.id, userID, 'remove')
 
-            toast.dark('💔 Removed from must-watch!', {
+            toast.dark('📺 Removed from must-watch!', {
                 position: "bottom-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -143,8 +125,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setMustWatchMovie: (data) => dispatch(setMustWatchMovie(data)),
-    removeMustWatchMovie: (data) => dispatch(removeMustWatchMovie (data))
+    onUpdateMustWatchMovieList: (currentFavouritesList, movieToUpdate, userID, action) => dispatch(updateMustWatchMovieList(currentFavouritesList, movieToUpdate, userID, action))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(MustWatchIcon))

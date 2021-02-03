@@ -1,17 +1,14 @@
-
-
-  .search-result__container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.search-result__container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   
-    .search-result__overview {
-        position: relative;
-        // width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-    }
-  
+  .search-result__overview {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
   }
+  
+}

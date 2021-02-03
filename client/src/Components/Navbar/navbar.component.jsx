@@ -12,13 +12,20 @@ import SearchBar from '../Searchbar/searchbar.component';
 import './navbar.styles.scss';
 
 const Navbar = ({ isAuthenticated, logOutUser }) => {
-    console.log('navbar')
 
+    // Navbar component is responsible for displaying navigation, and different navigation based on wether is user is logged or not
+
+    // props = {
+    //     isAuthenticated, // user authentification status (redux)
+    //     logOutUser // logs out a logged user (redux-action)
+    // }
 
     const handleClick = () => {
         window.scrollTo(0,0)
     }
 
+
+    // Dispatch redux action and inform user about logging out
     const handleLogOut = () => {
         window.scrollTo(0,0)
         logOutUser()

@@ -1,6 +1,5 @@
 .carousel {
   padding: 0px 60px 0px 60px;
-  // min-height: 50vh;
 
   &__title {
     color: white;
@@ -21,7 +20,6 @@
 
   &-container {
 
-
     &__similar {
       min-height: 20vh;
       display: flex;
@@ -31,21 +29,11 @@
   }
 }
 
-
-
 .slick-slide>div {
   margin: .5rem;
   display: flex;
   justify-content: center;
-  // transform: scale(.75);
-  // transition: transform .3s cubic-bezier(.4, 0, .2, 1);
 }
-
-.slick-center>div {
-  // position: relative;
-  // transform: scale(1);
-}
-
 
 .slick-arrow {
   z-index: 1000;

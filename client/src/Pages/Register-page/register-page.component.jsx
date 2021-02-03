@@ -14,21 +14,29 @@ import './form-page.styles.scss';
 
 const RegisterPage = ({ onRegisterNewUser }) => {
 
+	// RegisterPage component is responsible for registering new users
+	// props = {
+	// 	onRegisterNewUser, // passes data to register new user (redux-action)
+	// }
+
 	const [userCredentials, setUserCredentials] = useState({ username: '', email: '', password: '', confirmPassword: '' })
 
 	const { username, email, password, confirmPassword } = userCredentials
 	
 	const history = useHistory()
 
+	// handle form input changes
 	const handleChange = (e) => {
 
 		const { name, value } = e.target
 		setUserCredentials({...userCredentials, [name]: value})
 	}
 
+	// handles submission of data, validation of data and informing user about registration status
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
+		// informs user about status of registration
 		const createWarning = (warningText) => {
 			toast.error(`❌ ${warningText}`, {
 				position: "bottom-center",
@@ -41,6 +49,7 @@ const RegisterPage = ({ onRegisterNewUser }) => {
 			});
 		}
 
+		// validate data
 		if(password !== confirmPassword){
 
 			createWarning('Passwords don\'t match. Enter matching passwords')
@@ -57,6 +66,7 @@ const RegisterPage = ({ onRegisterNewUser }) => {
 		}
 
 
+		// collect form data
 		const formData = new FormData(e.target);
 		const data = {}
 		formData.forEach((value, property) => data[property] = value)
@@ -66,7 +76,7 @@ const RegisterPage = ({ onRegisterNewUser }) => {
 		setUserCredentials({ username: '', email: '', password: '', confirmPassword: '' })
 	}
 	
-
+	// particleJs is used for background styling
     let particleParams = {
 	    "particles": {
 	        "number": {

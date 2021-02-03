@@ -1,6 +1,6 @@
 import userActionTypes from './user.types'
 import axios from 'axios';
-import { showNotification } from './user.utils';
+import { showNotification, addMovie, removeMovie } from './user.utils';
 
 
 export const loadProfileData = (data) => ({
@@ -32,6 +32,60 @@ export const removeMustWatchMovie = (movieID) => ({
     payload: movieID
 })
 
+export const updateFavouriteMovieList = (currentFavouritesList, movieToUpdate, userID, action)  => (dispatch) => {
+
+    dispatch({ type: userActionTypes.UPDATE_FAVOURITE_MOVIE_PENDING })
+
+    let updatedFavouritesArray
+
+    if(action === 'add'){
+
+        updatedFavouritesArray = addMovie(currentFavouritesList, movieToUpdate)
+        dispatch(setFavouriteMovie(updatedFavouritesArray))
+        
+    } else if (action === 'remove') {
+
+        updatedFavouritesArray = removeMovie(currentFavouritesList, movieToUpdate)
+        dispatch(removeFavouriteMovie(updatedFavouritesArray))
+    }
+
+    axios.post('http://localhost:3001/api/favourites', { id: userID, data: updatedFavouritesArray})
+        .then( response => {
+            dispatch({ type: userActionTypes.UPDATE_FAVOURITE_MOVIE_SUCCESS })
+        })
+        .catch(error => {
+            dispatch({ type: userActionTypes.UPDATE_FAVOURITE_MOVIE_FAILED })
+            showNotification('error', 'Hmm. something went wrong.')
+    })
+}
+
+export const updateMustWatchMovieList = (currentMustWatchList, movieToUpdate, userID, action)  => (dispatch) => {
+
+    dispatch({ type: userActionTypes.UPDATE_MUST_WATCH_MOVIE_PENDING })
+
+    let updatedMustWatchArray
+
+    if(action === 'add'){
+
+        updatedMustWatchArray = addMovie(currentMustWatchList, movieToUpdate)
+        dispatch(setMustWatchMovie(updatedMustWatchArray))
+        
+    } else if (action === 'remove') {
+
+        updatedMustWatchArray = removeMovie(currentMustWatchList, movieToUpdate)
+        dispatch(removeMustWatchMovie(updatedMustWatchArray))
+    }
+
+    axios.post('http://localhost:3001/api/must-watch', { id: userID, data: updatedMustWatchArray})
+        .then( response => {
+            dispatch({ type: userActionTypes.UPDATE_MUST_WATCH_MOVIE_SUCCESS })
+        })
+        .catch(error => {
+            dispatch({ type: userActionTypes.UPDATE_MUST_WATCH_MOVIE_FAILED })
+            showNotification('error', 'Hmm. something went wrong.')
+    })
+}
+
 export const requestUserData = (data, history) => async (dispatch) => {
     dispatch({ type: userActionTypes.REQUEST_USER_DATA_PENDING })
 
@@ -44,7 +98,7 @@ export const requestUserData = (data, history) => async (dispatch) => {
 
         dispatch({type: userActionTypes.REQUEST_USER_DATA_SUCCESS})
 
-    } catch {
+    } catch (error) {
         dispatch({type: userActionTypes.REQUEST_USER_DATA_FAILED})
         showNotification('error', '❌ Hmm, Something went wrong')
     }
@@ -62,7 +116,7 @@ export const registerNewUser = (data, history) =>  async (dispatch) => {
         
         dispatch(requestUserData({ password, email }, history))
 
-    } catch {
+    } catch (error) {
         dispatch({ type: userActionTypes.REGISTER_NEW_USER_FAILED })
         showNotification('error', '❌ Hmm, Something went wrong')
     }

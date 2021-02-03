@@ -2,10 +2,13 @@ const registerSchema = require('../validation/registerValidation')
 const loginSchema = require('../validation/loginValidation.js')
 
 
-
+// Validates received data from front-end and registers new user in database
+// for security purposes password is hashed and stored as a hash
+// for secuity purposes user is not informed on front-end if he types email that is already registered
 const handleRegister = (req, res, db, bcrypt) => {
     const { username, email, password, confirmPassword } = req.body
 
+    // validate data based on validation schema
     const validation = registerSchema.schema.validate({
         username,
         email,
@@ -15,15 +18,19 @@ const handleRegister = (req, res, db, bcrypt) => {
 
     const { error } = validation
 
+    // if validation has failed reject registration
+    // else proceed with received registration data
     if(error) {
-        res.status(422).json({
-            message: error.details[0].message
-        })
+        res.status(422).json('Provide data in specified format')
     } else {
 
         let salt = bcrypt.genSaltSync(10)
         let hash = bcrypt.hashSync(password, salt)
 
+        // db uses two tables:
+        // 1. Login - storing email adresses and related hash(password)
+        // 2. Users - storing overall information about the user
+        // If registration is successful, return overall information about the user to the front-end
         db.transaction(trx => {
             trx.insert({
                 email: email,
@@ -40,7 +47,6 @@ const handleRegister = (req, res, db, bcrypt) => {
                     joined: new Date().toLocaleDateString()
                 })
                 .then(userData => {
-                    console.log(userData[0])
                     res.status(200).json(userData[0])
                 })
             })
@@ -54,7 +60,7 @@ const handleRegister = (req, res, db, bcrypt) => {
     }
 }
 
-
+// Operates similar to handleRegister, see previous documentation
 const handleLogin = (req, res, db, bcrypt) => {
     const { email, password } = req.body
 
@@ -62,24 +68,22 @@ const handleLogin = (req, res, db, bcrypt) => {
         email,
         password,
     })
-
+    
     const { error } = validation
-
+    
     if(error) {
-        res.status(422).json({
-            message: error.details[0].message
-        })
+        res.status(422).json('Provide data in specified format')
     } else {
-
+        
         db.select('email', 'hash')
         .from('login')
         .where('email', '=', email)
         .then(data => {
-
+            
+            // Compares password hashes to determine if user has provided correct password
             const isValid = bcrypt.compareSync(password, data[0].hash)
 
             if(isValid){
-                console.log(true)
 
                 return db.select('*')
                 .from('users')
@@ -95,8 +99,10 @@ const handleLogin = (req, res, db, bcrypt) => {
 
 }
 
+// Updates favourite movies of user
 const handleFavourite = (req, res, db) => {
     let userID = req.body.id
+    // updated array of objects that each contains data about favourite movie
     let data = JSON.stringify(req.body.data)
 
     return db('users')
@@ -106,6 +112,8 @@ const handleFavourite = (req, res, db) => {
         .catch(error => res.status(400).json('Unable to update favourites'))
 }
 
+
+// see documentation for handleFavourite
 const handleMustWatch = (req, res, db) => {
     let userID = req.body.id
     let data = JSON.stringify(req.body.data)

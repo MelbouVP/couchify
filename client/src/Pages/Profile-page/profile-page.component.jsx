@@ -17,12 +17,18 @@ import './profile-page.styles.scss';
 
 const ProfilePage = ({ profile }) => {
 
+    // ProfilePage component is responsible for displaying summary about the user
+    // props = {
+    //     profile, // data about user (redux)
+    // }
+
     const { name, email, joined, favourite_movies, must_watch_movies } = profile
 
     const [showOverlay, setShowOverlay] = useState(false)
     const [currentMovie, setCurrentMovie] = useState({name: null, trailerKey: null})
-
-
+    
+    
+    // acts as a modal and handles display of movie trailer
     const handleVideo = (title, trailerKey) => {
         setShowOverlay(true)
         setCurrentMovie({name: title, trailerKey: trailerKey})

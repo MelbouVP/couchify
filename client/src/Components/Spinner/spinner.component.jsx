@@ -5,6 +5,7 @@ import './spinner.styles.scss';
 
 const Spinner = ({ size }) => {
 
+    // Spinner component is responsible for displaying a spinner while data is loaded in parent component
 
     const overwriteDefaultSize = size && size
 

@@ -8,11 +8,12 @@ import ErrorBoundary from './Pages/Error-page/error-page.component';
 import ProtectedRoute from './Components/Protected-route/protected-route.component';
 import PageSpinner from './Components/Page-spinner/page-spinner.component';
 
-// import Navbar from './Components/Navbar/navbar.component';
-// import Footer from './Components/Footer/footer.component';
+import Navbar from './Components/Navbar/navbar.component';
+import Footer from './Components/Footer/footer.component';
 
 import './app.scss';
 
+// lazy load components 
 const HomePage = lazy(() => import('./Pages/Home-page/home-page.component'))
 const SearchPage = lazy(() => import('./Pages/Search-page/search-page.component'))
 const FilterPage = lazy(() => import('./Pages/Filter-page/filter-page.component'))
@@ -22,9 +23,6 @@ const RegisterPage = lazy(() => import('./Pages/Register-page/register-page.comp
 const ProfilePage = lazy(() => import('./Pages/Profile-page/profile-page.component'))
 
 const MovieSectionPage = lazy(() => import('./Pages/MovieSection-page/movie-section-page.component'))
-
-const Navbar =  lazy(() => import('./Components/Navbar/navbar.component'))
-const Footer =  lazy(() => import('./Components/Footer/footer.component'))
 
 
 

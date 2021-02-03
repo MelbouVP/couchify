@@ -1,12 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import { selectMoviesIsFetching, selectMoviesSearchData } from '../../Redux/movies-data/movies.selectors';
 
-import { changeIsFetching, fetchSearchedMovies } from '../../Redux/movies-data/movies.actions'
+import { changeIsFetching, requestSearchData, requestFilteredData } from '../../Redux/movies-data/movies.actions'
 
 import MovieCard from '../Movie-card/movie-card.component';
 import ChangePageButton from '../Change-page-btn/change-page-button.component';
@@ -15,7 +14,19 @@ import Spinner from '../Spinner/spinner.component';
 import './movie-overview.styles.scss';
 
 
-const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearchedMovies, otherData }) => {
+const MovieOverview = ({ searchData, isFetching, otherData, onRequestSearchData, onRequestFilteredData }) => {
+
+
+    // MovieOverview component is responsible for display search and filter results for parent components (MovieFilterPage and SearchPage)
+
+    // props = {
+    //     searchData, // movie data results that were filtered/searched (redux)
+    //     isFetching, (redux) 
+    //     otherData // on initial mount, if not movies have been fetched, displays movie data from HomePage component i.e. popular movies
+    //     onRequestSearchData, // handles request of new page of search results (redux-action)
+    //     onRequestFilteredData // handles request of new page  filtering results
+    // }
+
 
     const { results, page, searchValue, total_pages, sort_by, primary_release_date, with_genres } = searchData
 
@@ -30,7 +41,7 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
 
 
     // Display user search result or filtering result depending on section/path
-    // if there isn't data, provide backup data - defaultMovies(parent props)
+    // if there isn't data, provide backup data
     const movies = results.length ? 
         results.map( movieData => 
                     <MovieCard key={movieData.id} movieData={movieData} />
@@ -39,61 +50,38 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
         defaultMovies
 
 
-    const getNewSearchPage = async (routeName) => {
-        let route = routeName.toLowerCase()
-        changeIsFetching(true);
-        try {
-            let currentSearch = searchValue
+    // Handles fetching of additional search result pages
+    const getNewSearchPage = (routeName) => {    
 
-            const response = await axios({
-                method: 'post',
-                url: `http://localhost:3001/api/find/${route}`,
-                headers: {'Content-Type': 'application/json'},
-                data : {
-                    searchValue: currentSearch,
-                    pageNum: page
-                }
-            })
+        // pageIteration variable represents current search result page iteration,
+        // i.e 1st page of searched results, 2nd page of searched results etc.
+        let pageIteration = page
 
-            const data = await response.data
-            console.log(data);
-            fetchSearchedMovies(data);
-            
-        } catch(error) {
-            throw Error(error)
-        }
+        routeName === 'next' ? pageIteration++ : pageIteration--
 
-        changeIsFetching(false);
+        onRequestSearchData(searchValue, pageIteration)
     }
 
+    // see documentation for getNewSearchPage
     const getNewFilterPage = async (routeName) => {
-        let route = routeName.toLowerCase()
-        changeIsFetching(true);
 
-        try {
-            const response = await fetch(`http://localhost:3001/api/filter/${route}`, {
-                method: 'post',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    sortBy: sort_by,
-                    releaseDate: primary_release_date,
-                    genres: with_genres,
-                    pageNum: page
-                })
-            })
+        let pageIteration = page
 
-            const data = await response.json()
-            console.log(data);
-            fetchSearchedMovies(data);
-            
-        } catch(error) {
-            console.log(error)
-        }
-        changeIsFetching(false);
+        routeName === 'next' ? pageIteration++ : pageIteration--
+        
+        onRequestFilteredData({
+            sortBy: sort_by,
+            releaseDate: primary_release_date,
+            genres: with_genres,
+            pageNum: pageIteration
+        })
     }
 
+    
+    // Handles triggering of getNewSearchPage or getNewFilterPage based on current url path
     const handleClick = async (event) => {
-        let pageChange = event.target.textContent
+        // pageChange (string next || prev) handles wether previous or next page of results is fetched
+        let pageChange = event.target.textContent.toLowerCase()
         let pathname = history.location.pathname
         window.scrollTo(0, 0);
 
@@ -106,7 +94,7 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
             }
 
         } catch (error) {
-            console.log(error)
+            throw Error
         }
     } 
 
@@ -115,7 +103,7 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
             <div className='search-result__container'>
                 <div className="search-result__overview">
                     {
-                        page > 1 && isFetching === false ?
+                        page > 1 && isFetching === false ?  // prevent possibility of fetching previous page on 1st page of fetch results.
                             <ChangePageButton 
                                 handleClick={handleClick} 
                                 position={{top: '100%', right: '55%'}}>
@@ -133,7 +121,7 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
                     }
 
                     {
-                        total_pages > page && isFetching === false ?
+                        total_pages > page && isFetching === false ? // prevent possibility of fetching next page if current page is last page of fetched results
                             <ChangePageButton 
                                 handleClick={handleClick} 
                                 position={{top: '100%', left: '55%'}} >
@@ -152,7 +140,8 @@ const MovieOverview = ({ searchData, isFetching, changeIsFetching, fetchSearched
 
 const mapDispatchToProps = dispatch => ({
     changeIsFetching: (bool) => dispatch(changeIsFetching(bool)),
-    fetchSearchedMovies: (data) => dispatch(fetchSearchedMovies(data))
+    onRequestSearchData: (searchValue, pageNum) => dispatch(requestSearchData(searchValue, pageNum)),
+    onRequestFilteredData: (filterOptions) => dispatch(requestFilteredData(filterOptions))
 })
 
 const mapStateToProps = createStructuredSelector({

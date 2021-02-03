@@ -11,25 +11,33 @@ import '../Register-page/form-page.styles.scss'
 
 const LoginPage = ({ onRequestUserData }) => {
 
+	// LoginPage is responsible for authenticating user
+	// props = {
+	// 	onRequestUserData, // authenticates user (redux-action)
+	// }
+
     const [userCredentials, setUserCredentials] = useState({ email: '', password: ''})
 	const { email, password } = userCredentials
 	
 	const history = useHistory()
 
+	// handle internal state change
 	const handleChange = (e) => {
 
 		const { name, value } = e.target
 		setUserCredentials({...userCredentials, [name]: value})
 	}
 
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
+		// collect form data, assign it and fetch results
         const formData = new FormData(e.target);
 
-        for(let pair of formData.entries()) {
-            console.log(pair[0]+ ', '+ pair[1]); 
-         }
+        // for(let pair of formData.entries()) {
+        //     console.log(pair[0]+ ', '+ pair[1]); 
+        //  }
          
 		const data = {}
 		formData.forEach((value, property) => data[property] = value)
@@ -42,6 +50,7 @@ const LoginPage = ({ onRequestUserData }) => {
 	}
 	
 
+	// particleJs is used for background styling
     let particleParams = {
 	    "particles": {
 	        "number": {

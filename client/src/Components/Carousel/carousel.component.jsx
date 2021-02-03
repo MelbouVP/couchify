@@ -1,7 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -9,6 +8,15 @@ import './carousel.styles.scss';
 
 const Carousel = ({ sectionName, children, slideCount }) => {
 
+  // Carousel component is responsible for displaying card components
+  
+  // props = {
+  //   sectionName, // section title
+  //   children, // components that get displayed within carousel - movieCard & castCard
+  //   slideCount, // controls how many cards to display
+  // }
+
+  // controls behavior of carousel component
   const settings = {
     // centerPadding: '5rem',
     autoplay: true,
@@ -59,7 +67,8 @@ const Carousel = ({ sectionName, children, slideCount }) => {
       {
         sectionName ? 
           <h2 className="carousel__title" >{sectionName}</h2> 
-        : null
+        : 
+          null
       }
       <div className="carousel-container">
             {

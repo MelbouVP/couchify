@@ -15,6 +15,13 @@ import './home-page.styles.scss';
 
 const HomePage = ({ trendingMovies, popularMovies, onRequestHomePageData }) => {
 
+    // HomePage component is responsible for dispalying home-banner and popular/trending movie data
+    // props = {
+    //     trendingMovies, // data about trending movies (redux)
+    //     popularMovies, // data about popular movies (redux)
+    //     onRequestHomePageData // fetches popular and trending movie data (redux-action)
+    // }
+
     useEffect(() => {
         const fetchData = () => {
 

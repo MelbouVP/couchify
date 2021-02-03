@@ -1,10 +1,8 @@
-
 .forward-button__container {
     cursor: pointer;
     width:50px;
     height:50px;
     position: absolute;
-    // transform: translate(-50%, -50%);
     border-radius:50%;
     border:#03A9F4 2px solid;
     overflow:hidden;
@@ -51,13 +49,11 @@
         &-part-2{
             width:65%;
             transform: rotate(35deg) translate(22%, -232%);
-            // transform-origin: 0 0;
             border-radius: 10px;
         }
         &-part-3{
             width:65%;
             transform: rotate(-35deg) translate(23%, 247%);
-            // transform-origin: 0 0;
             border-radius: 10px;
         }
     }
