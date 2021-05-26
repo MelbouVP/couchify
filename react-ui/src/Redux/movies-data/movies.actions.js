@@ -42,8 +42,8 @@ export const requestHomePageData = () => async (dispatch) => {
     dispatch({type: moviesActionTypes.REQUEST_HOME_PAGE_DATA_PENDING })
 
     try {
-        const trending = await axios('http://localhost:3001/api/trending')
-        const popular = await axios('http://localhost:3001/api/popular')
+        const trending = await axios('https://secret-bayou-82769.herokuapp.com/api/trending')
+        const popular = await axios('https://secret-bayou-82769.herokuapp.com/api/popular')
     
         dispatch(fetchTrendingMovies(trending.data))
         dispatch(fetchPopularMovies(popular.data))
@@ -59,9 +59,9 @@ export const requestMovieSectionData = (movieId) => async (dispatch) => {
     dispatch({type: moviesActionTypes.REQUEST_MOVIE_SECTION_DATA_PENDING })
 
     try {
-        const responseMovieData = await axios(`http://localhost:3001/api/movie/${movieId}`)
-        const responseSimilarMoviesData = await axios(`http://localhost:3001/api/similar/${movieId}`)
-        const responseMovieCastData = await axios(`http://localhost:3001/api/credits/${movieId}`)
+        const responseMovieData = await axios(`https://secret-bayou-82769.herokuapp.com/api/movie/${movieId}`)
+        const responseSimilarMoviesData = await axios(`https://secret-bayou-82769.herokuapp.com/api/similar/${movieId}`)
+        const responseMovieCastData = await axios(`https://secret-bayou-82769.herokuapp.com/api/credits/${movieId}`)
 
         dispatch(changeCurrentlyViewedMovie(responseMovieData.data))
         dispatch(setSimilarMoviesData(responseSimilarMoviesData.data))
@@ -79,7 +79,7 @@ export const requestSearchData = (searchValue, pageNum = 1) => async (dispatch) 
     dispatch({type: moviesActionTypes.REQUEST_SEARCH_DATA_PENDING })
 
     try {
-        const response = await fetch(`http://localhost:3001/api/find`, {
+        const response = await fetch(`https://secret-bayou-82769.herokuapp.com/api/find`, {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -108,7 +108,7 @@ export const requestFilteredData = (filterOptions, initialFetch = false) => asyn
     try {
         const response = await axios({
             method: 'post',
-            url: 'http://localhost:3001/api/filter',
+            url: 'https://secret-bayou-82769.herokuapp.com/api/filter',
             data: {
               sortBy,
               releaseDate,

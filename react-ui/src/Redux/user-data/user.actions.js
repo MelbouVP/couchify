@@ -49,7 +49,7 @@ export const updateFavouriteMovieList = (currentFavouritesList, movieToUpdate, u
         dispatch(removeFavouriteMovie(updatedFavouritesArray))
     }
 
-    axios.post('http://localhost:3001/api/favourites', { id: userID, data: updatedFavouritesArray})
+    axios.post('https://secret-bayou-82769.herokuapp.com/api/favourites', { id: userID, data: updatedFavouritesArray})
         .then( response => {
             dispatch({ type: userActionTypes.UPDATE_FAVOURITE_MOVIE_SUCCESS })
         })
@@ -76,7 +76,7 @@ export const updateMustWatchMovieList = (currentMustWatchList, movieToUpdate, us
         dispatch(removeMustWatchMovie(updatedMustWatchArray))
     }
 
-    axios.post('http://localhost:3001/api/must-watch', { id: userID, data: updatedMustWatchArray})
+    axios.post('https://secret-bayou-82769.herokuapp.com/api/must-watch', { id: userID, data: updatedMustWatchArray})
         .then( response => {
             dispatch({ type: userActionTypes.UPDATE_MUST_WATCH_MOVIE_SUCCESS })
         })
@@ -90,7 +90,7 @@ export const requestUserData = (data, history) => async (dispatch) => {
     dispatch({ type: userActionTypes.REQUEST_USER_DATA_PENDING })
 
     try {
-        const response = await axios.post('http://localhost:3001/api/login', data)
+        const response = await axios.post('https://secret-bayou-82769.herokuapp.com/api/login', data)
         showNotification('success', '🚀 Login successful!')
         dispatch(loadProfileData(response.data))
 
@@ -108,7 +108,7 @@ export const registerNewUser = (data, history) =>  async (dispatch) => {
     dispatch({ type: userActionTypes.REGISTER_NEW_USER_PENDING })
 
     try {
-        await axios.post('http://localhost:3001/api/register', data)
+        await axios.post('https://secret-bayou-82769.herokuapp.com/api/register', data)
         showNotification('info', '🚀 Registration successful!')
         dispatch({ type: userActionTypes.REGISTER_NEW_USER_SUCCESS })
 
