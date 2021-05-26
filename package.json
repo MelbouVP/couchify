@@ -6,7 +6,8 @@
   "scripts": {
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "start": "concurrently --kill-others \"npm run server\" \"npm run client\""
+    // "start": "concurrently --kill-others \"npm run server\" \"npm run client\""
+    "heroku-postbuild": "cd react-ui && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
