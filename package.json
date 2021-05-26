@@ -4,9 +4,9 @@
   "description": "server API for front-end client",
   "main": "index.js",
   "scripts": {
+    "client": "cd react-ui && npm start",
     "server": "nodemon server.js",
-    "client": "cd client && npm start",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd react-ui && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
