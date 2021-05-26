@@ -46,6 +46,10 @@
     .profile-page__list {
         padding: 4rem 2rem;
 
+        h3 {
+            padding: 3rem;
+        }
+
         .react-tabs {
             overflow-x: scroll;
             background-color: rgb(19, 61, 177);

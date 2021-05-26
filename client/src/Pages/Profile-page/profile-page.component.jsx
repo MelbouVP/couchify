@@ -78,44 +78,54 @@ const ProfilePage = ({ profile }) => {
                     </TabList>
 
                     <TabPanel>
-                        <table className='profile-page__tab-panel__table'>
-                            <thead>
-                                <tr className='profile-page__tab-panel__header'>
-                                    <th>Details</th>
-                                    <th>Title</th>
-                                    <th>Release date</th>
-                                    <th>Genre</th>
-                                    <th>Rating</th>
-                                    <th>IMDB</th>
-                                    <th>Trailer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    favouriteMovieItems
-                                }
-                            </tbody>
-                        </table>
+                        {
+                            favouriteMovieItems.length > 0 ?
+                                <table className='profile-page__tab-panel__table'>
+                                    <thead>
+                                        <tr className='profile-page__tab-panel__header'>
+                                            <th>Details</th>
+                                            <th>Title</th>
+                                            <th>Release date</th>
+                                            <th>Genre</th>
+                                            <th>Rating</th>
+                                            <th>IMDB</th>
+                                            <th>Trailer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            favouriteMovieItems 
+                                        }
+                                    </tbody>
+                                </table>
+                            :
+                                <h3>The list is empty..</h3>
+                        }
                     </TabPanel>
                     <TabPanel>
-                    <table className='profile-page__tab-panel__table'>
-                            <thead>
-                                <tr className='profile-page__tab-panel__header'>
-                                    <th>Details</th>
-                                    <th>Title</th>
-                                    <th>Release date</th>
-                                    <th>Genre</th>
-                                    <th>Rating</th>
-                                    <th>IMDB</th>
-                                    <th>Trailer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    mustWatchMovieItems
-                                }
-                            </tbody>
-                        </table>
+                    {
+                            mustWatchMovieItems.length > 0 ?
+                                <table className='profile-page__tab-panel__table'>
+                                    <thead>
+                                        <tr className='profile-page__tab-panel__header'>
+                                            <th>Details</th>
+                                            <th>Title</th>
+                                            <th>Release date</th>
+                                            <th>Genre</th>
+                                            <th>Rating</th>
+                                            <th>IMDB</th>
+                                            <th>Trailer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            mustWatchMovieItems
+                                        }
+                                    </tbody>
+                                </table>
+                            :
+                                <h3>The list is empty..</h3>
+                    }
                     </TabPanel>
                 </Tabs>
             </div>
