@@ -5,7 +5,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 const pg = require('pg')
 const bcrypt = require('bcryptjs');
-const knex = require('knex')
+const knex = require('knex');
+const path = require('path');
 
 // Controllers
 
@@ -35,7 +36,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 // Connect to database
-const db = knex({
+const pg = knex({
     client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
