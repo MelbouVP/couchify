@@ -57,7 +57,7 @@ Besides core functionality, this application has a database that allows for user
 **1. Trending and most popular movies exploration**
 
 <p align="center">
-  <img src="https://s3.gifyu.com/images/movies-exploration.gif" width="805" height="341"/>
+  <img src="/readme_assets/movies exploration.gif" width="805" height="341"/>
 </p>
 <br/>
 <br/>
