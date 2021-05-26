@@ -6,7 +6,7 @@
   "scripts": {
     "client": "cd react-ui && npm start",
     "server": "nodemon server.js",
-    "heroku-postbuild": "cd react-ui && npm install --only=dev && npm install && npm run build"
+    "start": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",

@@ -1,16 +1,7 @@
 import React from 'react';
 import './range-slider.styles.scss';
+import Slider from '@material-ui/core/Slider';
 
-import { makeStyles } from '@bit/mui-org.material-ui.styles';
-import Slider from '@bit/mui-org.material-ui.slider';
-
-const useStyles = makeStyles({
-  root: {
-    width: 150,
-    margin: 'auto',
-    textAlign: 'center'
-  },
-});
 
 const RangeSlider = ({ handleRangeChange }) => {
 
@@ -22,7 +13,7 @@ const RangeSlider = ({ handleRangeChange }) => {
 
   const currentYear = parseInt(new Date().toISOString().replace('T', ' ').substr(0, 4))
   
-  const classes = useStyles();
+
   const [value, setRangeValue] = React.useState([1980, currentYear]);
 
 
@@ -33,7 +24,7 @@ const RangeSlider = ({ handleRangeChange }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className="slider__container">
       <Slider
         value={value}
         onChange={handleChange}
