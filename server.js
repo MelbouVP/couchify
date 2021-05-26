@@ -23,14 +23,14 @@ const userData = require('./controllers/dbUserData');
 
 // Server Setup
 const app = express();
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 5000;
 
 
 if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, '/client/build')));
+    app.use(express.static(path.join(__dirname, '/react-ui/build')));
 
     app.get('/', function(req, res) {
-        res.sendFile(path.join(__dirname, '/client/build', 'index.html'))
+        res.sendFile(path.join(__dirname, '/react-ui/build', 'index.html'))
     });
 }
 
@@ -38,11 +38,11 @@ if(process.env.NODE_ENV === 'production'){
 const db = knex({
     client: 'pg',
     connection: {
-        host : '127.0.0.1',
-        user : 'postgres',
-        password : process.env.PG_PASS,
-        database : 'couchify'
-    },
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false
+      }
+    }
 });
 
 // Middlewares
