@@ -2,10 +2,10 @@
   "name": "couchify",
   "version": "1.0.0",
   "description": "server API for front-end client",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd react-ui && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
