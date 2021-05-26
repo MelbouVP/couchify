@@ -2,7 +2,7 @@
 
 Couchify is an application that can be used to find movies to watch, explore trending and most popular movies. Functionality is supported by The Movie Database (TMDB) API.
 
-<img src="" />
+<img src="https://s3.gifyu.com/images/home-page_banner.png" />
 
 **Application live-demo can be seen at @**
 
@@ -66,7 +66,7 @@ Besides core functionality, this application has a database that allows for user
 <br/>
 <br/>
 <p align="center">
-  <img src="https://s3.gifyu.com/images/exploration-of-individual-movie.gif" width="805" height="341"/>
+  <img src="/readme_assets/exploration of individual movie.gif" width="805" height="341"/>
 </p>
 <br/>
 <br/>
@@ -75,7 +75,7 @@ Besides core functionality, this application has a database that allows for user
 <br/>
 <br/>
 <p align="center">
-  <img src="https://s3.gifyu.com/images/movie-search.gif" width="805" height="341"/>
+  <img src="/readme_assets/movie search.gif" width="805" height="341"/>
 </p>
 <br/>
 <br/>
@@ -84,7 +84,7 @@ Besides core functionality, this application has a database that allows for user
 <br/>
 <br/>
 <p align="center">
-  <img src="https://s3.gifyu.com/images/movie-filter.gif" width="805" height="341"/>
+  <img src="/readme_assets/movie  filter.gif" width="805" height="341"/>
 </p>
 
 **4. Adding/removing movie to favourite/must-watch movies list.**
