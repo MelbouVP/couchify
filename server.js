@@ -25,6 +25,15 @@ const userData = require('./controllers/dbUserData');
 const app = express();
 const PORT = process.env.port || 3001;
 
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, '/client/build')));
+
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname, '/client/build', 'index.html'))
+    });
+}
+
 // Connect to database
 const db = knex({
     client: 'pg',
