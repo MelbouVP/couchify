@@ -3,7 +3,7 @@ const bodyParser= require('body-parser');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-// const pg = require('pg')
+const pg = require('pg')
 const bcrypt = require('bcryptjs');
 const knex = require('knex');
 const path = require('path');
@@ -36,7 +36,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 // Connect to database
-const pg = knex({
+const db = knex({
     client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
