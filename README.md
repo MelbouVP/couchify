@@ -4,7 +4,7 @@ Couchify is an application that can be used to find movies to watch, explore tre
 
 <img src="https://s3.gifyu.com/images/home-page_banner.png" />
 
-**Application live-demo can be seen at @**
+**Application live-demo can be seen at https://couchify.herokuapp.com**
 
 ## Table of contents 
 * [Introduction](#introduction)
